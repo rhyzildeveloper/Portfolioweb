@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>Rhyziltech · dev & cybersecurity (fully responsive)</title>
+    <title>Rhyziltech · dev & cybersecurity | working contact</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
+        /* === STYLES (IDENTICAL TO PREVIOUS FULLY RESPONSIVE VERSION) === */
         * {
             margin: 0;
             padding: 0;
@@ -47,7 +50,6 @@
             overflow-x: hidden;
         }
 
-        /* particle canvas – subtle background */
         canvas#bgCanvas {
             position: fixed;
             top: 0;
@@ -70,7 +72,6 @@
             .container { max-width: 1500px; }
         }
 
-        /* Typography */
         h1, h2, h3, h4 {
             font-weight: 700;
             line-height: 1.2;
@@ -104,7 +105,6 @@
             font-size: 1rem;
         }
 
-        /* glass card */
         .glass-card {
             background: rgba(20, 25, 45, 0.8);
             backdrop-filter: blur(8px);
@@ -120,7 +120,6 @@
             transform: translateY(-6px);
         }
 
-        /* buttons */
         .btn {
             display: inline-block;
             padding: 14px 34px;
@@ -169,7 +168,6 @@
             }
         }
 
-        /* header */
         header {
             position: fixed;
             top: 0;
@@ -198,7 +196,6 @@
             letter-spacing: -0.5px;
         }
 
-        /* navigation – responsive */
         .nav-links {
             display: flex;
             gap: 2rem;
@@ -257,7 +254,6 @@
             }
         }
 
-        /* hero */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -293,7 +289,6 @@
 
         @keyframes blink { 50% { border-color: transparent; } }
 
-        /* about grid */
         .about-grid {
             display: grid;
             grid-template-columns: 1.2fr 0.9fr;
@@ -351,7 +346,6 @@
             border-left: 6px solid var(--secondary);
         }
 
-        /* services grid */
         .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -371,7 +365,6 @@
             margin-bottom: 20px;
         }
 
-        /* portfolio grid */
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -405,7 +398,6 @@
         .port-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 15px 0 5px; }
         .tag { background: #262f4a; padding: 4px 14px; border-radius: 40px; font-size: 0.8rem; }
 
-        /* why choose */
         .why-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -418,7 +410,6 @@
             text-align: center;
         }
 
-        /* contact */
         .contact-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -444,7 +435,6 @@
             margin: 30px 0;
         }
 
-        /* modal fully responsive */
         .modal {
             display: none;
             position: fixed;
@@ -465,6 +455,7 @@
             border: 1px solid var(--primary);
             max-height: 90vh;
             overflow-y: auto;
+            position: relative;
         }
         .close-modal {
             position: absolute;
@@ -493,7 +484,6 @@
             .close-modal { top: 10px; right: 20px; }
         }
 
-        /* footer */
         footer {
             background: #0a1020;
             border-top: 1px solid #202941;
@@ -507,7 +497,7 @@
             gap: 20px;
         }
 
-        /* popup */
+        /* status popup (now used for real feedback) */
         .popup {
             position: fixed; bottom: 30px; right: 20px;
             background: #1c2e2c;
@@ -520,6 +510,10 @@
             z-index: 3000;
             box-shadow: 0 15px 30px black;
             max-width: 90vw;
+        }
+        .popup.error {
+            background: #4a1e2c;
+            border-left-color: #ff6b6b;
         }
     </style>
 </head>
@@ -554,7 +548,6 @@
         </div>
     </section>
 
-    <!-- about + founder (fully responsive) -->
     <section id="about">
         <div class="container">
             <h2>👤 founder & mission</h2>
@@ -589,7 +582,6 @@
         </div>
     </section>
 
-    <!-- services benefit oriented -->
     <section id="services">
         <div class="container">
             <h2>⚡ services that scale</h2>
@@ -604,7 +596,6 @@
         </div>
     </section>
 
-    <!-- portfolio clickable cards -->
     <section id="portfolio">
         <div class="container">
             <h2>📂 academic / demo projects</h2>
@@ -617,7 +608,6 @@
         </div>
     </section>
 
-    <!-- why choose -->
     <section id="why-choose">
         <div class="container">
             <h2>🔐 why choose us</h2>
@@ -629,17 +619,17 @@
         </div>
     </section>
 
-    <!-- contact (fixed email) -->
+    <!-- contact section with working EmailJS -->
     <section id="contact">
         <div class="container">
             <h2>📬 professional contact</h2>
             <div class="contact-row">
                 <div>
                     <form id="contactForm">
-                        <div class="form-group"><label>full name</label><input type="text" class="form-control" id="conName" required></div>
-                        <div class="form-group"><label>email</label><input type="email" class="form-control" id="conEmail" required></div>
-                        <div class="form-group"><label>message</label><textarea class="form-control" id="conMsg" rows="4" required></textarea></div>
-                        <button type="submit" class="btn">💬 send message</button>
+                        <div class="form-group"><label>full name</label><input type="text" class="form-control" id="conName" name="from_name" required></div>
+                        <div class="form-group"><label>email</label><input type="email" class="form-control" id="conEmail" name="reply_to" required></div>
+                        <div class="form-group"><label>message</label><textarea class="form-control" id="conMsg" name="message" rows="4" required></textarea></div>
+                        <button type="submit" class="btn" id="sendBtn">💬 send message</button>
                     </form>
                 </div>
                 <div>
@@ -659,7 +649,7 @@
         </div>
     </footer>
 
-    <!-- modal -->
+    <!-- modal for projects -->
     <div class="modal" id="projectModal">
         <div class="modal-card">
             <button class="close-modal" id="closeModalBtn">&times;</button>
@@ -678,12 +668,15 @@
         </div>
     </div>
 
-    <!-- popup -->
-    <div class="popup" id="successPopup"><i class="fas fa-check-circle" style="font-size: 2rem; color: var(--accent);"></i> <span>message sent (demo). thanks.</span></div>
+    <!-- status popup (success/error) -->
+    <div class="popup" id="statusPopup"><i class="fas" id="popupIcon"></i> <span id="popupMessage"></span></div>
 
     <script>
         (function() {
-            // canvas responsive
+            // --- EmailJS initialization (public key, replace with your actual key if needed) ---
+            emailjs.init("YOUR_PUBLIC_KEY");  // <-- REPLACE WITH YOUR EMAILJS PUBLIC KEY
+
+            // canvas background (same as before)
             const canvas = document.getElementById('bgCanvas');
             const ctx = canvas.getContext('2d');
             let w = window.innerWidth, h = window.innerHeight;
@@ -722,8 +715,6 @@
             const menuBtn = document.getElementById('menuToggle');
             const nav = document.getElementById('navLinks');
             menuBtn.addEventListener('click', () => { nav.classList.toggle('show'); });
-
-            // close nav on link click (for mobile)
             document.querySelectorAll('.nav-links a').forEach(link => link.addEventListener('click', () => { nav.classList.remove('show'); }));
 
             // project data
@@ -757,19 +748,64 @@
             document.getElementById('closeModalBtn').addEventListener('click', ()=>{ modal.style.display='none'; document.body.style.overflow='auto'; });
             window.addEventListener('click', (e) => { if(e.target === modal) { modal.style.display='none'; document.body.style.overflow='auto'; } });
 
-            // contact form
+            // ---------- WORKING EMAILJS CONTACT ----------
             const form = document.getElementById('contactForm');
-            const popup = document.getElementById('successPopup');
-            form.addEventListener('submit', (e) => {
-                e.preventDefault();
-                if (!document.getElementById('conName').value.trim() || !document.getElementById('conEmail').value.trim()) return alert('fill name & email');
-                popup.style.display = 'flex';
-                setTimeout(() => popup.style.display = 'none', 3500);
-                form.reset();
-            });
+            const popup = document.getElementById('statusPopup');
+            const popupIcon = document.getElementById('popupIcon');
+            const popupMsg = document.getElementById('popupMessage');
+            const sendBtn = document.getElementById('sendBtn');
 
-            // smooth resize handling
+            // Replace with your actual EmailJS service ID and template ID
+            const SERVICE_ID = 'service_xxx';        // <-- YOUR SERVICE ID
+            const TEMPLATE_ID = 'template_xxx';       // <-- YOUR TEMPLATE ID
+
+            function showPopup(message, isSuccess = true) {
+                popupIcon.className = isSuccess ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
+                popupMsg.innerText = message;
+                popup.className = `popup ${isSuccess ? '' : 'error'}`;
+                popup.style.display = 'flex';
+                setTimeout(() => { popup.style.display = 'none'; }, 4000);
+            }
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // basic validation
+                const name = document.getElementById('conName').value.trim();
+                const email = document.getElementById('conEmail').value.trim();
+                const message = document.getElementById('conMsg').value.trim();
+                if (!name || !email || !message) {
+                    showPopup('Please fill all fields', false);
+                    return;
+                }
+
+                // disable button to avoid double submission
+                sendBtn.disabled = true;
+                sendBtn.innerText = 'sending...';
+
+                // prepare template parameters (match with your emailjs template)
+                const templateParams = {
+                    from_name: name,
+                    reply_to: email,
+                    message: message,
+                    to_name: 'Rhyzil',  // optional
+                };
+
+                emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams)
+                    .then(function(response) {
+                        showPopup('Message sent successfully! I\'ll reply within 12h.', true);
+                        form.reset();
+                        sendBtn.disabled = false;
+                        sendBtn.innerText = '💬 send message';
+                    }, function(error) {
+                        console.error('EmailJS error:', error);
+                        showPopup('Failed to send. Check console or try again.', false);
+                        sendBtn.disabled = false;
+                        sendBtn.innerText = '💬 send message';
+                    });
+            });
         })();
     </script>
+    <!-- reminder: replace YOUR_PUBLIC_KEY, SERVICE_ID, TEMPLATE_ID with actual credentials -->
 </body>
 </html>

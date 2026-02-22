@@ -515,23 +515,6 @@
             background: #4a1e2c;
             border-left-color: #ff6b6b;
         }
-        /* config status */
-        .config-note {
-            background: #1e253f;
-            padding: 12px 20px;
-            border-radius: 60px;
-            margin-bottom: 20px;
-            border-left: 5px solid var(--primary);
-            font-size: 0.9rem;
-        }
-        .config-note i {
-            color: var(--accent);
-            margin-right: 8px;
-        }
-        .config-success {
-            background: #1a332a;
-            border-left-color: var(--accent);
-        }
     </style>
 </head>
 <body>
@@ -640,11 +623,7 @@
     <section id="contact">
         <div class="container">
             <h2>📬 professional contact</h2>
-            <!-- Configuration status - fully configured -->
-            <div class="config-note config-success" id="configNote">
-                <i class="fas fa-check-circle"></i>
-                <span></span>
-            </div>
+            <!-- No configuration message shown - clean for visitors -->
 
             <div class="contact-row">
                 <div>
@@ -700,11 +679,6 @@
             const PUBLIC_KEY = 'UV2MXRtD7FcyZXQ3F';        // Your EmailJS public key
             const SERVICE_ID = 'service_ad1l4qy';         // Your Gmail service ID
             const TEMPLATE_ID = 'template_jtw8dbq';       // Your template ID
-
-            // Update config note
-            const configNote = document.getElementById('configNote');
-            configNote.className = 'config-note config-success';
-            configNote.innerHTML = '<i class="fas fa-check-circle"></i> ✅ EmailJS fully configured! Messages will be sent to businessrhyziltech@gmail.com';
 
             // Initialize EmailJS with your public key
             if (typeof emailjs !== 'undefined' && emailjs.init) {

@@ -434,6 +434,36 @@
             gap: 20px;
             margin: 30px 0;
         }
+        
+        .contact-detail a {
+            color: var(--text-body);
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        
+        .contact-detail a:hover {
+            color: var(--primary);
+        }
+        
+        .facebook-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #1877f2;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.2s;
+            margin-top: 10px;
+        }
+        
+        .facebook-link:hover {
+            background: #0a5c9e;
+            transform: scale(1.02);
+            color: white;
+        }
 
         .modal {
             display: none;
@@ -635,10 +665,26 @@
                     </form>
                 </div>
                 <div>
-                    <div class="contact-detail"><i class="fas fa-envelope" style="font-size: 2rem; color: var(--primary);"></i> <span style="font-size: 1.1rem; word-break: break-all;">businessrhyziltech@gmail.com</span></div>
-                    <div class="contact-detail"><i class="fas fa-phone-alt"></i> <span>+63 993 679 6302</span></div>
-                    <div class="contact-detail"><i class="fas fa-map-pin"></i> <span>Crossing Otabon Tabango Leyte</span></div>
-                    <div style="background: #1a2340; border-radius: 30px; padding: 25px; margin-top: 20px;"><i class="fas fa-clock"></i> response: &lt;12h</div>
+                    <div class="contact-detail">
+                        <i class="fab fa-facebook" style="font-size: 2rem; color: #1877f2;"></i> 
+                        <a href="https://www.facebook.com/profile.php?id=61584139169630" target="_blank" rel="noopener noreferrer">facebook.com/Rhyziltech</a>
+                    </div>
+                    <div class="contact-detail">
+                        <i class="fas fa-phone-alt" style="font-size: 2rem; color: var(--primary);"></i> 
+                        <span>+63 993 679 6302</span>
+                    </div>
+                    <div class="contact-detail">
+                        <i class="fas fa-map-pin" style="font-size: 2rem; color: var(--accent);"></i> 
+                        <span>Crossing Otabon Tabango Leyte</span>
+                    </div>
+                    <div style="background: #1a2340; border-radius: 30px; padding: 25px; margin-top: 20px;">
+                        <i class="fas fa-clock" style="color: var(--primary);"></i> response: &lt;12h
+                    </div>
+                    
+                    <!-- Facebook button for easy access -->
+                    <a href="https://www.facebook.com/profile.php?id=61584139169630" target="_blank" rel="noopener noreferrer" class="facebook-link">
+                        <i class="fab fa-facebook-f"></i> Message me on Facebook
+                    </a>
                 </div>
             </div>
         </div>

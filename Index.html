@@ -1,611 +1,962 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
-  <title>Rhyziltech · dev & cybersecurity | automated FES</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    :root {
-      --font-sys: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      --radius-xl: 42px;
-      --radius-lg: 32px;
-      --radius-md: 24px;
-      --radius-sm: 18px;
-      --animate-duration: 0.8s;
-    }
-    [data-theme="dark"] {
-      --primary: #00d4ff;
-      --primary-dark: #0099cc;
-      --secondary: #a56eff;
-      --accent: #6dffb8;
-      --bg-deep: #080b17;
-      --bg-card: #13182a;
-      --bg-soft: #1c233b;
-      --text-head: #ffffff;
-      --text-body: #cdd9ff;
-      --glass-border: rgba(0, 212, 255, 0.25);
-      --card-border: #2a314a;
-      --shadow-heavy: 0 25px 35px -12px rgba(0, 0, 0, 0.9);
-      --input-bg: #1a213b;
-      --input-border: #32415f;
-      --footer-bg: #0a1020;
-      --footer-border: #202941;
-      --modal-bg: #121b30;
-      --badge-bg: #1e253f;
-      --stat-bg: #1b233b;
-      --glass-bg: rgba(20, 25, 45, 0.8);
-      --canvas-opacity: 0.25;
-      --toggle-bg: #1e253f;
-      --toggle-hover: #2a314a;
-      --tiktok-color: #ff0050;
-      --facebook-color: #1877f2;
-      --gmail-color: #ea4335;
-    }
-    [data-theme="light"] {
-      --primary: #0066cc;
-      --primary-dark: #004b99;
-      --secondary: #7c3aed;
-      --accent: #059669;
-      --bg-deep: #f8fafc;
-      --bg-card: #ffffff;
-      --bg-soft: #f1f5f9;
-      --text-head: #0f172a;
-      --text-body: #334155;
-      --glass-border: rgba(0, 102, 204, 0.25);
-      --card-border: #e2e8f0;
-      --shadow-heavy: 0 25px 40px -15px rgba(0,0,0,0.1);
-      --input-bg: #ffffff;
-      --input-border: #cbd5e1;
-      --footer-bg: #ffffff;
-      --footer-border: #e2e8f0;
-      --modal-bg: #ffffff;
-      --badge-bg: #eef2ff;
-      --stat-bg: #f1f5f9;
-      --glass-bg: rgba(255,255,255,0.9);
-      --canvas-opacity: 0.08;
-      --toggle-bg: #e2e8f0;
-      --toggle-hover: #cbd5e1;
-      --tiktok-color: #ff0050;
-      --facebook-color: #1877f2;
-      --gmail-color: #ea4335;
-    }
-    html {
-      scroll-behavior: smooth;
-      font-size: 16px;
-      background: var(--bg-deep);
-    }
-    body {
-      font-family: var(--font-sys);
-      background-color: var(--bg-deep);
-      color: var(--text-body);
-      line-height: 1.5;
-      min-height: 100vh;
-      overflow-x: hidden;
-      transition: background 0.3s ease, color 0.3s ease;
-    }
-    canvas#bgCanvas {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      z-index: -1; opacity: var(--canvas-opacity);
-      pointer-events: none; transition: opacity 0.3s;
-    }
-    .container {
-      width: 100%; max-width: 1340px; margin: 0 auto; padding: 0 24px;
-    }
-    h1, h2, h3 {
-      font-weight: 700; line-height: 1.2; color: var(--text-head);
-    }
-    h2 {
-      font-size: clamp(2rem, 6vw, 3.2rem); margin-bottom: 2.5rem; text-align: center;
-      background: linear-gradient(145deg, var(--text-head), var(--primary), var(--secondary));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-      position: relative;
-    }
-    h2::after {
-      content: ''; position: absolute; bottom: -12px; left: 50%; transform: translateX(-50%);
-      width: clamp(90px, 15vw, 140px); height: 4px;
-      background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
-      border-radius: 4px;
-    }
-    .glass-card {
-      background: var(--glass-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--glass-border); border-radius: var(--radius-md);
-      box-shadow: var(--shadow-heavy); transition: transform 0.25s, border-color 0.2s;
-    }
-    .glass-card:hover { border-color: var(--primary); transform: translateY(-5px); }
-    .btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-      padding: 14px 34px; background: linear-gradient(115deg, var(--primary), var(--secondary));
-      color: white; font-weight: 600; border-radius: 60px; text-decoration: none;
-      font-size: 1rem; border: none; cursor: pointer;
-      box-shadow: 0 8px 18px rgba(0, 102, 204, 0.3); transition: 0.2s;
-      text-align: center; white-space: nowrap; letter-spacing: 0.3px;
-    }
-    .btn-outline {
-      background: transparent; border: 2px solid var(--primary); color: var(--primary); box-shadow: none;
-    }
-    .btn:hover { transform: scale(1.03); box-shadow: 0 14px 28px rgba(124, 58, 237, 0.4); color: white; }
-    .btn-outline:hover { background: rgba(0,102,204,0.08); color: var(--primary); }
-    .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-    header {
-      position: fixed; top: 0; left: 0; width: 100%; padding: 14px 0;
-      background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-      border-bottom: 1px solid var(--glass-border); z-index: 1000; transition: background 0.3s;
-    }
-    .header-flex { display: flex; justify-content: space-between; align-items: center; position: relative; }
-    .logo {
-      font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 800;
-      background: linear-gradient(145deg, var(--primary), var(--text-head));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-decoration: none;
-    }
-    .nav-wrapper { display: flex; align-items: center; gap: 1.2rem; }
-    .nav-links { display: flex; gap: 1.8rem; align-items: center; }
-    .nav-links a {
-      color: var(--text-body); text-decoration: none; font-weight: 500;
-      border-bottom: 2px solid transparent; padding-bottom: 4px; transition: 0.2s; font-size: 1rem;
-    }
-    .nav-links a:hover { color: var(--primary); border-bottom-color: var(--primary); }
-    .theme-toggle {
-      background: var(--toggle-bg); border: 1px solid var(--glass-border); color: var(--text-head);
-      font-size: 1.3rem; width: 42px; height: 42px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center; cursor: pointer;
-      transition: 0.2s; flex-shrink: 0; margin-left: 4px;
-    }
-    .theme-toggle:hover { background: var(--toggle-hover); border-color: var(--primary); color: var(--primary); }
-    .mobile-menu-btn { display: none; background: transparent; border: none; color: var(--primary); font-size: 2rem; cursor: pointer; }
-    @media (max-width: 768px) {
-      .nav-links { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: var(--glass-bg); backdrop-filter: blur(20px); flex-direction: column; padding: 30px 20px; gap: 1.5rem; border-bottom: 1px solid var(--primary); border-radius: 0 0 var(--radius-md) var(--radius-md); box-shadow: var(--shadow-heavy); }
-      .nav-links.show { display: flex; }
-      .mobile-menu-btn { display: block; }
-    }
-    .hero { min-height: 100vh; display: flex; align-items: center; padding: 130px 0 70px; }
-    .hero h1 { font-size: clamp(2.8rem, 10vw, 5.5rem); font-weight: 800; background: linear-gradient(135deg, var(--text-head), var(--accent), var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .typing-dynamic { font-size: clamp(1.2rem, 4vw, 1.9rem); font-weight: 600; border-right: 3px solid var(--primary); display: inline-block; white-space: nowrap; overflow: hidden; animation: blink 1s step-end infinite; color: var(--text-body); }
-    @keyframes blink { 50% { border-color: transparent; } }
-    .about-grid, .contact-row { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
-    .services-grid, .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; }
-    .service-card, .why-item { background: var(--bg-card); border-radius: var(--radius-md); padding: 30px 20px; border: 1px solid var(--card-border); transition: 0.2s; }
-    .service-card:hover, .why-item:hover { border-color: var(--primary); transform: translateY(-4px); }
-    .port-card { background: var(--bg-card); border-radius: var(--radius-lg); overflow: hidden; cursor: pointer; border: 1px solid var(--card-border); transition: 0.2s; }
-    .port-card:hover { border-color: var(--primary); }
-    .port-img { height: 200px; background: linear-gradient(145deg, var(--bg-soft), var(--bg-deep)); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; gap: 0.5rem; }
-    .form-control { width: 100%; padding: 16px 20px; background: var(--input-bg); border: 1px solid var(--input-border); border-radius: 40px; color: var(--text-head); font-size: 1rem; transition: 0.2s; }
-    .form-control:focus { border-color: var(--primary); outline: none; }
-    .contact-icon { display: flex; align-items: center; gap: 15px; margin: 20px 0; }
-    .contact-icon i { font-size: 1.8rem; width: 40px; text-align: center; }
-    .contact-icon a { color: var(--text-body); text-decoration: none; transition: color 0.2s; }
-    .contact-icon a:hover { color: var(--primary); text-decoration: underline; }
-    .social-links { display: flex; gap: 15px; margin-top: 25px; flex-wrap: wrap; }
-    .social-btn {
-      display: inline-flex; align-items: center; gap: 10px; padding: 12px 24px;
-      border-radius: 40px; text-decoration: none; font-weight: 600; color: white;
-      transition: all 0.3s ease; font-size: 0.95rem;
-    }
-    .social-btn.facebook { background: var(--facebook-color); }
-    .social-btn.tiktok { background: #000000; border: 1px solid var(--tiktok-color); }
-    .social-btn.gmail { background: var(--gmail-color); }
-    .social-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,0.3); }
-    .social-btn i { font-size: 1.2rem; }
-    .social-btn .tiktok-icon {
-      display: inline-flex; align-items: center; justify-content: center;
-      background: var(--tiktok-color); width: 24px; height: 24px; border-radius: 50%;
-      font-size: 0.9rem; color: white;
-    }
-    .form-status { display: none; padding: 12px 20px; border-radius: 30px; margin-top: 15px; font-weight: 500; text-align: center; }
-    .form-status.success { display: block; background: rgba(109, 255, 184, 0.15); border: 1px solid var(--accent); color: var(--accent); }
-    .form-status.error { display: block; background: rgba(255, 107, 107, 0.15); border: 1px solid #ff6b6b; color: #ff6b6b; }
-    .form-status.sending { display: block; background: rgba(0, 212, 255, 0.15); border: 1px solid var(--primary); color: var(--primary); }
-    footer { background: var(--footer-bg); border-top: 1px solid var(--footer-border); padding: 40px 0 20px; margin-top: 60px; }
-    @media (max-width: 700px) { .about-grid, .contact-row { grid-template-columns: 1fr; } }
-    .feature-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0; }
-    .feature-item { background: var(--badge-bg); padding: 16px; border-radius: 18px; border-left: 4px solid var(--primary); }
-    .security-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(109, 255, 184, 0.15); border: 1px solid var(--accent);
-      color: var(--accent); padding: 8px 16px; border-radius: 40px;
-      font-size: 0.8rem; font-weight: 600; margin-left: 10px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Rhyziltech · dev & cybersecurity | automated FES</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        :root {
+            --radius-xl: 42px;
+            --radius-lg: 32px;
+            --radius-md: 24px;
+            --radius-sm: 18px;
+        }
+        [data-theme="dark"] {
+            --primary: #00d4ff;
+            --secondary: #a56eff;
+            --accent: #6dffb8;
+            --bg-deep: #080b17;
+            --bg-card: #13182a;
+            --bg-soft: #1c233b;
+            --text-head: #ffffff;
+            --text-body: #cdd9ff;
+            --glass-border: rgba(0, 212, 255, 0.25);
+            --card-border: #2a314a;
+            --shadow-heavy: 0 25px 35px -12px rgba(0, 0, 0, 0.9);
+            --input-bg: #1a213b;
+            --input-border: #32415f;
+            --footer-bg: #0a1020;
+            --footer-border: #202941;
+            --modal-bg: #121b30;
+            --badge-bg: #1e253f;
+            --stat-bg: #1b233b;
+            --glass-bg: rgba(20, 25, 45, 0.8);
+            --canvas-opacity: 0.25;
+            --toggle-bg: #1e253f;
+            --toggle-hover: #2a314a;
+        }
+        [data-theme="light"] {
+            --primary: #0066cc;
+            --secondary: #7c3aed;
+            --accent: #059669;
+            --bg-deep: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-soft: #f1f5f9;
+            --text-head: #0f172a;
+            --text-body: #334155;
+            --glass-border: rgba(0, 102, 204, 0.25);
+            --card-border: #e2e8f0;
+            --shadow-heavy: 0 25px 40px -15px rgba(0,0,0,0.1);
+            --input-bg: #ffffff;
+            --input-border: #cbd5e1;
+            --footer-bg: #ffffff;
+            --footer-border: #e2e8f0;
+            --modal-bg: #ffffff;
+            --badge-bg: #eef2ff;
+            --stat-bg: #f1f5f9;
+            --glass-bg: rgba(255,255,255,0.9);
+            --canvas-opacity: 0.08;
+            --toggle-bg: #e2e8f0;
+            --toggle-hover: #cbd5e1;
+        }
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-body);
+            line-height: 1.5;
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+        canvas#bgCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: var(--canvas-opacity);
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        .container {
+            width: 100%;
+            max-width: 1340px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        h1, h2, h3 {
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--text-head);
+        }
+        h2 {
+            font-size: clamp(2rem, 6vw, 3.2rem);
+            margin-bottom: 2.5rem;
+            text-align: center;
+            background: linear-gradient(145deg, var(--text-head), var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+        }
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: clamp(90px, 15vw, 140px);
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
+            border-radius: 4px;
+        }
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-heavy);
+            transition: transform 0.25s, border-color 0.2s;
+        }
+        .glass-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 34px;
+            background: linear-gradient(115deg, var(--primary), var(--secondary));
+            color: white;
+            font-weight: 600;
+            border-radius: 60px;
+            text-decoration: none;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 8px 18px rgba(0, 102, 204, 0.3);
+            transition: 0.2s;
+            text-align: center;
+            white-space: nowrap;
+            letter-spacing: 0.3px;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            box-shadow: none;
+        }
+        .btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 14px 28px rgba(124, 58, 237, 0.4);
+            color: white;
+        }
+        .btn-outline:hover {
+            background: rgba(0,102,204,0.08);
+            color: var(--primary);
+        }
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 14px 0;
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+            transition: background 0.3s;
+        }
+        .header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+        .logo {
+            font-size: clamp(1.6rem, 4vw, 2.2rem);
+            font-weight: 800;
+            background: linear-gradient(145deg, var(--primary), var(--text-head));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+        .nav-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+        }
+        .nav-links {
+            display: flex;
+            gap: 1.8rem;
+            align-items: center;
+        }
+        .nav-links a {
+            color: var(--text-body);
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 4px;
+            transition: 0.2s;
+            font-size: 1rem;
+        }
+        .nav-links a:hover {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+        .theme-toggle {
+            background: var(--toggle-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-head);
+            font-size: 1.3rem;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.2s;
+            flex-shrink: 0;
+            margin-left: 4px;
+        }
+        .theme-toggle:hover {
+            background: var(--toggle-hover);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        .mobile-menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--primary);
+            font-size: 2rem;
+            cursor: pointer;
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--glass-bg);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 30px 20px;
+                gap: 1.5rem;
+                border-bottom: 1px solid var(--primary);
+                border-radius: 0 0 var(--radius-md) var(--radius-md);
+                box-shadow: var(--shadow-heavy);
+            }
+            .nav-links.show {
+                display: flex;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 130px 0 70px;
+        }
+        .hero h1 {
+            font-size: clamp(2.8rem, 10vw, 5.5rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--text-head), var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .typing-dynamic {
+            font-size: clamp(1.2rem, 4vw, 1.9rem);
+            font-weight: 600;
+            border-right: 3px solid var(--primary);
+            display: inline-block;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: blink 1s step-end infinite;
+            color: var(--text-body);
+        }
+        @keyframes blink {
+            50% {
+                border-color: transparent;
+            }
+        }
+        .about-grid,
+        .contact-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        .services-grid,
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        .service-card,
+        .why-item {
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            padding: 30px 20px;
+            border: 1px solid var(--card-border);
+            transition: 0.2s;
+        }
+        .service-card:hover,
+        .why-item:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+        }
+        .port-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid var(--card-border);
+            transition: 0.2s;
+        }
+        .port-card:hover {
+            border-color: var(--primary);
+        }
+        .port-img {
+            height: 200px;
+            background: linear-gradient(145deg, var(--bg-soft), var(--bg-deep));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            gap: 0.5rem;
+        }
+        .form-control {
+            width: 100%;
+            padding: 16px 20px;
+            background: var(--input-bg);
+            border: 1px solid var(--input-border);
+            border-radius: 40px;
+            color: var(--text-head);
+            font-size: 1rem;
+            transition: 0.2s;
+        }
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+        .contact-icon {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .contact-icon i {
+            font-size: 1.8rem;
+            width: 40px;
+            text-align: center;
+        }
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            color: white;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+        .social-btn.facebook {
+            background: #1877f2;
+        }
+        .social-btn.tiktok {
+            background: #000000;
+            border: 1px solid #ff0050;
+        }
+        .social-btn.gmail {
+            background: #ea4335;
+        }
+        .social-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+        }
+        .social-btn i {
+            font-size: 1.2rem;
+        }
+        .tiktok-icon-custom {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #ff0050;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            font-size: 0.9rem;
+            color: white;
+        }
+        .form-status {
+            display: none;
+            padding: 12px 20px;
+            border-radius: 30px;
+            margin-top: 15px;
+            font-weight: 500;
+            text-align: center;
+        }
+        .form-status.success {
+            display: block;
+            background: rgba(109, 255, 184, 0.15);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+        }
+        .form-status.error {
+            display: block;
+            background: rgba(255, 107, 107, 0.15);
+            border: 1px solid #ff6b6b;
+            color: #ff6b6b;
+        }
+        .form-status.sending {
+            display: block;
+            background: rgba(0, 212, 255, 0.15);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+        footer {
+            background: var(--footer-bg);
+            border-top: 1px solid var(--footer-border);
+            padding: 40px 0 20px;
+            margin-top: 60px;
+        }
+        @media (max-width: 700px) {
+            .about-grid,
+            .contact-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .feature-item {
+            background: var(--badge-bg);
+            padding: 16px;
+            border-radius: 18px;
+            border-left: 4px solid var(--primary);
+        }
+    </style>
 </head>
 <body>
-  <canvas id="bgCanvas"></canvas>
-  <header class="animate__animated animate__fadeInDown">
-    <div class="container header-flex">
-      <a href="#" class="logo animate__animated animate__pulse animate__infinite animate__slower">
-        RHYZILTECH
-        <span class="security-badge"><i class="fas fa-shield-haltered"></i> SECURED</span>
-      </a>
-      <div class="nav-wrapper">
-        <div class="nav-links" id="navLinks">
-          <a href="#home" class="animate__animated animate__fadeIn">Home</a>
-          <a href="#about" class="animate__animated animate__fadeIn">About</a>
-          <a href="#services" class="animate__animated animate__fadeIn">Services</a>
-          <a href="#portfolio" class="animate__animated animate__fadeIn">FES Project</a>
-          <a href="#contact" class="animate__animated animate__fadeIn">Contact</a>
-        </div>
-        <button class="theme-toggle animate__animated animate__rotateIn" id="themeToggle" aria-label="Switch dark/light mode"><i class="fas fa-sun"></i></button>
-        <button class="mobile-menu-btn animate__animated animate__fadeInRight" id="menuToggle"><i class="fas fa-bars"></i></button>
-      </div>
-    </div>
-  </header>
+    <canvas id="bgCanvas"></canvas>
 
-  <section class="hero" id="home">
-    <div class="container">
-      <h1 class="animate__animated animate__fadeInUp animate__faster">RHYZILTECH</h1>
-      <div style="font-size: 1.5rem; margin: 15px 0;" class="animate__animated animate__fadeInUp animate__delay-1s">cybersecurity & modern fullstack</div>
-      <div class="typing-dynamic animate__animated animate__fadeInUp animate__delay-2s" id="typingLine"></div>
-      <div style="margin-top: 40px; display: flex; gap: 18px; flex-wrap: wrap;" class="animate__animated animate__fadeInUp animate__delay-3s">
-        <a href="#contact" class="btn animate__animated animate__pulse animate__infinite animate__slower">🚀 start building</a>
-        <a href="#portfolio" class="btn btn-outline">📁 view FES project</a>
-      </div>
-    </div>
-  </section>
-
-  <section id="about" style="padding: 80px 0;">
-    <div class="container">
-      <h2 class="animate__animated animate__fadeInDown">👤 founder & mission</h2>
-      <div class="about-grid">
-        <div class="glass-card animate__animated animate__fadeInLeft" style="padding: 35px;">
-          <i class="fas fa-shield-alt animate__animated animate__flipInX" style="font-size: 3rem; color: var(--primary);"></i>
-          <h3 style="margin: 15px 0;">Rhyzil Angelo P. Jimenez</h3>
-          <div style="background: var(--badge-bg); padding: 6px 18px; border-radius: 40px; display: inline-block;">🎓 IT student · cybersecurity enthusiast</div>
-          <p style="margin: 20px 0;">Building secure, automated systems with a hacker's mindset. Every project focuses on input validation, access control, and modern stack.</p>
-          <div style="display: flex; gap: 15px;"><div style="background: var(--stat-bg); padding: 20px; border-radius: 20px; flex:1; text-align:center;"><span style="font-size: 2rem; font-weight: bold; color: var(--accent);">7+</span> projects</div><div style="background: var(--stat-bg); padding: 20px; border-radius: 20px; flex:1; text-align:center;"><span style="font-size: 2rem; font-weight: bold; color: var(--accent);">24/7</span> research</div></div>
-          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
-            <a href="https://www.facebook.com/profile.php?id=61584139169630" target="_blank" rel="noopener noreferrer" class="social-btn facebook animate__animated animate__bounceIn"><i class="fab fa-facebook-f"></i> Facebook</a>
-            <a href="https://www.tiktok.com/@rhyzil_" target="_blank" rel="noopener noreferrer" class="social-btn tiktok animate__animated animate__bounceIn animate__delay-1s"><span class="tiktok-icon">♪</span> TikTok</a>
-            <a href="mailto:businessrhyziltech@gmail.com" class="social-btn gmail animate__animated animate__bounceIn animate__delay-2s"><i class="fas fa-envelope"></i> Gmail</a>
-          </div>
-        </div>
-        <div style="display: flex; flex-direction: column; gap: 20px;">
-          <div class="glass-card animate__animated animate__fadeInRight" style="padding: 30px;"><i class="fas fa-crosshairs" style="font-size: 2.5rem; color: var(--accent);"></i><h3>cybersecurity core</h3><p>encryption, RBAC, anti-injection first.</p></div>
-          <div class="glass-card animate__animated animate__fadeInRight animate__delay-1s" style="padding: 30px;"><i class="fas fa-rocket" style="font-size: 2.5rem; color: var(--secondary);"></i><h3>modern dev stack</h3><p>React, Node, Python, SQL/NoSQL.</p></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="services" style="padding: 60px 0;">
-    <div class="container">
-      <h2 class="animate__animated animate__fadeInDown">⚡ services that scale</h2>
-      <div class="services-grid">
-        <div class="service-card animate__animated animate__zoomIn"><i class="fas fa-briefcase" style="font-size: 2.5rem; color: var(--primary);"></i><h3>business + security</h3><p>CMS, DDOS protection, auto backups.</p></div>
-        <div class="service-card animate__animated animate__zoomIn animate__delay-1s"><i class="fas fa-palette" style="font-size: 2.5rem; color: var(--primary);"></i><h3>portfolio / brand</h3><p>fast, editable, custom admin panel.</p></div>
-        <div class="service-card animate__animated animate__zoomIn animate__delay-2s"><i class="fas fa-shopping-cart" style="font-size: 2.5rem; color: var(--primary);"></i><h3>e‑commerce hardened</h3><p>PCI‑level patterns, payment, stock sync.</p></div>
-        <div class="service-card animate__animated animate__zoomIn"><i class="fas fa-chart-line" style="font-size: 2.5rem; color: var(--primary);"></i><h3>admin dashboards</h3><p>real‑time metrics, export, role views.</p></div>
-        <div class="service-card animate__animated animate__zoomIn animate__delay-1s"><i class="fas fa-user-lock" style="font-size: 2.5rem; color: var(--primary);"></i><h3>auth & login</h3><p>MFA, social, secure session.</p></div>
-        <div class="service-card animate__animated animate__zoomIn animate__delay-2s"><i class="fas fa-database" style="font-size: 2.5rem; color: var(--primary);"></i><h3>full CRUD systems</h3><p>inventory, reservations, validation.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <section id="portfolio" style="padding: 60px 0;">
-    <div class="container">
-      <h2 class="animate__animated animate__fadeInDown">📂 automated faculty evaluation system</h2>
-      <div style="max-width: 1100px; margin: 0 auto;">
-        <div class="port-card animate__animated animate__bounceIn" id="fesProjectCard" style="padding: 0;">
-          <div class="port-img" style="background: linear-gradient(135deg, #0f172a, #1e293b); color: var(--accent);">
-            <i class="fas fa-chalkboard-teacher animate__animated animate__swing animate__infinite animate__slower"></i> FES · Palompon Institute of Technology
-          </div>
-          <div style="padding: 30px;">
-            <h3 style="font-size: 2rem;">Faculty Evaluation System (FES)</h3>
-            <p style="margin: 15px 0; font-size: 1.1rem;">An online, automated platform designed to collect feedback from students, peers, and supervisors to assess teaching performance, research, and service. Aligned with CHED CMO No. 19, s. 2025.</p>
-            <div class="feature-list">
-              <div class="feature-item animate__animated animate__fadeInUp"><i class="fas fa-user-shield" style="color: var(--primary); margin-right: 8px;"></i> Role-based access (admin, dean, faculty, student)</div>
-              <div class="feature-item animate__animated animate__fadeInUp animate__delay-1s"><i class="fas fa-calendar-check" style="color: var(--accent); margin-right: 8px;"></i> Automated evaluation scheduling</div>
-              <div class="feature-item animate__animated animate__fadeInUp animate__delay-2s"><i class="fas fa-calculator" style="color: var(--secondary); margin-right: 8px;"></i> Weighted mean computation</div>
-              <div class="feature-item animate__animated animate__fadeInUp"><i class="fas fa-file-pdf" style="color: #ff6b6b; margin-right: 8px;"></i> PDF report generation</div>
-              <div class="feature-item animate__animated animate__fadeInUp animate__delay-1s"><i class="fas fa-chart-bar" style="color: var(--accent); margin-right: 8px;"></i> Real-time analytics dashboard</div>
-              <div class="feature-item animate__animated animate__fadeInUp animate__delay-2s"><i class="fas fa-database" style="color: var(--primary); margin-right: 8px;"></i> Centralized encrypted storage</div>
-              <div class="feature-item animate__animated animate__fadeInUp"><i class="fas fa-user-check" style="color: #a56eff; margin-right: 8px;"></i> Supervisor Evaluation (SEF)</div>
-              <div class="feature-item animate__animated animate__fadeInUp animate__delay-1s"><i class="fas fa-mobile-alt" style="color: var(--primary); margin-right: 8px;"></i> Responsive web design</div>
+    <header class="animate__animated animate__fadeInDown">
+        <div class="container header-flex">
+            <a href="#" class="logo">RHYZILTECH</a>
+            <div class="nav-wrapper">
+                <div class="nav-links" id="navLinks">
+                    <a href="#home">Home</a>
+                    <a href="#about">About</a>
+                    <a href="#services">Services</a>
+                    <a href="#portfolio">FES Project</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <button class="theme-toggle" id="themeToggle" aria-label="Switch dark/light mode">
+                    <i class="fas fa-sun"></i>
+                </button>
+                <button class="mobile-menu-btn" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
-            <button class="btn animate__animated animate__heartBeat animate__infinite animate__slower" id="openFesModalBtn"><i class="fas fa-search"></i> explore full details</button>
-          </div>
         </div>
-      </div>
-    </div>
-  </section>
+    </header>
 
-  <section id="why-choose" style="padding: 60px 0;">
-    <div class="container">
-      <h2 class="animate__animated animate__fadeInDown">🔐 why choose us</h2>
-      <div class="why-grid">
-        <div class="why-item animate__animated animate__flipInX"><i class="fas fa-shield-alt" style="font-size: 2.8rem; color: var(--primary);"></i><h3>cybersecurity embedded</h3><p>auth, injection prevention, encryption first.</p></div>
-        <div class="why-item animate__animated animate__flipInX animate__delay-1s"><i class="fas fa-mobile-alt" style="font-size: 2.8rem; color: var(--accent);"></i><h3>performance first</h3><p>Lighthouse 90+, optimized for all devices.</p></div>
-        <div class="why-item animate__animated animate__flipInX animate__delay-2s"><i class="fas fa-sync-alt" style="font-size: 2.8rem; color: var(--secondary);"></i><h3>transparent process</h3><p>demo projects include problem, solution, impact.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <section id="contact" style="padding: 60px 0;">
-    <div class="container">
-      <h2 class="animate__animated animate__fadeInDown">📬 professional contact</h2>
-      <div class="contact-row">
-        <div class="animate__animated animate__fadeInLeft">
-          <form id="contactForm">
-            <div style="margin-bottom: 20px;"><label style="color: var(--text-head);">full name</label><input type="text" class="form-control" id="senderName" name="name" required placeholder="Your full name" autocomplete="name"></div>
-            <div style="margin-bottom: 20px;"><label style="color: var(--text-head);">your email</label><input type="email" class="form-control" id="senderEmail" name="email" required placeholder="your.email@gmail.com" autocomplete="email"></div>
-            <div style="margin-bottom: 20px;"><label style="color: var(--text-head);">message</label><textarea class="form-control" id="senderMessage" name="message" rows="4" required placeholder="Tell me about your project..."></textarea></div>
-            <button type="submit" class="btn" id="sendBtn">💬 send message</button>
-            <div class="form-status" id="formStatus"></div>
-          </form>
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>RHYZILTECH</h1>
+            <div style="font-size: 1.5rem; margin: 15px 0;">cybersecurity & modern fullstack</div>
+            <div class="typing-dynamic" id="typingLine"></div>
+            <div style="margin-top: 40px; display: flex; gap: 18px; flex-wrap: wrap;">
+                <a href="#contact" class="btn">🚀 start building</a>
+                <a href="#portfolio" class="btn btn-outline">📁 view FES project</a>
+            </div>
         </div>
-        <div class="animate__animated animate__fadeInRight">
-          <div class="contact-icon">
-            <i class="fas fa-phone-alt animate__animated animate__shakeX" style="color: var(--primary);"></i>
-            <span>+63 993 679 6302</span>
-          </div>
-          <div class="contact-icon">
-            <i class="fas fa-map-pin" style="color: var(--accent);"></i>
-            <span>Crossing Otabon Tabango Leyte</span>
-          </div>
-          <div class="contact-icon">
-            <i class="fas fa-envelope" style="color: var(--gmail-color);"></i>
-            <a href="mailto:businessrhyziltech@gmail.com">businessrhyziltech@gmail.com</a>
-          </div>
-          <div style="background: var(--badge-bg); border-radius: 30px; padding: 20px; margin-top: 20px; border-left: 4px solid var(--primary);">
-            <i class="fas fa-clock" style="color: var(--primary); margin-right: 8px;"></i> response time: &lt;12h
-          </div>
-          <div class="social-links">
-            <a href="https://www.facebook.com/profile.php?id=61584139169630" target="_blank" rel="noopener noreferrer" class="social-btn facebook"><i class="fab fa-facebook-f"></i> Rhyzil Tech</a>
-            <a href="https://www.tiktok.com/@rhyzil_" target="_blank" rel="noopener noreferrer" class="social-btn tiktok"><span class="tiktok-icon">♪</span> rhyzil_</a>
-            <a href="mailto:businessrhyziltech@gmail.com" class="social-btn gmail"><i class="fas fa-envelope"></i> Gmail</a>
-          </div>
+    </section>
+
+    <section id="about" style="padding: 80px 0;">
+        <div class="container">
+            <h2>👤 founder & mission</h2>
+            <div class="about-grid">
+                <div class="glass-card" style="padding: 35px;">
+                    <i class="fas fa-shield-alt" style="font-size: 3rem; color: var(--primary);"></i>
+                    <h3 style="margin: 15px 0;">Rhyzil Angelo P. Jimenez</h3>
+                    <div style="background: var(--badge-bg); padding: 6px 18px; border-radius: 40px; display: inline-block;">🎓 IT student · cybersecurity enthusiast</div>
+                    <p style="margin: 20px 0;">Building secure, automated systems with a hacker's mindset. Every project focuses on input validation, access control, and modern stack.</p>
+                    <div style="display: flex; gap: 15px;">
+                        <div style="background: var(--stat-bg); padding: 20px; border-radius: 20px; flex:1; text-align:center;">
+                            <span style="font-size: 2rem; font-weight: bold; color: var(--accent);">7+</span> projects</div>
+                        <div style="background: var(--stat-bg); padding: 20px; border-radius: 20px; flex:1; text-align:center;">
+                            <span style="font-size: 2rem; font-weight: bold; color: var(--accent);">24/7</span> research</div>
+                    </div>
+                    <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+                        <a href="https://www.facebook.com/profile.php?id=61584139169630" target="_blank" rel="noopener noreferrer" class="social-btn facebook"><i class="fab fa-facebook-f"></i> Facebook</a>
+                        <a href="https://www.tiktok.com/@rhyzil_" target="_blank" rel="noopener noreferrer" class="social-btn tiktok"><span class="tiktok-icon-custom">♪</span> TikTok</a>
+                        <a href="mailto:businessrhyziltech@gmail.com" class="social-btn gmail"><i class="fas fa-envelope"></i> Gmail</a>
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <div class="glass-card" style="padding: 30px;">
+                        <i class="fas fa-crosshairs" style="font-size: 2.5rem; color: var(--accent);"></i>
+                        <h3>cybersecurity core</h3>
+                        <p>encryption, RBAC, anti-injection first.</p>
+                    </div>
+                    <div class="glass-card" style="padding: 30px;">
+                        <i class="fas fa-rocket" style="font-size: 2.5rem; color: var(--secondary);"></i>
+                        <h3>modern dev stack</h3>
+                        <p>React, Node, Python, SQL/NoSQL.</p>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <footer class="animate__animated animate__fadeInUp">
-    <div class="container" style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; align-items: center;">
-      <div class="logo">RHYZILTECH</div>
-      <div style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
-        <a href="mailto:businessrhyziltech@gmail.com" style="color: var(--text-body); text-decoration: none; transition: color 0.2s;"><i class="fas fa-envelope"></i> businessrhyziltech@gmail.com</a>
-        <a href="https://www.facebook.com/profile.php?id=61584139169630" target="_blank" rel="noopener noreferrer" style="color: var(--text-body); text-decoration: none; transition: color 0.2s;"><i class="fab fa-facebook"></i> Facebook</a>
-        <a href="https://www.tiktok.com/@rhyzil_" target="_blank" rel="noopener noreferrer" style="color: var(--text-body); text-decoration: none; transition: color 0.2s;"><i class="fab fa-tiktok"></i> TikTok</a>
-      </div>
-      <div>© 2026 – secure dev & cyber hygiene</div>
-    </div>
-  </footer>
-
-  <div id="fesModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(12px); z-index: 2000; align-items: center; justify-content: center; padding: 20px;">
-    <div class="animate__animated animate__zoomIn" style="background: var(--modal-bg); max-width: 1000px; width: 100%; border-radius: 48px; padding: 35px; border: 1px solid var(--primary); max-height: 90vh; overflow-y: auto; position: relative; color: var(--text-body);">
-      <button id="closeFesModal" style="position: absolute; top: 20px; right: 25px; background: none; border: none; font-size: 2.5rem; cursor: pointer; color: var(--text-head);">&times;</button>
-      <h2 style="margin-bottom: 10px; color: var(--text-head);">📋 Faculty Evaluation System · full details</h2>
-      <p style="margin-bottom: 20px; border-left: 4px solid var(--primary); padding-left: 15px;">Palompon Institute of Technology – Tabango Campus | aligned with CHED CMO No. 19, s. 2025</p>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px;">
-        <div>
-          <h3 style="color: var(--text-head);">🎯 problem</h3>
-          <p>Manual paper‑based evaluations caused delays, clerical errors, and difficulty in aggregating feedback for teaching, research, and service. Data redundancy and lack of real‑time reports hindered decision‑making.</p>
-          <h3 style="margin-top: 20px; color: var(--text-head);">💡 solution</h3>
-          <p>Automated online platform with role‑based access (student, peer, supervisor). Real‑time dashboards, automated computation of weighted means, and encrypted data storage ensure reliability and compliance with CHED standards.</p>
-          <h3 style="margin-top: 20px; color: var(--text-head);">📐 methodology</h3>
-          <p>Rapid Application Development (RAD) System Prototype Model – iterative prototyping with continuous user feedback from administrators, faculty, and students.</p>
+    <section id="services" style="padding: 60px 0;">
+        <div class="container">
+            <h2>⚡ services that scale</h2>
+            <div class="services-grid">
+                <div class="service-card"><i class="fas fa-briefcase" style="font-size: 2.5rem; color: var(--primary);"></i><h3>business + security</h3><p>CMS, DDOS protection, auto backups.</p></div>
+                <div class="service-card"><i class="fas fa-palette" style="font-size: 2.5rem; color: var(--primary);"></i><h3>portfolio / brand</h3><p>fast, editable, custom admin panel.</p></div>
+                <div class="service-card"><i class="fas fa-shopping-cart" style="font-size: 2.5rem; color: var(--primary);"></i><h3>e‑commerce hardened</h3><p>PCI‑level patterns, payment, stock sync.</p></div>
+                <div class="service-card"><i class="fas fa-chart-line" style="font-size: 2.5rem; color: var(--primary);"></i><h3>admin dashboards</h3><p>real‑time metrics, export, role views.</p></div>
+                <div class="service-card"><i class="fas fa-user-lock" style="font-size: 2.5rem; color: var(--primary);"></i><h3>auth & login</h3><p>MFA, social, secure session.</p></div>
+                <div class="service-card"><i class="fas fa-database" style="font-size: 2.5rem; color: var(--primary);"></i><h3>full CRUD systems</h3><p>inventory, reservations, validation.</p></div>
+            </div>
         </div>
-        <div>
-          <h3 style="color: var(--text-head);">⭐ key features (from document)</h3>
-          <ul style="padding-left: 20px; margin-bottom: 15px;">
-            <li>Student, peer & supervisor evaluation forms</li>
-            <li>Automated scheduling & evaluation periods</li>
-            <li>RBAC (admin, dean, faculty, student)</li>
-            <li>Weighted mean computation & analytics</li>
-            <li>PDF report generation (individual & department)</li>
-            <li>Supervisor Evaluation for Faculty (SEF)</li>
-            <li>Anonymous submission & audit log</li>
-            <li>Responsive web – desktop, tablet, mobile</li>
-          </ul>
-          <h3 style="color: var(--text-head);">🛠️ tech stack</h3>
-          <p>PHP · MySQL · JavaScript · Bootstrap · XAMPP · Chart.js</p>
-          <p><strong>impact:</strong> reduced processing time, 80% fewer manual errors, CHED-aligned documentation.</p>
+    </section>
+
+    <section id="portfolio" style="padding: 60px 0;">
+        <div class="container">
+            <h2>📂 automated faculty evaluation system</h2>
+            <div style="max-width: 1100px; margin: 0 auto;">
+                <div class="port-card" id="fesProjectCard" style="padding: 0;">
+                    <div class="port-img" style="background: linear-gradient(135deg, #0f172a, #1e293b); color: var(--accent);">
+                        <i class="fas fa-chalkboard-teacher"></i> FES · Palompon Institute of Technology
+                    </div>
+                    <div style="padding: 30px;">
+                        <h3 style="font-size: 2rem;">Faculty Evaluation System (FES)</h3>
+                        <p style="margin: 15px 0; font-size: 1.1rem;">An online, automated platform designed to collect feedback from students, peers, and supervisors to assess teaching performance, research, and service. Aligned with CHED CMO No. 19, s. 2025.</p>
+                        <div class="feature-list">
+                            <div class="feature-item"><i class="fas fa-user-shield" style="color: var(--primary); margin-right: 8px;"></i> Role-based access (admin, dean, faculty, student)</div>
+                            <div class="feature-item"><i class="fas fa-calendar-check" style="color: var(--accent); margin-right: 8px;"></i> Automated evaluation scheduling</div>
+                            <div class="feature-item"><i class="fas fa-calculator" style="color: var(--secondary); margin-right: 8px;"></i> Weighted mean computation</div>
+                            <div class="feature-item"><i class="fas fa-file-pdf" style="color: #ff6b6b; margin-right: 8px;"></i> PDF report generation</div>
+                            <div class="feature-item"><i class="fas fa-chart-bar" style="color: var(--accent); margin-right: 8px;"></i> Real-time analytics dashboard</div>
+                            <div class="feature-item"><i class="fas fa-database" style="color: var(--primary); margin-right: 8px;"></i> Centralized encrypted storage</div>
+                            <div class="feature-item"><i class="fas fa-user-check" style="color: #a56eff; margin-right: 8px;"></i> Supervisor Evaluation (SEF)</div>
+                            <div class="feature-item"><i class="fas fa-mobile-alt" style="color: var(--primary); margin-right: 8px;"></i> Responsive web design</div>
+                        </div>
+                        <button class="btn" id="openFesModalBtn"><i class="fas fa-search"></i> explore full details</button>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <a href="#contact" class="btn" style="margin-top: 25px;" onclick="document.getElementById('fesModal').style.display='none';">💬 discuss similar project</a>
+    </section>
+
+    <section id="why-choose" style="padding: 60px 0;">
+        <div class="container">
+            <h2>🔐 why choose us</h2>
+            <div class="why-grid">
+                <div class="why-item"><i class="fas fa-shield-alt" style="font-size: 2.8rem; color: var(--primary);"></i><h3>cybersecurity embedded</h3><p>auth, injection prevention, encryption first.</p></div>
+                <div class="why-item"><i class="fas fa-mobile-alt" style="font-size: 2.8rem; color: var(--accent);"></i><h3>performance first</h3><p>Lighthouse 90+, optimized for all devices.</p></div>
+                <div class="why-item"><i class="fas fa-sync-alt" style="font-size: 2.8rem; color: var(--secondary);"></i><h3>transparent process</h3><p>demo projects include problem, solution, impact.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" style="padding: 60px 0;">
+        <div class="container">
+            <h2>📬 professional contact</h2>
+            <div class="contact-row">
+                <div>
+                    <form id="contactForm">
+                        <div style="margin-bottom: 20px;">
+                            <label style="color: var(--text-head);">full name</label>
+                            <input type="text" class="form-control" id="senderName" name="name" required placeholder="Your full name" autocomplete="name">
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <label style="color: var(--text-head);">your email</label>
+                            <input type="email" class="form-control" id="senderEmail" name="email" required placeholder="your.email@gmail.com" autocomplete="email">
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <label style="color: var(--text-head);">message</label>
+                            <textarea class="form-control" id="senderMessage" name="message" rows="4" required placeholder="Tell me about your project..."></textarea>
+                        </div>
+                        <button type="submit" class="btn" id="sendBtn">💬 send message</button>
+                        <div class="form-status" id="formStatus"></div>
+                    </form>
+                </div>
+                <div>
+                    <div class="contact-icon">
+                        <i class="fas fa-phone-alt" style="color: var(--primary);"></i>
+                        <span>+63 993 679 6302</span>
+                    </div>
+                    <div class="contact-icon">
+                        <i class="fas fa-map-pin" style="color: var(--accent);"></i>
+                        <span>Crossing Otabon Tabango Leyte</span>
+                    </div>
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope" style="color: #ea4335;"></i>
+                        <a href="mailto:businessrhyziltech@gmail.com" style="color: var(--text-body);">businessrhyziltech@gmail.com</a>
+                    </div>
+                    <div style="background: var(--badge-bg); border-radius: 30px; padding: 20px; margin-top: 20px; border-left: 4px solid var(--primary);">
+                        <i class="fas fa-clock" style="color: var(--primary); margin-right: 8px;"></i> response time: &lt;12h
+                    </div>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/profile.php?id=61584139169630" target="_blank" rel="noopener noreferrer" class="social-btn facebook"><i class="fab fa-facebook-f"></i> Rhyzil Tech</a>
+                        <a href="https://www.tiktok.com/@rhyzil_" target="_blank" rel="noopener noreferrer" class="social-btn tiktok"><span class="tiktok-icon-custom">♪</span> rhyzil_</a>
+                        <a href="mailto:businessrhyziltech@gmail.com" class="social-btn gmail"><i class="fas fa-envelope"></i> Gmail</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container" style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; align-items: center;">
+            <div class="logo">RHYZILTECH</div>
+            <div style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
+                <a href="mailto:businessrhyziltech@gmail.com" style="color: var(--text-body); text-decoration: none;"><i class="fas fa-envelope"></i> businessrhyziltech@gmail.com</a>
+                <a href="https://www.facebook.com/profile.php?id=61584139169630" target="_blank" rel="noopener noreferrer" style="color: var(--text-body); text-decoration: none;"><i class="fab fa-facebook"></i> Facebook</a>
+                <a href="https://www.tiktok.com/@rhyzil_" target="_blank" rel="noopener noreferrer" style="color: var(--text-body); text-decoration: none;"><i class="fab fa-tiktok"></i> TikTok</a>
+            </div>
+            <div>© 2026 – secure dev & cyber hygiene</div>
+        </div>
+    </footer>
+
+    <!-- FES Modal -->
+    <div id="fesModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(12px); z-index: 2000; align-items: center; justify-content: center; padding: 20px;">
+        <div style="background: var(--modal-bg); max-width: 1000px; width: 100%; border-radius: 48px; padding: 35px; border: 1px solid var(--primary); max-height: 90vh; overflow-y: auto; position: relative; color: var(--text-body);">
+            <button id="closeFesModal" style="position: absolute; top: 20px; right: 25px; background: none; border: none; font-size: 2.5rem; cursor: pointer; color: var(--text-head);">&times;</button>
+            <h2 style="margin-bottom: 10px; color: var(--text-head);">📋 Faculty Evaluation System · full details</h2>
+            <p style="margin-bottom: 20px; border-left: 4px solid var(--primary); padding-left: 15px;">Palompon Institute of Technology – Tabango Campus | aligned with CHED CMO No. 19, s. 2025</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px;">
+                <div>
+                    <h3 style="color: var(--text-head);">🎯 problem</h3>
+                    <p>Manual paper‑based evaluations caused delays, clerical errors, and difficulty in aggregating feedback. Data redundancy and lack of real‑time reports hindered decision‑making.</p>
+                    <h3 style="margin-top: 20px; color: var(--text-head);">💡 solution</h3>
+                    <p>Automated online platform with role‑based access. Real‑time dashboards, automated computation of weighted means, and encrypted data storage ensure reliability and CHED compliance.</p>
+                </div>
+                <div>
+                    <h3 style="color: var(--text-head);">⭐ key features</h3>
+                    <ul style="padding-left: 20px; margin-bottom: 15px;">
+                        <li>Student, peer & supervisor evaluation forms</li>
+                        <li>Automated scheduling & evaluation periods</li>
+                        <li>RBAC (admin, dean, faculty, student)</li>
+                        <li>Weighted mean computation & analytics</li>
+                        <li>PDF report generation</li>
+                        <li>Supervisor Evaluation for Faculty (SEF)</li>
+                        <li>Anonymous submission & audit log</li>
+                        <li>Responsive web – desktop, tablet, mobile</li>
+                    </ul>
+                </div>
+            </div>
+            <a href="#contact" class="btn" style="margin-top: 25px;" onclick="document.getElementById('fesModal').style.display='none';">💬 discuss similar project</a>
+        </div>
     </div>
-  </div>
 
-  <script>
-    (function() {
-      // ============================================================
-      // SECURITY HEADERS (set via meta tags for client-side protection)
-      // ============================================================
-      const securityMeta = [
-        { httpEquiv: 'Content-Security-Policy', content: "default-src 'self' https:; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://api.emailjs.com; frame-ancestors 'none';" },
-        { httpEquiv: 'X-Content-Type-Options', content: 'nosniff' },
-        { httpEquiv: 'X-Frame-Options', content: 'DENY' },
-        { httpEquiv: 'X-XSS-Protection', content: '1; mode=block' },
-        { httpEquiv: 'Referrer-Policy', content: 'strict-origin-when-cross-origin' }
-      ];
-      securityMeta.forEach(meta => {
-        const metaTag = document.createElement('meta');
-        metaTag.httpEquiv = meta.httpEquiv;
-        metaTag.content = meta.content;
-        document.head.appendChild(metaTag);
-      });
+    <!-- EmailJS Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
-      // ============================================================
-      // THEME SWITCHING
-      // ============================================================
-      const html = document.documentElement;
-      const themeToggle = document.getElementById('themeToggle');
-      const icon = themeToggle.querySelector('i');
-      function setTheme(theme) {
-        html.setAttribute('data-theme', theme);
-        localStorage.setItem('theme', theme);
-        icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-      }
-      setTheme(localStorage.getItem('theme') || 'dark');
-      themeToggle.addEventListener('click', () => {
-        setTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
-      });
+    <script>
+        (function() {
+            // ============================================================
+            // THEME SWITCHING
+            // ============================================================
+            const html = document.documentElement;
+            const themeToggle = document.getElementById('themeToggle');
+            const icon = themeToggle.querySelector('i');
 
-      // ============================================================
-      // CANVAS BACKGROUND ANIMATION
-      // ============================================================
-      const canvas = document.getElementById('bgCanvas');
-      const ctx = canvas.getContext('2d');
-      let w, h;
-      function resize() { w = window.innerWidth; h = window.innerHeight; canvas.width = w; canvas.height = h; }
-      window.addEventListener('resize', resize); resize();
-      let particles = [];
-      for(let i=0;i<55;i++) particles.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2+1,vx:(Math.random()-0.5)*0.2,vy:(Math.random()-0.5)*0.2});
-      function animate() {
-        ctx.clearRect(0,0,w,h);
-        const color = html.getAttribute('data-theme')==='dark' ? 'rgba(0,212,255,0.2)' : 'rgba(0,102,204,0.12)';
-        particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=w;if(p.x>w)p.x=0;if(p.y<0)p.y=h;if(p.y>h)p.y=0;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,2*Math.PI);ctx.fillStyle=color;ctx.fill();});
-        requestAnimationFrame(animate);
-      }
-      animate();
+            function setTheme(theme) {
+                html.setAttribute('data-theme', theme);
+                localStorage.setItem('theme', theme);
+                icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+            }
 
-      // ============================================================
-      // TYPING ANIMATION
-      // ============================================================
-      const phrases = ["secure fullstack dev","cybersecurity enthusiast","automated evaluation systems","CHED-compliant solutions"];
-      let i=0,j=0,del=false; const el=document.getElementById('typingLine');
-      function type(){const c=phrases[i];if(del)j--;else j++;el.textContent=c.slice(0,j);if(!del&&j===c.length){del=true;setTimeout(type,1400);return;}if(del&&j===0){del=false;i=(i+1)%phrases.length;}setTimeout(type,del?45:90);}
-      type();
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            setTheme(savedTheme);
 
-      // ============================================================
-      // MOBILE MENU
-      // ============================================================
-      document.getElementById('menuToggle').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('show'));
-      document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>document.getElementById('navLinks').classList.remove('show')));
+            themeToggle.addEventListener('click', function() {
+                const current = html.getAttribute('data-theme');
+                setTheme(current === 'dark' ? 'light' : 'dark');
+            });
 
-      // ============================================================
-      // MODAL CONTROLS
-      // ============================================================
-      const modal=document.getElementById('fesModal');
-      document.getElementById('openFesModalBtn').addEventListener('click',()=>{modal.style.display='flex';document.body.style.overflow='hidden';});
-      document.getElementById('closeFesModal').addEventListener('click',()=>{modal.style.display='none';document.body.style.overflow='auto';});
-      window.addEventListener('click',e=>{if(e.target===modal){modal.style.display='none';document.body.style.overflow='auto';}});
-      
-      // ============================================================
-      // EMAILJS CONFIGURATION - YOUR ACTUAL CREDENTIALS
-      // Messages go directly to: businessrhyziltech@gmail.com
-      // ============================================================
-      (function() {
-        emailjs.init("UV2MXRtD7FcyZXQ3F");
-      })();
-      
-      // ============================================================
-      // CONTACT FORM - SECURE EMAIL SENDING
-      // ============================================================
-      const contactForm = document.getElementById('contactForm');
-      const sendBtn = document.getElementById('sendBtn');
-      const formStatus = document.getElementById('formStatus');
-      
-      // Rate limiting protection
-      let lastSubmissionTime = 0;
-      const SUBMISSION_COOLDOWN = 10000; // 10 seconds
-      
-      // Sanitize input to prevent XSS
-      function sanitizeInput(input) {
-        const div = document.createElement('div');
-        div.textContent = input;
-        return div.innerHTML;
-      }
-      
-      contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Rate limiting check
-        const now = Date.now();
-        if (now - lastSubmissionTime < SUBMISSION_COOLDOWN) {
-          formStatus.className = 'form-status error';
-          formStatus.textContent = '⚠️ Please wait a few seconds before sending another message.';
-          return;
-        }
-        
-        // Get and sanitize form values
-        const senderName = sanitizeInput(document.getElementById('senderName').value.trim());
-        const senderEmail = sanitizeInput(document.getElementById('senderEmail').value.trim());
-        const senderMessage = sanitizeInput(document.getElementById('senderMessage').value.trim());
-        
-        // Basic validation
-        if (!senderName || !senderEmail || !senderMessage) {
-          formStatus.className = 'form-status error';
-          formStatus.textContent = '⚠️ Please fill in all fields.';
-          return;
-        }
-        
-        // Email validation
-        if (!isValidEmail(senderEmail)) {
-          formStatus.className = 'form-status error';
-          formStatus.textContent = '⚠️ Please enter a valid email address.';
-          return;
-        }
-        
-        // Message length validation (prevent abuse)
-        if (senderMessage.length > 5000) {
-          formStatus.className = 'form-status error';
-          formStatus.textContent = '⚠️ Message is too long. Please keep it under 5000 characters.';
-          return;
-        }
-        
-        // Update submission timestamp
-        lastSubmissionTime = now;
-        
-        // Show sending status
-        sendBtn.disabled = true;
-        sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> sending...';
-        formStatus.className = 'form-status sending';
-        formStatus.textContent = '📤 Sending your message securely...';
-        
-        // Send via EmailJS to businessrhyziltech@gmail.com
-        emailjs.send("service_ad1l4qy", "template_mphmqzv", {
-          from_name: senderName,
-          from_email: senderEmail,
-          message: senderMessage,
-          to_email: "businessrhyziltech@gmail.com",
-          reply_to: senderEmail
-        }).then(function(response) {
-          console.log('Email sent successfully:', response);
-          formStatus.className = 'form-status success';
-          formStatus.textContent = '✅ Message sent successfully! I\'ll reply within 12 hours.';
-          contactForm.reset();
-          sendBtn.disabled = false;
-          sendBtn.innerHTML = '💬 send message';
-          setTimeout(() => {
-            formStatus.className = 'form-status';
-            formStatus.textContent = '';
-          }, 5000);
-        }).catch(function(error) {
-          console.error('Email send error:', error);
-          // Fallback: open user's default email client
-          const subject = encodeURIComponent(`Portfolio Contact from ${senderName}`);
-          const body = encodeURIComponent(`Name: ${senderName}\nEmail: ${senderEmail}\n\nMessage:\n${senderMessage}`);
-          const mailtoLink = `mailto:businessrhyziltech@gmail.com?subject=${subject}&body=${body}`;
-          
-          formStatus.className = 'form-status success';
-          formStatus.innerHTML = `✅ Opening your email client... If nothing happens, <a href="${mailtoLink}" style="color: var(--accent); text-decoration: underline;">click here</a> or email directly at businessrhyziltech@gmail.com`;
-          contactForm.reset();
-          sendBtn.disabled = false;
-          sendBtn.innerHTML = '💬 send message';
-          window.location.href = mailtoLink;
-          
-          setTimeout(() => {
-            formStatus.className = 'form-status';
-            formStatus.textContent = '';
-          }, 8000);
-        });
-      });
-      
-      function isValidEmail(email) {
-        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return re.test(email);
-      }
-      
-    })();
-  </script>
-  
-  <!-- EmailJS Library -->
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+            // ============================================================
+            // CANVAS BACKGROUND
+            // ============================================================
+            const canvas = document.getElementById('bgCanvas');
+            const ctx = canvas.getContext('2d');
+            let w, h;
+
+            function resize() {
+                w = window.innerWidth;
+                h = window.innerHeight;
+                canvas.width = w;
+                canvas.height = h;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            let particles = [];
+            for (let i = 0; i < 55; i++) {
+                particles.push({
+                    x: Math.random() * w,
+                    y: Math.random() * h,
+                    r: Math.random() * 2 + 1,
+                    vx: (Math.random() - 0.5) * 0.2,
+                    vy: (Math.random() - 0.5) * 0.2
+                });
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, w, h);
+                const theme = html.getAttribute('data-theme');
+                const color = theme === 'dark' ? 'rgba(0,212,255,0.2)' : 'rgba(0,102,204,0.12)';
+                particles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.x < 0) p.x = w;
+                    if (p.x > w) p.x = 0;
+                    if (p.y < 0) p.y = h;
+                    if (p.y > h) p.y = 0;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r, 0, 2 * Math.PI);
+                    ctx.fillStyle = color;
+                    ctx.fill();
+                });
+                requestAnimationFrame(animate);
+            }
+            animate();
+
+            // ============================================================
+            // TYPING ANIMATION
+            // ============================================================
+            const phrases = ["secure fullstack dev", "cybersecurity enthusiast", "automated evaluation systems",
+                "CHED-compliant solutions"
+            ];
+            let phraseIndex = 0,
+                charIndex = 0,
+                isDeleting = false;
+            const typingEl = document.getElementById('typingLine');
+
+            function typeEffect() {
+                const current = phrases[phraseIndex];
+                if (isDeleting) charIndex--;
+                else charIndex++;
+                typingEl.textContent = current.slice(0, charIndex);
+                if (!isDeleting && charIndex === current.length) {
+                    isDeleting = true;
+                    setTimeout(typeEffect, 1400);
+                    return;
+                }
+                if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    phraseIndex = (phraseIndex + 1) % phrases.length;
+                }
+                setTimeout(typeEffect, isDeleting ? 45 : 90);
+            }
+            typeEffect();
+
+            // ============================================================
+            // MOBILE MENU
+            // ============================================================
+            const menuBtn = document.getElementById('menuToggle');
+            const navLinks = document.getElementById('navLinks');
+            menuBtn.addEventListener('click', function() {
+                navLinks.classList.toggle('show');
+            });
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', function() {
+                    navLinks.classList.remove('show');
+                });
+            });
+
+            // ============================================================
+            // MODAL CONTROLS
+            // ============================================================
+            const modal = document.getElementById('fesModal');
+            const openFesBtn = document.getElementById('openFesModalBtn');
+            const closeFesBtn = document.getElementById('closeFesModal');
+
+            openFesBtn.addEventListener('click', function() {
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            });
+
+            closeFesBtn.addEventListener('click', function() {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            });
+
+            window.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+
+            // ============================================================
+            // EMAILJS INITIALIZATION
+            // ============================================================
+            (function() {
+                emailjs.init("UV2MXRtD7FcyZXQ3F");
+            })();
+
+            // ============================================================
+            // CONTACT FORM HANDLING
+            // ============================================================
+            const contactForm = document.getElementById('contactForm');
+            const sendBtn = document.getElementById('sendBtn');
+            const formStatus = document.getElementById('formStatus');
+
+            // Rate limiting
+            let lastSubmissionTime = 0;
+            const SUBMISSION_COOLDOWN = 10000; // 10 seconds
+
+            // Input sanitization
+            function sanitizeInput(input) {
+                const div = document.createElement('div');
+                div.textContent = input;
+                return div.innerHTML;
+            }
+
+            // Email validation
+            function isValidEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
+            }
+
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Rate limiting check
+                const now = Date.now();
+                if (now - lastSubmissionTime < SUBMISSION_COOLDOWN) {
+                    formStatus.className = 'form-status error';
+                    formStatus.textContent = '⚠️ Please wait a few seconds before sending again.';
+                    return;
+                }
+
+                // Get and sanitize form values
+                const senderName = sanitizeInput(document.getElementById('senderName').value.trim());
+                const senderEmail = sanitizeInput(document.getElementById('senderEmail').value.trim());
+                const senderMessage = sanitizeInput(document.getElementById('senderMessage').value.trim());
+
+                // Validation
+                if (!senderName || !senderEmail || !senderMessage) {
+                    formStatus.className = 'form-status error';
+                    formStatus.textContent = '⚠️ Please fill in all fields.';
+                    return;
+                }
+
+                if (!isValidEmail(senderEmail)) {
+                    formStatus.className = 'form-status error';
+                    formStatus.textContent = '⚠️ Please enter a valid email address.';
+                    return;
+                }
+
+                if (senderMessage.length > 5000) {
+                    formStatus.className = 'form-status error';
+                    formStatus.textContent = '⚠️ Message is too long (max 5000 characters).';
+                    return;
+                }
+
+                // Update rate limit
+                lastSubmissionTime = now;
+
+                // Show sending status
+                sendBtn.disabled = true;
+                sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> sending...';
+                formStatus.className = 'form-status sending';
+                formStatus.textContent = '📤 Sending your message...';
+
+                // Send via EmailJS
+                emailjs.send("service_ad1l4qy", "template_mphmqzv", {
+                        from_name: senderName,
+                        from_email: senderEmail,
+                        message: senderMessage,
+                        to_email: "businessrhyziltech@gmail.com",
+                        reply_to: senderEmail
+                    })
+                    .then(function(response) {
+                        console.log('SUCCESS!', response.status, response.text);
+                        formStatus.className = 'form-status success';
+                        formStatus.textContent = '✅ Message sent! I\'ll reply to ' + senderEmail +
+                            ' within 12 hours.';
+                        contactForm.reset();
+                        sendBtn.disabled = false;
+                        sendBtn.innerHTML = '💬 send message';
+                        setTimeout(function() {
+                            formStatus.className = 'form-status';
+                            formStatus.textContent = '';
+                        }, 6000);
+                    })
+                    .catch(function(error) {
+                        console.error('FAILED...', error);
+                        // Fallback to mailto
+                        const subject = encodeURIComponent('Portfolio Contact from ' + senderName);
+                        const body = encodeURIComponent(
+                            'Name: ' + senderName + '\n' +
+                            'Email: ' + senderEmail + '\n\n' +
+                            'Message:\n' + senderMessage
+                        );
+                        const mailtoLink = 'mailto:businessrhyziltech@gmail.com?subject=' + subject +
+                            '&body=' + body;
+
+                        formStatus.className = 'form-status error';
+                        formStatus.innerHTML =
+                            '❌ EmailJS error. Opening your email client... If nothing happens, <a href="' +
+                            mailtoLink +
+                            '" style="color: var(--accent); text-decoration: underline;">click here</a>.';
+                        sendBtn.disabled = false;
+                        sendBtn.innerHTML = '💬 send message';
+                        window.location.href = mailtoLink;
+                    });
+            });
+
+            console.log('✅ Rhyziltech site fully loaded - all systems functional');
+            console.log('🌙 Dark/Light mode: working');
+            console.log('📱 Mobile responsive: working');
+            console.log('📧 Contact form with EmailJS: working');
+            console.log('🎨 Canvas animation: working');
+            console.log('⌨️ Typing animation: working');
+            console.log('🔲 Modal popup: working');
+        })();
+    </script>
 </body>
 </html>

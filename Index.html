@@ -46,6 +46,7 @@
       --toggle-hover: #2a314a;
       --tiktok-color: #ff0050;
       --facebook-color: #1877f2;
+      --gmail-color: #ea4335;
     }
     [data-theme="light"] {
       --primary: #0066cc;
@@ -73,6 +74,7 @@
       --toggle-hover: #cbd5e1;
       --tiktok-color: #ff0050;
       --facebook-color: #1877f2;
+      --gmail-color: #ea4335;
     }
     html {
       scroll-behavior: smooth;
@@ -131,6 +133,7 @@
     }
     .btn:hover { transform: scale(1.03); box-shadow: 0 14px 28px rgba(124, 58, 237, 0.4); color: white; }
     .btn-outline:hover { background: rgba(0,102,204,0.08); color: var(--primary); }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
     header {
       position: fixed; top: 0; left: 0; width: 100%; padding: 14px 0;
       background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
@@ -177,60 +180,48 @@
     .form-control:focus { border-color: var(--primary); outline: none; }
     .contact-icon { display: flex; align-items: center; gap: 15px; margin: 20px 0; }
     .contact-icon i { font-size: 1.8rem; width: 40px; text-align: center; }
-    .social-links {
-      display: flex;
-      gap: 15px;
-      margin-top: 25px;
-      flex-wrap: wrap;
-    }
+    .contact-icon a { color: var(--text-body); text-decoration: none; transition: color 0.2s; }
+    .contact-icon a:hover { color: var(--primary); text-decoration: underline; }
+    .social-links { display: flex; gap: 15px; margin-top: 25px; flex-wrap: wrap; }
     .social-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 12px 24px;
-      border-radius: 40px;
-      text-decoration: none;
-      font-weight: 600;
-      color: white;
-      transition: all 0.3s ease;
-      font-size: 0.95rem;
+      display: inline-flex; align-items: center; gap: 10px; padding: 12px 24px;
+      border-radius: 40px; text-decoration: none; font-weight: 600; color: white;
+      transition: all 0.3s ease; font-size: 0.95rem;
     }
-    .social-btn.facebook {
-      background: var(--facebook-color);
-    }
-    .social-btn.tiktok {
-      background: #000000;
-      border: 1px solid var(--tiktok-color);
-    }
-    .social-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.3);
-    }
-    .social-btn i {
-      font-size: 1.2rem;
-    }
+    .social-btn.facebook { background: var(--facebook-color); }
+    .social-btn.tiktok { background: #000000; border: 1px solid var(--tiktok-color); }
+    .social-btn.gmail { background: var(--gmail-color); }
+    .social-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,0.3); }
+    .social-btn i { font-size: 1.2rem; }
     .social-btn .tiktok-icon {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--tiktok-color);
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      font-size: 0.9rem;
-      color: white;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--tiktok-color); width: 24px; height: 24px; border-radius: 50%;
+      font-size: 0.9rem; color: white;
     }
+    .form-status { display: none; padding: 12px 20px; border-radius: 30px; margin-top: 15px; font-weight: 500; text-align: center; }
+    .form-status.success { display: block; background: rgba(109, 255, 184, 0.15); border: 1px solid var(--accent); color: var(--accent); }
+    .form-status.error { display: block; background: rgba(255, 107, 107, 0.15); border: 1px solid #ff6b6b; color: #ff6b6b; }
+    .form-status.sending { display: block; background: rgba(0, 212, 255, 0.15); border: 1px solid var(--primary); color: var(--primary); }
     footer { background: var(--footer-bg); border-top: 1px solid var(--footer-border); padding: 40px 0 20px; margin-top: 60px; }
     @media (max-width: 700px) { .about-grid, .contact-row { grid-template-columns: 1fr; } }
     .feature-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0; }
     .feature-item { background: var(--badge-bg); padding: 16px; border-radius: 18px; border-left: 4px solid var(--primary); }
+    .security-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(109, 255, 184, 0.15); border: 1px solid var(--accent);
+      color: var(--accent); padding: 8px 16px; border-radius: 40px;
+      font-size: 0.8rem; font-weight: 600; margin-left: 10px;
+    }
   </style>
 </head>
 <body>
   <canvas id="bgCanvas"></canvas>
   <header class="animate__animated animate__fadeInDown">
     <div class="container header-flex">
-      <a href="#" class="logo animate__animated animate__pulse animate__infinite animate__slower">RHYZILTECH</a>
+      <a href="#" class="logo animate__animated animate__pulse animate__infinite animate__slower">
+        RHYZILTECH
+        <span class="security-badge"><i class="fas fa-shield-haltered"></i> SECURED</span>
+      </a>
       <div class="nav-wrapper">
         <div class="nav-links" id="navLinks">
           <a href="#home" class="animate__animated animate__fadeIn">Home</a>
@@ -267,9 +258,10 @@
           <div style="background: var(--badge-bg); padding: 6px 18px; border-radius: 40px; display: inline-block;">🎓 IT student · cybersecurity enthusiast</div>
           <p style="margin: 20px 0;">Building secure, automated systems with a hacker's mindset. Every project focuses on input validation, access control, and modern stack.</p>
           <div style="display: flex; gap: 15px;"><div style="background: var(--stat-bg); padding: 20px; border-radius: 20px; flex:1; text-align:center;"><span style="font-size: 2rem; font-weight: bold; color: var(--accent);">7+</span> projects</div><div style="background: var(--stat-bg); padding: 20px; border-radius: 20px; flex:1; text-align:center;"><span style="font-size: 2rem; font-weight: bold; color: var(--accent);">24/7</span> research</div></div>
-          <div style="margin-top: 25px; display: flex; gap: 12px;">
+          <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
             <a href="https://www.facebook.com/profile.php?id=61584139169630" target="_blank" rel="noopener noreferrer" class="social-btn facebook animate__animated animate__bounceIn"><i class="fab fa-facebook-f"></i> Facebook</a>
             <a href="https://www.tiktok.com/@rhyzil_" target="_blank" rel="noopener noreferrer" class="social-btn tiktok animate__animated animate__bounceIn animate__delay-1s"><span class="tiktok-icon">♪</span> TikTok</a>
+            <a href="mailto:businessrhyziltech@gmail.com" class="social-btn gmail animate__animated animate__bounceIn animate__delay-2s"><i class="fas fa-envelope"></i> Gmail</a>
           </div>
         </div>
         <div style="display: flex; flex-direction: column; gap: 20px;">
@@ -338,11 +330,12 @@
       <h2 class="animate__animated animate__fadeInDown">📬 professional contact</h2>
       <div class="contact-row">
         <div class="animate__animated animate__fadeInLeft">
-          <form id="contactForm" action="https://formspree.io/f/xreayjgj" method="POST">
-            <div style="margin-bottom: 20px;"><label style="color: var(--text-head);">full name</label><input type="text" class="form-control" name="name" required></div>
-            <div style="margin-bottom: 20px;"><label style="color: var(--text-head);">email</label><input type="email" class="form-control" name="email" required></div>
-            <div style="margin-bottom: 20px;"><label style="color: var(--text-head);">message</label><textarea class="form-control" name="message" rows="4" required></textarea></div>
-            <button type="submit" class="btn animate__animated animate__tada" id="sendBtn">💬 send message</button>
+          <form id="contactForm">
+            <div style="margin-bottom: 20px;"><label style="color: var(--text-head);">full name</label><input type="text" class="form-control" id="senderName" name="name" required placeholder="Your full name" autocomplete="name"></div>
+            <div style="margin-bottom: 20px;"><label style="color: var(--text-head);">your email</label><input type="email" class="form-control" id="senderEmail" name="email" required placeholder="your.email@gmail.com" autocomplete="email"></div>
+            <div style="margin-bottom: 20px;"><label style="color: var(--text-head);">message</label><textarea class="form-control" id="senderMessage" name="message" rows="4" required placeholder="Tell me about your project..."></textarea></div>
+            <button type="submit" class="btn" id="sendBtn">💬 send message</button>
+            <div class="form-status" id="formStatus"></div>
           </form>
         </div>
         <div class="animate__animated animate__fadeInRight">
@@ -355,8 +348,8 @@
             <span>Crossing Otabon Tabango Leyte</span>
           </div>
           <div class="contact-icon">
-            <i class="fas fa-envelope" style="color: var(--secondary);"></i>
-            <span>businessrhyziltech@gmail.com</span>
+            <i class="fas fa-envelope" style="color: var(--gmail-color);"></i>
+            <a href="mailto:businessrhyziltech@gmail.com">businessrhyziltech@gmail.com</a>
           </div>
           <div style="background: var(--badge-bg); border-radius: 30px; padding: 20px; margin-top: 20px; border-left: 4px solid var(--primary);">
             <i class="fas fa-clock" style="color: var(--primary); margin-right: 8px;"></i> response time: &lt;12h
@@ -364,6 +357,7 @@
           <div class="social-links">
             <a href="https://www.facebook.com/profile.php?id=61584139169630" target="_blank" rel="noopener noreferrer" class="social-btn facebook"><i class="fab fa-facebook-f"></i> Rhyzil Tech</a>
             <a href="https://www.tiktok.com/@rhyzil_" target="_blank" rel="noopener noreferrer" class="social-btn tiktok"><span class="tiktok-icon">♪</span> rhyzil_</a>
+            <a href="mailto:businessrhyziltech@gmail.com" class="social-btn gmail"><i class="fas fa-envelope"></i> Gmail</a>
           </div>
         </div>
       </div>
@@ -373,7 +367,8 @@
   <footer class="animate__animated animate__fadeInUp">
     <div class="container" style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; align-items: center;">
       <div class="logo">RHYZILTECH</div>
-      <div style="display: flex; gap: 20px; align-items: center;">
+      <div style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
+        <a href="mailto:businessrhyziltech@gmail.com" style="color: var(--text-body); text-decoration: none; transition: color 0.2s;"><i class="fas fa-envelope"></i> businessrhyziltech@gmail.com</a>
         <a href="https://www.facebook.com/profile.php?id=61584139169630" target="_blank" rel="noopener noreferrer" style="color: var(--text-body); text-decoration: none; transition: color 0.2s;"><i class="fab fa-facebook"></i> Facebook</a>
         <a href="https://www.tiktok.com/@rhyzil_" target="_blank" rel="noopener noreferrer" style="color: var(--text-body); text-decoration: none; transition: color 0.2s;"><i class="fab fa-tiktok"></i> TikTok</a>
       </div>
@@ -418,6 +413,26 @@
 
   <script>
     (function() {
+      // ============================================================
+      // SECURITY HEADERS (set via meta tags for client-side protection)
+      // ============================================================
+      const securityMeta = [
+        { httpEquiv: 'Content-Security-Policy', content: "default-src 'self' https:; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://api.emailjs.com; frame-ancestors 'none';" },
+        { httpEquiv: 'X-Content-Type-Options', content: 'nosniff' },
+        { httpEquiv: 'X-Frame-Options', content: 'DENY' },
+        { httpEquiv: 'X-XSS-Protection', content: '1; mode=block' },
+        { httpEquiv: 'Referrer-Policy', content: 'strict-origin-when-cross-origin' }
+      ];
+      securityMeta.forEach(meta => {
+        const metaTag = document.createElement('meta');
+        metaTag.httpEquiv = meta.httpEquiv;
+        metaTag.content = meta.content;
+        document.head.appendChild(metaTag);
+      });
+
+      // ============================================================
+      // THEME SWITCHING
+      // ============================================================
       const html = document.documentElement;
       const themeToggle = document.getElementById('themeToggle');
       const icon = themeToggle.querySelector('i');
@@ -431,6 +446,9 @@
         setTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
       });
 
+      // ============================================================
+      // CANVAS BACKGROUND ANIMATION
+      // ============================================================
       const canvas = document.getElementById('bgCanvas');
       const ctx = canvas.getContext('2d');
       let w, h;
@@ -446,20 +464,148 @@
       }
       animate();
 
+      // ============================================================
+      // TYPING ANIMATION
+      // ============================================================
       const phrases = ["secure fullstack dev","cybersecurity enthusiast","automated evaluation systems","CHED-compliant solutions"];
       let i=0,j=0,del=false; const el=document.getElementById('typingLine');
       function type(){const c=phrases[i];if(del)j--;else j++;el.textContent=c.slice(0,j);if(!del&&j===c.length){del=true;setTimeout(type,1400);return;}if(del&&j===0){del=false;i=(i+1)%phrases.length;}setTimeout(type,del?45:90);}
       type();
 
+      // ============================================================
+      // MOBILE MENU
+      // ============================================================
       document.getElementById('menuToggle').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('show'));
       document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>document.getElementById('navLinks').classList.remove('show')));
 
+      // ============================================================
+      // MODAL CONTROLS
+      // ============================================================
       const modal=document.getElementById('fesModal');
       document.getElementById('openFesModalBtn').addEventListener('click',()=>{modal.style.display='flex';document.body.style.overflow='hidden';});
       document.getElementById('closeFesModal').addEventListener('click',()=>{modal.style.display='none';document.body.style.overflow='auto';});
       window.addEventListener('click',e=>{if(e.target===modal){modal.style.display='none';document.body.style.overflow='auto';}});
-      document.getElementById('contactForm').addEventListener('submit',()=>{const b=document.getElementById('sendBtn');b.disabled=true;b.innerText='sending...';});
+      
+      // ============================================================
+      // EMAILJS CONFIGURATION - YOUR ACTUAL CREDENTIALS
+      // Messages go directly to: businessrhyziltech@gmail.com
+      // ============================================================
+      (function() {
+        emailjs.init("UV2MXRtD7FcyZXQ3F");
+      })();
+      
+      // ============================================================
+      // CONTACT FORM - SECURE EMAIL SENDING
+      // ============================================================
+      const contactForm = document.getElementById('contactForm');
+      const sendBtn = document.getElementById('sendBtn');
+      const formStatus = document.getElementById('formStatus');
+      
+      // Rate limiting protection
+      let lastSubmissionTime = 0;
+      const SUBMISSION_COOLDOWN = 10000; // 10 seconds
+      
+      // Sanitize input to prevent XSS
+      function sanitizeInput(input) {
+        const div = document.createElement('div');
+        div.textContent = input;
+        return div.innerHTML;
+      }
+      
+      contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Rate limiting check
+        const now = Date.now();
+        if (now - lastSubmissionTime < SUBMISSION_COOLDOWN) {
+          formStatus.className = 'form-status error';
+          formStatus.textContent = '⚠️ Please wait a few seconds before sending another message.';
+          return;
+        }
+        
+        // Get and sanitize form values
+        const senderName = sanitizeInput(document.getElementById('senderName').value.trim());
+        const senderEmail = sanitizeInput(document.getElementById('senderEmail').value.trim());
+        const senderMessage = sanitizeInput(document.getElementById('senderMessage').value.trim());
+        
+        // Basic validation
+        if (!senderName || !senderEmail || !senderMessage) {
+          formStatus.className = 'form-status error';
+          formStatus.textContent = '⚠️ Please fill in all fields.';
+          return;
+        }
+        
+        // Email validation
+        if (!isValidEmail(senderEmail)) {
+          formStatus.className = 'form-status error';
+          formStatus.textContent = '⚠️ Please enter a valid email address.';
+          return;
+        }
+        
+        // Message length validation (prevent abuse)
+        if (senderMessage.length > 5000) {
+          formStatus.className = 'form-status error';
+          formStatus.textContent = '⚠️ Message is too long. Please keep it under 5000 characters.';
+          return;
+        }
+        
+        // Update submission timestamp
+        lastSubmissionTime = now;
+        
+        // Show sending status
+        sendBtn.disabled = true;
+        sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> sending...';
+        formStatus.className = 'form-status sending';
+        formStatus.textContent = '📤 Sending your message securely...';
+        
+        // Send via EmailJS to businessrhyziltech@gmail.com
+        emailjs.send("service_ad1l4qy", "template_mphmqzv", {
+          from_name: senderName,
+          from_email: senderEmail,
+          message: senderMessage,
+          to_email: "businessrhyziltech@gmail.com",
+          reply_to: senderEmail
+        }).then(function(response) {
+          console.log('Email sent successfully:', response);
+          formStatus.className = 'form-status success';
+          formStatus.textContent = '✅ Message sent successfully! I\'ll reply within 12 hours.';
+          contactForm.reset();
+          sendBtn.disabled = false;
+          sendBtn.innerHTML = '💬 send message';
+          setTimeout(() => {
+            formStatus.className = 'form-status';
+            formStatus.textContent = '';
+          }, 5000);
+        }).catch(function(error) {
+          console.error('Email send error:', error);
+          // Fallback: open user's default email client
+          const subject = encodeURIComponent(`Portfolio Contact from ${senderName}`);
+          const body = encodeURIComponent(`Name: ${senderName}\nEmail: ${senderEmail}\n\nMessage:\n${senderMessage}`);
+          const mailtoLink = `mailto:businessrhyziltech@gmail.com?subject=${subject}&body=${body}`;
+          
+          formStatus.className = 'form-status success';
+          formStatus.innerHTML = `✅ Opening your email client... If nothing happens, <a href="${mailtoLink}" style="color: var(--accent); text-decoration: underline;">click here</a> or email directly at businessrhyziltech@gmail.com`;
+          contactForm.reset();
+          sendBtn.disabled = false;
+          sendBtn.innerHTML = '💬 send message';
+          window.location.href = mailtoLink;
+          
+          setTimeout(() => {
+            formStatus.className = 'form-status';
+            formStatus.textContent = '';
+          }, 8000);
+        });
+      });
+      
+      function isValidEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+      }
+      
     })();
   </script>
+  
+  <!-- EmailJS Library -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </body>
 </html>

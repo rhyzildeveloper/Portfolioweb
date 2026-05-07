@@ -490,11 +490,7 @@
     }
 
     .service-card:hover::before { opacity: 1; }
-    .service-card:hover {
-      border-color: var(--primary);
-      transform: translateY(-8px);
-      box-shadow: 0 25px 60px rgba(22, 88, 250, 0.15);
-    }
+    .service-card:hover { border-color: var(--primary); transform: translateY(-8px); box-shadow: 0 25px 60px rgba(22, 88, 250, 0.15); }
 
     @media (max-width: 480px) { .service-card:hover { transform: translateY(-4px); } }
 
@@ -516,119 +512,71 @@
 
     @media (max-width: 480px) { .pricing-card { padding: 28px 22px; } }
 
-    .pricing-card.featured {
-      border-color: var(--primary);
-      box-shadow: 0 0 50px rgba(22, 88, 250, 0.2);
-      position: relative;
-    }
-
+    .pricing-card.featured { border-color: var(--primary); box-shadow: 0 0 50px rgba(22, 88, 250, 0.2); position: relative; }
     .pricing-card.featured::before {
-      content: 'BEST VALUE';
-      position: absolute;
-      top: -14px;
-      right: 25px;
-      background: var(--primary);
-      color: white;
-      padding: 6px 18px;
-      border-radius: 25px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
+      content: 'BEST VALUE'; position: absolute; top: -14px; right: 25px;
+      background: var(--primary); color: white; padding: 6px 18px; border-radius: 25px;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em;
     }
-
-    .pricing-card:hover { border-color: var(--primary); transform: translateY(-6px); box-shadow: 0 25px 60px rgba(22, 88, 250, 0.2); }
+    .pricing-card:hover { border-color: var(--primary); transform: translateY(-6px); }
     .pricing-icon { font-size: 2.5rem; margin-bottom: 15px; }
     .price-range {
-      font-family: var(--font-display);
-      font-size: 1.8rem;
-      font-weight: 800;
+      font-family: var(--font-display); font-size: 1.8rem; font-weight: 800;
       background: linear-gradient(135deg, var(--primary), var(--secondary));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin: 12px 0;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 12px 0;
     }
-    .pricing-desc { color: var(--text-muted); margin-bottom: 20px; flex-grow: 1; font-size: 0.95rem; line-height: 1.6; }
+    .pricing-desc { color: var(--text-muted); margin-bottom: 20px; flex-grow: 1; font-size: 0.95rem; }
     .pricing-features { list-style: none; padding: 0; margin-bottom: 25px; text-align: left; }
     .pricing-features li { padding: 6px 0; color: var(--text-muted); font-size: 0.9rem; display: flex; align-items: center; gap: 8px; }
     .pricing-features li i { color: var(--accent-glow); font-size: 0.8rem; }
-
     .downpayment-note {
-      background: rgba(22, 88, 250, 0.1);
-      border: 1px solid var(--primary);
-      border-radius: var(--radius-md);
-      padding: 16px 20px;
-      margin-top: 30px;
-      text-align: center;
-      font-size: 0.9rem;
-      color: var(--text);
+      background: rgba(22, 88, 250, 0.1); border: 1px solid var(--primary);
+      border-radius: var(--radius-md); padding: 16px 20px; margin-top: 30px;
+      text-align: center; font-size: 0.9rem; color: var(--text);
     }
-    .downpayment-note i { color: var(--primary); margin-right: 6px; }
 
     .process-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; }
-
     @media (max-width: 768px) { .process-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; } }
     @media (max-width: 480px) { .process-grid { grid-template-columns: 1fr; gap: 15px; } }
-
     .process-step {
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-2xl);
-      padding: 35px 25px;
-      text-align: center;
-      transition: all 0.3s;
+      background: var(--glass); border: 1px solid var(--glass-border);
+      border-radius: var(--radius-2xl); padding: 35px 25px; text-align: center; transition: all 0.3s;
     }
     .process-step:hover { border-color: var(--primary); box-shadow: 0 0 40px rgba(22, 88, 250, 0.2); }
     .process-number {
-      font-family: var(--font-display);
-      font-size: 3rem;
-      font-weight: 800;
+      font-family: var(--font-display); font-size: 3rem; font-weight: 800;
       background: linear-gradient(135deg, var(--primary), var(--secondary));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
-    @media (max-width: 480px) { .process-number { font-size: 2.2rem; } }
 
     .faq-item { background: var(--glass); border: 1px solid var(--glass-border); border-radius: var(--radius-xl); margin-bottom: 16px; overflow: hidden; }
-    .faq-question { padding: 22px 28px; cursor: pointer; font-weight: 600; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; }
-    @media (max-width: 480px) { .faq-question { padding: 18px 20px; font-size: 0.95rem; } }
+    .faq-question { padding: 22px 28px; cursor: pointer; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
     .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; padding: 0 28px; }
     .faq-item.active .faq-answer { max-height: 200px; padding: 0 28px 22px; }
-    @media (max-width: 480px) { .faq-item.active .faq-answer { padding: 0 20px 18px; } }
 
     .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; max-width: 1000px; margin: 0 auto; }
     @media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; gap: 30px; } }
 
     .selected-package {
-      display: none;
-      background: rgba(22, 88, 250, 0.15);
-      border: 1px solid var(--primary);
-      border-radius: var(--radius-md);
-      padding: 14px 20px;
-      margin-bottom: 20px;
-      color: var(--text);
-      font-weight: 500;
-      align-items: center;
-      gap: 10px;
+      display: none; background: rgba(22, 88, 250, 0.15); border: 1px solid var(--primary);
+      border-radius: var(--radius-md); padding: 14px 20px; margin-bottom: 20px;
+      color: var(--text); font-weight: 500; align-items: center; gap: 10px;
     }
     .selected-package.show { display: flex; }
-    .selected-package i { color: var(--primary); }
-    .selected-package .remove-package { margin-left: auto; cursor: pointer; color: var(--text-muted); transition: color 0.2s; }
+    .selected-package .remove-package { margin-left: auto; cursor: pointer; color: var(--text-muted); }
     .selected-package .remove-package:hover { color: #ff5050; }
 
     footer { background: var(--glass); border-top: 1px solid var(--glass-border); padding: 60px 0 30px; margin-top: 80px; }
-    @media (max-width: 480px) { footer { padding: 40px 0 20px; margin-top: 40px; } }
     .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; }
     @media (max-width: 768px) { .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 30px; } }
-    @media (max-width: 480px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 25px; } }
 
     .social-icon {
       display: inline-flex; align-items: center; justify-content: center;
       width: 44px; height: 44px; border-radius: 50%;
       background: var(--glass); border: 1px solid var(--glass-border);
-      color: var(--text); transition: all 0.3s; text-decoration: none; flex-shrink: 0;
+      color: var(--text); transition: all 0.3s; text-decoration: none;
     }
     .social-icon:hover { border-color: var(--primary); color: var(--primary); box-shadow: 0 0 25px rgba(22, 88, 250, 0.4); }
-    @media (max-width: 480px) { .social-icon { width: 38px; height: 38px; font-size: 0.9rem; } }
 
     .modal-overlay {
       display: none; position: fixed; inset: 0;
@@ -637,20 +585,16 @@
     }
     .modal-content {
       background: var(--surface); max-width: 900px; width: 100%;
-      border-radius: var(--radius-2xl); padding: 40px;
-      border: 1px solid var(--primary); max-height: 85vh; overflow-y: auto;
+      border-radius: var(--radius-2xl); padding: 40px; border: 1px solid var(--primary);
+      max-height: 85vh; overflow-y: auto;
     }
-    @media (max-width: 768px) { .modal-content { padding: 30px 25px; border-radius: var(--radius-xl); } }
-    @media (max-width: 480px) { .modal-content { padding: 25px 18px; border-radius: var(--radius-lg); } }
 
     .form-control {
-      width: 100%; padding: 16px 22px;
-      background: var(--glass); border: 1px solid var(--glass-border);
-      border-radius: 50px; color: var(--text); font-size: 1rem;
-      transition: 0.3s; margin-bottom: 16px;
+      width: 100%; padding: 16px 22px; background: var(--glass);
+      border: 1px solid var(--glass-border); border-radius: 50px;
+      color: var(--text); font-size: 1rem; transition: 0.3s; margin-bottom: 16px;
     }
-    @media (max-width: 480px) { .form-control { padding: 14px 18px; font-size: 0.95rem; } }
-    .form-control:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 20px rgba(22, 88, 250, 0.15); }
+    .form-control:focus { border-color: var(--primary); outline: none; }
     textarea.form-control { border-radius: 28px; resize: vertical; }
 
     .status-msg { display: none; padding: 14px 22px; border-radius: 40px; margin-top: 16px; font-weight: 500; text-align: center; }
@@ -663,7 +607,6 @@
     .mb-20 { margin-bottom: 20px; }
     .gap-12 { gap: 12px; }
     .flex { display: flex; }
-    .flex-wrap { flex-wrap: wrap; }
 
     .fes-feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-top: 20px; }
     .fes-feature-item {
@@ -707,10 +650,10 @@
           <a href="#pricing" class="btn-outline">View pricing</a>
         </div>
         <div class="stats-row">
-          <div class="stat-card"><span class="stat-number">150+</span><p>Projects delivered</p></div>
-          <div class="stat-card"><span class="stat-number">98%</span><p>Client retention</p></div>
-          <div class="stat-card"><span class="stat-number">24/7</span><p>Security monitoring</p></div>
-          <div class="stat-card"><span class="stat-number">12</span><p>Global partners</p></div>
+          <div class="stat-card"><span class="stat-number">150+</span><p>Projects</p></div>
+          <div class="stat-card"><span class="stat-number">98%</span><p>Retention</p></div>
+          <div class="stat-card"><span class="stat-number">24/7</span><p>Security</p></div>
+          <div class="stat-card"><span class="stat-number">12</span><p>Partners</p></div>
         </div>
       </div>
     </div>
@@ -721,17 +664,13 @@
       <h2>About the agency</h2>
       <div class="about-grid">
         <div class="glass-card" style="padding: 40px;">
-          <h3 style="font-size: 2rem; margin-bottom: 15px;">Rhyzil Angelo P. Jimenez</h3>
-          <p style="color: var(--text-muted); margin-bottom: 20px;">Founder & Lead Security Architect. With a hacker's mindset and a builder's vision, we craft digital products that are as secure as they are beautiful.</p>
-          <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-            <div><strong style="font-size: 2rem; color: var(--primary);">7+</strong><br>years experience</div>
-            <div><strong style="font-size: 2rem; color: var(--primary);">50+</strong><br>systems secured</div>
-          </div>
+          <h3 style="font-size: 2rem;">Rhyzil Angelo P. Jimenez</h3>
+          <p style="color: var(--text-muted); margin: 15px 0;">Founder & Lead Security Architect. Building secure, automated systems with a hacker's mindset.</p>
+          <div style="display: flex; gap: 20px;"><div><strong style="font-size: 2rem; color: var(--primary);">7+</strong><br>years</div><div><strong style="font-size: 2rem; color: var(--primary);">50+</strong><br>systems</div></div>
         </div>
         <div class="glass-card" style="padding: 40px; text-align: center;">
-          <i class="fas fa-shield-haltered" style="font-size: 4rem; color: var(--primary); margin-bottom: 15px;"></i>
-          <h3>Cybersecurity-first approach</h3>
-          <p style="color: var(--text-muted);">Every line of code is written with security in mind. From RBAC to encryption, we build systems that defend themselves.</p>
+          <i class="fas fa-shield-haltered" style="font-size: 4rem; color: var(--primary);"></i>
+          <h3>Security-first</h3><p style="color: var(--text-muted);">RBAC, encryption, anti-injection built into every project.</p>
         </div>
       </div>
     </div>
@@ -739,151 +678,63 @@
 
   <section id="services">
     <div class="container">
-      <h2>Services that scale</h2>
+      <h2>Services</h2>
       <div class="services-grid">
-        <div class="service-card"><i class="fas fa-code service-icon"></i><h3>Web Development</h3><p>Full-stack, responsive, high-performance.</p></div>
-        <div class="service-card"><i class="fas fa-cloud service-icon"></i><h3>SaaS Development</h3><p>Scalable platforms with recurring revenue.</p></div>
-        <div class="service-card"><i class="fas fa-paint-brush service-icon"></i><h3>UI/UX Design</h3><p>Figma-to-code, design systems, prototypes.</p></div>
-        <div class="service-card"><i class="fas fa-shield service-icon"></i><h3>Cybersecurity</h3><p>Pen testing, audits, secure architecture.</p></div>
-        <div class="service-card"><i class="fas fa-robot service-icon"></i><h3>AI Solutions</h3><p>Machine learning, NLP, automation.</p></div>
-        <div class="service-card"><i class="fas fa-server service-icon"></i><h3>Cloud Infrastructure</h3><p>AWS, Azure, GCP deployments.</p></div>
-        <div class="service-card"><i class="fas fa-cogs service-icon"></i><h3>Automation Systems</h3><p>Workflow automation, CI/CD, DevOps.</p></div>
-        <div class="service-card"><i class="fas fa-cube service-icon"></i><h3>Product Design</h3><p>End-to-end product strategy.</p></div>
+        <div class="service-card"><i class="fas fa-code service-icon"></i><h3>Web Development</h3><p>Full-stack, responsive.</p></div>
+        <div class="service-card"><i class="fas fa-cloud service-icon"></i><h3>SaaS Development</h3><p>Scalable platforms.</p></div>
+        <div class="service-card"><i class="fas fa-paint-brush service-icon"></i><h3>UI/UX Design</h3><p>Modern interfaces.</p></div>
+        <div class="service-card"><i class="fas fa-shield service-icon"></i><h3>Cybersecurity</h3><p>Pen testing, audits.</p></div>
+        <div class="service-card"><i class="fas fa-robot service-icon"></i><h3>AI Solutions</h3><p>ML, NLP, automation.</p></div>
+        <div class="service-card"><i class="fas fa-server service-icon"></i><h3>Cloud</h3><p>AWS, Azure, GCP.</p></div>
+        <div class="service-card"><i class="fas fa-cogs service-icon"></i><h3>Automation</h3><p>CI/CD, DevOps.</p></div>
+        <div class="service-card"><i class="fas fa-cube service-icon"></i><h3>Product Design</h3><p>End-to-end strategy.</p></div>
       </div>
     </div>
   </section>
 
-  <!-- PRICING SECTION -->
   <section id="pricing">
     <div class="container">
       <h2>💰 Service Rates & Packages</h2>
-      <p style="text-align: center; color: var(--text-muted); margin-bottom: 3rem; font-size: 1.1rem;">Click "Avail this package" and the package name will be automatically included in your inquiry 🙂</p>
+      <p style="text-align: center; color: var(--text-muted); margin-bottom: 2rem;">Click "Avail this package" to include it in your inquiry</p>
       <div class="pricing-grid">
-        <div class="pricing-card">
-          <div class="pricing-icon">🌐</div>
-          <h3>Simple Store Website</h3>
-          <p class="pricing-desc">Landing page, business info, menu, gallery, contact page.</p>
-          <div class="price-range">₱3,000 – ₱8,000</div>
-          <ul class="pricing-features">
-            <li><i class="fas fa-check-circle"></i> Responsive landing page</li>
-            <li><i class="fas fa-check-circle"></i> Business information</li>
-            <li><i class="fas fa-check-circle"></i> Menu/Services display</li>
-            <li><i class="fas fa-check-circle"></i> Image gallery</li>
-            <li><i class="fas fa-check-circle"></i> Contact form & map</li>
-          </ul>
-          <a href="#contact" class="btn-outline mt-20 avail-btn" data-package="🌐 Simple Store Website (₱3,000-₱8,000)">Avail this package</a>
-        </div>
-        <div class="pricing-card featured">
-          <div class="pricing-icon">🚀</div>
-          <h3>Modern Business Website</h3>
-          <p class="pricing-desc">Admin panel, responsive design, animations, modern UI/UX.</p>
-          <div class="price-range">₱8,000 – ₱20,000+</div>
-          <ul class="pricing-features">
-            <li><i class="fas fa-check-circle"></i> Custom admin dashboard</li>
-            <li><i class="fas fa-check-circle"></i> Fully responsive design</li>
-            <li><i class="fas fa-check-circle"></i> Smooth animations</li>
-            <li><i class="fas fa-check-circle"></i> Modern UI/UX</li>
-            <li><i class="fas fa-check-circle"></i> SEO optimization</li>
-          </ul>
-          <a href="#contact" class="btn-primary mt-20 avail-btn" data-package="🚀 Modern Business Website (₱8,000-₱20,000+)">Avail this package</a>
-        </div>
-        <div class="pricing-card">
-          <div class="pricing-icon">☕</div>
-          <h3>Coffee Shop with Ordering</h3>
-          <p class="pricing-desc">Online ordering, admin dashboard, menu management, responsive.</p>
-          <div class="price-range">₱15,000 – ₱40,000+</div>
-          <ul class="pricing-features">
-            <li><i class="fas fa-check-circle"></i> Online ordering system</li>
-            <li><i class="fas fa-check-circle"></i> Admin dashboard</li>
-            <li><i class="fas fa-check-circle"></i> Menu management (CRUD)</li>
-            <li><i class="fas fa-check-circle"></i> Order tracking</li>
-            <li><i class="fas fa-check-circle"></i> Payment integration</li>
-          </ul>
-          <a href="#contact" class="btn-outline mt-20 avail-btn" data-package="☕ Coffee Shop with Ordering (₱15,000-₱40,000+)">Avail this package</a>
-        </div>
-        <div class="pricing-card">
-          <div class="pricing-icon">🎓</div>
-          <h3>Capstone · Simple System</h3>
-          <p class="pricing-desc">Login, CRUD, basic database — ideal for academic projects.</p>
-          <div class="price-range">₱5,000 – ₱15,000</div>
-          <ul class="pricing-features">
-            <li><i class="fas fa-check-circle"></i> User authentication</li>
-            <li><i class="fas fa-check-circle"></i> CRUD operations</li>
-            <li><i class="fas fa-check-circle"></i> Basic database</li>
-            <li><i class="fas fa-check-circle"></i> Simple dashboard</li>
-            <li><i class="fas fa-check-circle"></i> Source code delivery</li>
-          </ul>
-          <a href="#contact" class="btn-outline mt-20 avail-btn" data-package="🎓 Capstone Simple System (₱5,000-₱15,000)">Avail this package</a>
-        </div>
-        <div class="pricing-card featured">
-          <div class="pricing-icon">🤖</div>
-          <h3>Capstone · Advanced AI / Thesis</h3>
-          <p class="pricing-desc">AI features, analytics, automation, APIs — cutting-edge projects.</p>
-          <div class="price-range">₱20,000 – ₱80,000+</div>
-          <ul class="pricing-features">
-            <li><i class="fas fa-check-circle"></i> AI/ML features</li>
-            <li><i class="fas fa-check-circle"></i> Advanced analytics</li>
-            <li><i class="fas fa-check-circle"></i> Automation workflows</li>
-            <li><i class="fas fa-check-circle"></i> API development</li>
-            <li><i class="fas fa-check-circle"></i> Full documentation</li>
-          </ul>
-          <a href="#contact" class="btn-primary mt-20 avail-btn" data-package="🤖 Capstone Advanced AI/Thesis (₱20,000-₱80,000+)">Avail this package</a>
-        </div>
+        <div class="pricing-card"><div class="pricing-icon">🌐</div><h3>Simple Store Website</h3><p class="pricing-desc">Landing page, business info, menu, gallery, contact page.</p><div class="price-range">₱3,000 – ₱8,000</div><ul class="pricing-features"><li><i class="fas fa-check-circle"></i> Responsive landing page</li><li><i class="fas fa-check-circle"></i> Business information</li><li><i class="fas fa-check-circle"></i> Image gallery</li><li><i class="fas fa-check-circle"></i> Contact form</li></ul><a href="#contact" class="btn-outline mt-20 avail-btn" data-package="🌐 Simple Store Website (₱3,000-₱8,000)">Avail this package</a></div>
+        <div class="pricing-card featured"><div class="pricing-icon">🚀</div><h3>Modern Business Website</h3><p class="pricing-desc">Admin panel, responsive, animations, modern UI/UX.</p><div class="price-range">₱8,000 – ₱20,000+</div><ul class="pricing-features"><li><i class="fas fa-check-circle"></i> Custom admin dashboard</li><li><i class="fas fa-check-circle"></i> Fully responsive</li><li><i class="fas fa-check-circle"></i> Smooth animations</li><li><i class="fas fa-check-circle"></i> SEO optimized</li></ul><a href="#contact" class="btn-primary mt-20 avail-btn" data-package="🚀 Modern Business Website (₱8,000-₱20,000+)">Avail this package</a></div>
+        <div class="pricing-card"><div class="pricing-icon">☕</div><h3>Coffee Shop + Ordering</h3><p class="pricing-desc">Online ordering, admin dashboard, menu management.</p><div class="price-range">₱15,000 – ₱40,000+</div><ul class="pricing-features"><li><i class="fas fa-check-circle"></i> Online ordering system</li><li><i class="fas fa-check-circle"></i> Admin dashboard</li><li><i class="fas fa-check-circle"></i> Menu management</li><li><i class="fas fa-check-circle"></i> Payment integration</li></ul><a href="#contact" class="btn-outline mt-20 avail-btn" data-package="☕ Coffee Shop + Ordering (₱15,000-₱40,000+)">Avail this package</a></div>
+        <div class="pricing-card"><div class="pricing-icon">🎓</div><h3>Capstone Simple System</h3><p class="pricing-desc">Login, CRUD, basic database — academic projects.</p><div class="price-range">₱5,000 – ₱15,000</div><ul class="pricing-features"><li><i class="fas fa-check-circle"></i> User authentication</li><li><i class="fas fa-check-circle"></i> CRUD operations</li><li><i class="fas fa-check-circle"></i> Basic database</li><li><i class="fas fa-check-circle"></i> Source code delivery</li></ul><a href="#contact" class="btn-outline mt-20 avail-btn" data-package="🎓 Capstone Simple System (₱5,000-₱15,000)">Avail this package</a></div>
+        <div class="pricing-card featured"><div class="pricing-icon">🤖</div><h3>Capstone Advanced AI</h3><p class="pricing-desc">AI features, analytics, automation, APIs.</p><div class="price-range">₱20,000 – ₱80,000+</div><ul class="pricing-features"><li><i class="fas fa-check-circle"></i> AI/ML features</li><li><i class="fas fa-check-circle"></i> Advanced analytics</li><li><i class="fas fa-check-circle"></i> API development</li><li><i class="fas fa-check-circle"></i> Full documentation</li></ul><a href="#contact" class="btn-primary mt-20 avail-btn" data-package="🤖 Capstone Advanced AI (₱20,000-₱80,000+)">Avail this package</a></div>
       </div>
-      <div class="downpayment-note">
-        <p><i class="fas fa-info-circle"></i> <strong>📌 50% Downpayment Required Before Starting</strong></p>
-        <p><i class="fas fa-info-circle"></i> <strong>📌 Remaining Balance Upon Completion</strong></p>
-        <p style="margin-top: 10px; color: var(--text-muted);">Click any "Avail this package" button and the package name will be automatically included in your email 🙂</p>
-      </div>
+      <div class="downpayment-note"><p><strong>📌 50% Downpayment | Remaining Balance Upon Completion</strong></p></div>
     </div>
   </section>
 
   <section id="portfolio">
     <div class="container">
       <h2>Featured project</h2>
-      <div class="glass-card" style="padding: 40px; cursor: pointer;" id="fesCard">
+      <div class="glass-card" style="padding: 40px;">
         <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap; margin-bottom: 20px;">
           <i class="fas fa-chalkboard-teacher" style="font-size: 3rem; color: var(--primary);"></i>
-          <div><h3 style="font-size: 2rem;">Faculty Evaluation System (FES)</h3><p style="color: var(--secondary);">Palompon Institute of Technology – Tabango Campus | CHED CMO No. 19, s. 2025</p></div>
+          <div><h3>Faculty Evaluation System</h3><p style="color: var(--secondary);">PIT Tabango | CHED CMO No. 19, s. 2025</p></div>
         </div>
         <div class="fes-feature-grid">
-          <div class="fes-feature-item"><strong>Role-Based Access</strong><br>Admin, dean, faculty, student</div>
-          <div class="fes-feature-item"><strong>Evaluation Scheduling</strong><br>Automated periods</div>
+          <div class="fes-feature-item"><strong>RBAC</strong><br>Admin, dean, faculty, student</div>
+          <div class="fes-feature-item"><strong>Scheduling</strong><br>Automated evaluation periods</div>
           <div class="fes-feature-item"><strong>Weighted Mean</strong><br>Automated computation</div>
           <div class="fes-feature-item"><strong>PDF Reports</strong><br>Individual & department</div>
-          <div class="fes-feature-item"><strong>Analytics Dashboard</strong><br>Real-time charts</div>
-          <div class="fes-feature-item"><strong>SEF Component</strong><br>Supervisor evaluation</div>
+          <div class="fes-feature-item"><strong>Analytics</strong><br>Real-time dashboard</div>
+          <div class="fes-feature-item"><strong>SEF</strong><br>Supervisor evaluation</div>
         </div>
-        <button class="btn-primary mt-20" id="openFesBtn"><i class="fas fa-search"></i> Explore full case study</button>
+        <button class="btn-primary mt-20" id="openFesBtn"><i class="fas fa-search"></i> Case study</button>
       </div>
     </div>
   </section>
 
   <section>
-    <div class="container"><h2>Our process</h2>
+    <div class="container"><h2>Process</h2>
       <div class="process-grid">
-        <div class="process-step"><span class="process-number">01</span><h3>Discovery</h3><p>Requirements analysis.</p></div>
-        <div class="process-step"><span class="process-number">02</span><h3>Strategy</h3><p>Architecture planning.</p></div>
-        <div class="process-step"><span class="process-number">03</span><h3>Development</h3><p>Agile sprints & testing.</p></div>
-        <div class="process-step"><span class="process-number">04</span><h3>Launch</h3><p>Deployment & support.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="container"><h2>FAQ</h2>
-      <div class="faq-item"><div class="faq-question">What is the payment process? <i class="fas fa-chevron-down"></i></div><div class="faq-answer"><p>50% downpayment to start, remaining 50% upon completion. GCash, Maya, bank transfers accepted.</p></div></div>
-      <div class="faq-item"><div class="faq-question">How long does a project take? <i class="fas fa-chevron-down"></i></div><div class="faq-answer"><p>Simple sites: 1-2 weeks. Business sites: 2-4 weeks. Advanced systems: 4-12 weeks.</p></div></div>
-      <div class="faq-item"><div class="faq-question">Do you provide support? <i class="fas fa-chevron-down"></i></div><div class="faq-answer"><p>Yes, 30 days post-launch support included with optional maintenance retainers.</p></div></div>
-    </div>
-  </section>
-
-  <section>
-    <div class="container text-center">
-      <div class="glass-card" style="padding: 60px 40px;">
-        <h2 style="font-size: 2.8rem;">Ready to build something incredible?</h2>
-        <p style="color: var(--text-muted); margin: 20px 0 30px; font-size: 1.2rem;">Zero obligation, 100% confidential.</p>
-        <a href="#contact" class="btn-primary">Start the conversation <i class="fas fa-arrow-right"></i></a>
+        <div class="process-step"><span class="process-number">01</span><h3>Discovery</h3></div>
+        <div class="process-step"><span class="process-number">02</span><h3>Strategy</h3></div>
+        <div class="process-step"><span class="process-number">03</span><h3>Development</h3></div>
+        <div class="process-step"><span class="process-number">04</span><h3>Launch</h3></div>
       </div>
     </div>
   </section>
@@ -906,9 +757,9 @@
           <div class="status-msg" id="formStatus"></div>
         </form>
         <div>
-          <div class="mb-20"><i class="fas fa-phone" style="color: var(--primary); width: 24px;"></i> +63 993 679 6302</div>
-          <div class="mb-20"><i class="fas fa-envelope" style="color: var(--primary); width: 24px;"></i> businessrhyziltech@gmail.com</div>
-          <div class="mb-20"><i class="fas fa-map-pin" style="color: var(--primary); width: 24px;"></i> Crossing Otabon, Tabango, Leyte</div>
+          <div class="mb-20"><i class="fas fa-phone" style="color: var(--primary);"></i> +63 993 679 6302</div>
+          <div class="mb-20"><i class="fas fa-envelope" style="color: var(--primary);"></i> businessrhyziltech@gmail.com</div>
+          <div class="mb-20"><i class="fas fa-map-pin" style="color: var(--primary);"></i> Crossing Otabon, Tabango, Leyte</div>
           <div class="flex gap-12 mt-20">
             <a href="https://www.facebook.com/profile.php?id=61584139169630" target="_blank" rel="noopener" class="social-icon"><i class="fab fa-facebook-f"></i></a>
             <a href="https://www.tiktok.com/@rhyzil_" target="_blank" rel="noopener" class="social-icon"><i class="fab fa-tiktok"></i></a>
@@ -922,34 +773,32 @@
   <footer>
     <div class="container">
       <div class="footer-grid">
-        <div><h3 style="font-size: 1.5rem;">RHYZILTECH</h3><p style="color: var(--text-muted);">Elite SaaS & cybersecurity agency.</p></div>
-        <div><h4>Services</h4><p style="color: var(--text-muted);">Web Dev<br>SaaS<br>Cybersecurity<br>AI</p></div>
-        <div><h4>Company</h4><p style="color: var(--text-muted);">About<br>Projects<br>Pricing<br>Contact</p></div>
+        <div><h3>RHYZILTECH</h3><p style="color: var(--text-muted);">Elite SaaS & cybersecurity.</p></div>
+        <div><h4>Services</h4><p style="color: var(--text-muted);">Web Dev<br>SaaS<br>Security<br>AI</p></div>
+        <div><h4>Company</h4><p style="color: var(--text-muted);">About<br>Pricing<br>Contact</p></div>
         <div><h4>Social</h4><div class="flex gap-12"><a href="https://www.facebook.com/profile.php?id=61584139169630" target="_blank" rel="noopener" class="social-icon"><i class="fab fa-facebook-f"></i></a><a href="https://www.tiktok.com/@rhyzil_" target="_blank" rel="noopener" class="social-icon"><i class="fab fa-tiktok"></i></a></div></div>
       </div>
-      <div style="text-align: center; margin-top: 40px; color: var(--text-muted); font-size: 0.9rem;">© 2026 Rhyziltech. Secure by design.</div>
+      <div style="text-align: center; margin-top: 40px; color: var(--text-muted);">© 2026 Rhyziltech. Secure by design.</div>
     </div>
   </footer>
 
   <div class="modal-overlay" id="fesModal">
     <div class="modal-content">
       <button id="closeFesModal" style="float:right; background:none; border:none; color:var(--text); font-size:2rem; cursor:pointer;">&times;</button>
-      <h2>📋 Faculty Evaluation System · Full Case Study</h2>
-      <p style="color: var(--secondary); margin-bottom: 20px;">Palompon Institute of Technology – Tabango Campus | CHED CMO No. 19, s. 2025</p>
-      <h3>🎯 Problem</h3><p style="color: var(--text-muted); margin-bottom: 15px;">Manual paper‑based evaluations caused delays, clerical errors, and data redundancy.</p>
-      <h3>💡 Solution</h3><p style="color: var(--text-muted); margin-bottom: 15px;">Automated platform with RBAC, weighted mean computation, PDF reports, and SEF component.</p>
-      <h3>🛠️ Tech Stack</h3><p style="color: var(--text-muted);">PHP · MySQL · JavaScript · Bootstrap · XAMPP · Chart.js</p>
-      <a href="#contact" class="btn-primary mt-20" onclick="document.getElementById('fesModal').style.display='none';">💬 Discuss this project</a>
+      <h2>📋 FES Case Study</h2>
+      <p style="color: var(--secondary);">PIT Tabango | CHED CMO No. 19, s. 2025</p>
+      <p style="color: var(--text-muted);">Automated evaluation with RBAC, weighted mean, PDF reports, SEF, real-time analytics. PHP · MySQL · JS · Bootstrap · XAMPP.</p>
+      <a href="#contact" class="btn-primary mt-20" onclick="document.getElementById('fesModal').style.display='none';">💬 Discuss</a>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script>
     (function() {
+      // Theme
       const html = document.documentElement;
       const themeToggle = document.getElementById('themeToggle');
       const icon = themeToggle.querySelector('i');
-
       function setTheme(t) {
         html.setAttribute('data-theme', t);
         localStorage.setItem('theme', t);
@@ -958,10 +807,14 @@
       setTheme(localStorage.getItem('theme') || 'dark');
       themeToggle.addEventListener('click', () => setTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
 
+      // Mobile menu
       document.getElementById('menuToggle').addEventListener('click', () => document.getElementById('navLinks').classList.toggle('show'));
       document.querySelectorAll('.nav-links a').forEach(a => a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('show')));
+
+      // FAQ
       document.querySelectorAll('.faq-question').forEach(q => q.addEventListener('click', () => q.parentElement.classList.toggle('active')));
 
+      // Modal
       const modal = document.getElementById('fesModal');
       document.getElementById('openFesBtn').addEventListener('click', () => { modal.style.display = 'flex'; document.body.style.overflow = 'hidden'; });
       document.getElementById('closeFesModal').addEventListener('click', () => { modal.style.display = 'none'; document.body.style.overflow = 'auto'; });
@@ -985,12 +838,16 @@
 
       document.getElementById('removePackage').addEventListener('click', () => {
         selectedPackageInput.value = '';
-        selectedPackageName.textContent = '';
         selectedPackageDisplay.classList.remove('show');
       });
 
-      // EmailJS - FIXED VERSION
+      // ============================================================
+      // EMAILJS - WORKING CONFIGURATION
+      // ============================================================
+      console.log('🚀 Initializing EmailJS...');
       emailjs.init("UV2MXRtD7FcyZXQ3F");
+      console.log('✅ EmailJS initialized with public key');
+
       const form = document.getElementById('contactForm');
       const status = document.getElementById('formStatus');
       const sendBtn = document.getElementById('sendBtn');
@@ -998,10 +855,11 @@
 
       form.addEventListener('submit', function(e) {
         e.preventDefault();
-        
+        console.log('📤 Form submitted');
+
         if (Date.now() - lastSubmit < 8000) {
           status.className = 'status-msg error';
-          status.textContent = '⚠️ Please wait a moment before sending again.';
+          status.textContent = '⚠️ Please wait before sending again.';
           return;
         }
 
@@ -1009,6 +867,8 @@
         const email = document.getElementById('senderEmail').value.trim();
         const msg = document.getElementById('senderMessage').value.trim();
         const selectedPackage = selectedPackageInput.value;
+
+        console.log('Form data:', { name, email, msg: msg.substring(0, 30), package: selectedPackage });
 
         if (!name || !email || !msg) {
           status.className = 'status-msg error';
@@ -1018,7 +878,7 @@
 
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
           status.className = 'status-msg error';
-          status.textContent = '⚠️ Please enter a valid email.';
+          status.textContent = '⚠️ Valid email required.';
           return;
         }
 
@@ -1026,52 +886,60 @@
         sendBtn.disabled = true;
         sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
         status.className = 'status-msg sending';
-        status.textContent = '📤 Sending your message...';
+        status.textContent = '📤 Sending...';
 
-        // Build message with package info included in the message body
+        // Build message with package
         let fullMessage = msg;
         if (selectedPackage) {
-          fullMessage = '📦 PACKAGE AVAILED: ' + selectedPackage + '\n\n📝 CLIENT MESSAGE:\n' + msg;
+          fullMessage = '📦 PACKAGE: ' + selectedPackage + '\n\n📝 MESSAGE:\n' + msg;
         }
 
-        // Only send variables that exist in your EmailJS template
-        // Your template uses: from_name, from_email, message, reply_to
-        emailjs.send("service_ad1l4qy", "template_mphmqzv", {
+        // Template parameters matching your EmailJS template
+        const templateParams = {
           from_name: name,
           from_email: email,
           message: fullMessage,
           reply_to: email
-        }).then(function(response) {
-          console.log('SUCCESS!', response.status, response.text);
-          status.className = 'status-msg success';
-          status.textContent = '✅ Message sent successfully! I\'ll reply within 12 hours.';
-          form.reset();
-          selectedPackageInput.value = '';
-          selectedPackageDisplay.classList.remove('show');
-          sendBtn.disabled = false;
-          sendBtn.innerHTML = '💬 Send message';
-          setTimeout(() => { status.className = 'status-msg'; status.textContent = ''; }, 6000);
-        }).catch(function(error) {
-          console.error('FAILED...', error);
-          // Fallback to mailto
-          const subject = encodeURIComponent('Portfolio Contact from ' + name + (selectedPackage ? ' - ' + selectedPackage : ''));
-          const body = encodeURIComponent(
-            (selectedPackage ? '📦 PACKAGE AVAILED: ' + selectedPackage + '\n\n' : '') +
-            'Name: ' + name + '\n' +
-            'Email: ' + email + '\n\n' +
-            'Message:\n' + msg
-          );
-          const mailtoLink = 'mailto:businessrhyziltech@gmail.com?subject=' + subject + '&body=' + body;
-          
-          status.className = 'status-msg error';
-          status.innerHTML = '❌ Unable to send via form. Opening email client... <a href="' + mailtoLink + '" style="color:var(--secondary);text-decoration:underline;">Click here</a> if nothing happens.';
-          sendBtn.disabled = false;
-          sendBtn.innerHTML = '💬 Send message';
-          window.location.href = mailtoLink;
-        });
+        };
+
+        console.log('📧 Sending via EmailJS...');
+        console.log('Service:', 'service_ad1l4qy');
+        console.log('Template:', 'template_mphmqzv');
+        console.log('Params:', templateParams);
+
+        emailjs.send("service_ad1l4qy", "template_mphmqzv", templateParams)
+          .then(function(response) {
+            console.log('✅ SUCCESS!', response.status, response.text);
+            status.className = 'status-msg success';
+            status.textContent = '✅ Sent! Reply within 12 hours.';
+            form.reset();
+            selectedPackageInput.value = '';
+            selectedPackageDisplay.classList.remove('show');
+            sendBtn.disabled = false;
+            sendBtn.innerHTML = '💬 Send message';
+            setTimeout(() => { status.className = 'status-msg'; status.textContent = ''; }, 6000);
+          })
+          .catch(function(error) {
+            console.error('❌ EmailJS Error:', error);
+            console.error('Error details:', JSON.stringify(error));
+            
+            // Mailto fallback
+            const subject = 'Portfolio Contact from ' + encodeURIComponent(name);
+            const body = encodeURIComponent(
+              (selectedPackage ? 'PACKAGE: ' + selectedPackage + '\n\n' : '') +
+              'Name: ' + name + '\nEmail: ' + email + '\n\nMessage:\n' + msg
+            );
+            const mailto = 'mailto:businessrhyziltech@gmail.com?subject=' + subject + '&body=' + body;
+            
+            status.className = 'status-msg error';
+            status.innerHTML = '⚠️ Direct email: <a href="mailto:businessrhyziltech@gmail.com" style="color:var(--secondary);">businessrhyziltech@gmail.com</a>';
+            sendBtn.disabled = false;
+            sendBtn.innerHTML = '💬 Send message';
+            window.open(mailto, '_blank');
+          });
       });
 
-      console.log('✅ Rhyziltech — All systems operational');
+      console.log('✅ All systems ready');
     })();
   </script>
 </body>

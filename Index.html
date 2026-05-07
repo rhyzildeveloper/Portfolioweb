@@ -136,13 +136,8 @@
       padding: 0 28px;
     }
 
-    @media (max-width: 768px) {
-      .container { padding: 0 20px; }
-    }
-
-    @media (max-width: 480px) {
-      .container { padding: 0 16px; }
-    }
+    @media (max-width: 768px) { .container { padding: 0 20px; } }
+    @media (max-width: 480px) { .container { padding: 0 16px; } }
 
     h1, h2, h3, h4 {
       font-family: var(--font-display);
@@ -199,9 +194,7 @@
       transform: translateY(-6px);
     }
 
-    @media (max-width: 480px) {
-      .glass-card { border-radius: var(--radius-lg); }
-    }
+    @media (max-width: 480px) { .glass-card { border-radius: var(--radius-lg); } }
 
     .btn-primary {
       display: inline-flex;
@@ -279,7 +272,6 @@
       }
     }
 
-    /* Header */
     header {
       position: fixed;
       top: 0;
@@ -294,9 +286,7 @@
       transition: background 0.3s;
     }
 
-    @media (max-width: 480px) {
-      header { padding: 14px 0; }
-    }
+    @media (max-width: 480px) { header { padding: 14px 0; } }
 
     .header-flex {
       display: flex;
@@ -315,9 +305,7 @@
       letter-spacing: -0.03em;
     }
 
-    @media (max-width: 480px) {
-      .logo { font-size: 1.4rem; }
-    }
+    @media (max-width: 480px) { .logo { font-size: 1.4rem; } }
 
     .nav-links {
       display: flex;
@@ -398,7 +386,6 @@
       .mobile-btn { display: block; }
     }
 
-    /* Hero */
     .hero {
       min-height: 100vh;
       display: flex;
@@ -407,21 +394,12 @@
       position: relative;
     }
 
-    @media (max-width: 768px) {
-      .hero { padding: 120px 0 60px; min-height: auto; }
-    }
+    @media (max-width: 768px) { .hero { padding: 120px 0 60px; min-height: auto; } }
+    @media (max-width: 480px) { .hero { padding: 100px 0 40px; text-align: center; } }
 
-    @media (max-width: 480px) {
-      .hero { padding: 100px 0 40px; text-align: center; }
-    }
+    .hero-content { max-width: 750px; }
 
-    .hero-content {
-      max-width: 750px;
-    }
-
-    @media (max-width: 480px) {
-      .hero-content { max-width: 100%; }
-    }
+    @media (max-width: 480px) { .hero-content { max-width: 100%; } }
 
     .hero-badge {
       display: inline-flex;
@@ -437,9 +415,7 @@
       flex-wrap: wrap;
     }
 
-    @media (max-width: 480px) {
-      .hero-badge { font-size: 0.8rem; padding: 6px 16px; }
-    }
+    @media (max-width: 480px) { .hero-badge { font-size: 0.8rem; padding: 6px 16px; } }
 
     .hero-subtitle {
       font-size: 1.3rem;
@@ -448,13 +424,8 @@
       line-height: 1.7;
     }
 
-    @media (max-width: 768px) {
-      .hero-subtitle { font-size: 1.1rem; }
-    }
-
-    @media (max-width: 480px) {
-      .hero-subtitle { font-size: 1rem; }
-    }
+    @media (max-width: 768px) { .hero-subtitle { font-size: 1.1rem; } }
+    @media (max-width: 480px) { .hero-subtitle { font-size: 1rem; } }
 
     .hero-buttons {
       display: flex;
@@ -462,11 +433,8 @@
       flex-wrap: wrap;
     }
 
-    @media (max-width: 480px) {
-      .hero-buttons { flex-direction: column; gap: 12px; }
-    }
+    @media (max-width: 480px) { .hero-buttons { flex-direction: column; gap: 12px; } }
 
-    /* Stats */
     .stats-row {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -474,13 +442,8 @@
       margin-top: 60px;
     }
 
-    @media (max-width: 768px) {
-      .stats-row { grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 40px; }
-    }
-
-    @media (max-width: 480px) {
-      .stats-row { grid-template-columns: 1fr 1fr; gap: 12px; }
-    }
+    @media (max-width: 768px) { .stats-row { grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 40px; } }
+    @media (max-width: 480px) { .stats-row { grid-template-columns: 1fr 1fr; gap: 12px; } }
 
     .stat-card {
       background: var(--glass);
@@ -491,9 +454,7 @@
       transition: all 0.3s;
     }
 
-    @media (max-width: 480px) {
-      .stat-card { padding: 20px 14px; border-radius: var(--radius-lg); }
-    }
+    @media (max-width: 480px) { .stat-card { padding: 20px 14px; border-radius: var(--radius-lg); } }
 
     .stat-card:hover {
       border-color: var(--primary);
@@ -509,24 +470,15 @@
       -webkit-text-fill-color: transparent;
     }
 
-    @media (max-width: 480px) {
-      .stat-number { font-size: 2rem; }
-    }
+    @media (max-width: 480px) { .stat-number { font-size: 2rem; } }
 
-    /* Sections */
     section {
       padding: 80px 0;
     }
 
-    @media (max-width: 768px) {
-      section { padding: 60px 0; }
-    }
+    @media (max-width: 768px) { section { padding: 60px 0; } }
+    @media (max-width: 480px) { section { padding: 40px 0; } }
 
-    @media (max-width: 480px) {
-      section { padding: 40px 0; }
-    }
-
-    /* About */
     .about-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -534,24 +486,16 @@
       align-items: center;
     }
 
-    @media (max-width: 768px) {
-      .about-grid { grid-template-columns: 1fr; gap: 25px; }
-    }
+    @media (max-width: 768px) { .about-grid { grid-template-columns: 1fr; gap: 25px; } }
 
-    /* Services */
     .services-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 25px;
     }
 
-    @media (max-width: 768px) {
-      .services-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
-    }
-
-    @media (max-width: 480px) {
-      .services-grid { grid-template-columns: 1fr; gap: 15px; }
-    }
+    @media (max-width: 768px) { .services-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; } }
+    @media (max-width: 480px) { .services-grid { grid-template-columns: 1fr; gap: 15px; } }
 
     .service-card {
       background: var(--glass);
@@ -563,9 +507,7 @@
       overflow: hidden;
     }
 
-    @media (max-width: 480px) {
-      .service-card { padding: 25px 20px; border-radius: var(--radius-lg); }
-    }
+    @media (max-width: 480px) { .service-card { padding: 25px 20px; border-radius: var(--radius-lg); } }
 
     .service-card::before {
       content: '';
@@ -584,9 +526,7 @@
       box-shadow: 0 25px 60px rgba(22, 88, 250, 0.15);
     }
 
-    @media (max-width: 480px) {
-      .service-card:hover { transform: translateY(-4px); }
-    }
+    @media (max-width: 480px) { .service-card:hover { transform: translateY(-4px); } }
 
     .service-icon {
       font-size: 2.2rem;
@@ -594,20 +534,121 @@
       margin-bottom: 18px;
     }
 
-    /* Process */
+    /* Pricing */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    @media (max-width: 768px) { .pricing-grid { grid-template-columns: 1fr; max-width: 550px; margin: 0 auto; gap: 20px; } }
+
+    .pricing-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-2xl);
+      padding: 35px 30px;
+      transition: all 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    @media (max-width: 480px) { .pricing-card { padding: 28px 22px; } }
+
+    .pricing-card.featured {
+      border-color: var(--primary);
+      box-shadow: 0 0 50px rgba(22, 88, 250, 0.2);
+      position: relative;
+    }
+
+    .pricing-card.featured::before {
+      content: 'BEST VALUE';
+      position: absolute;
+      top: -14px;
+      right: 25px;
+      background: var(--primary);
+      color: white;
+      padding: 6px 18px;
+      border-radius: 25px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+
+    .pricing-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-6px);
+      box-shadow: 0 25px 60px rgba(22, 88, 250, 0.2);
+    }
+
+    .pricing-icon {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+    }
+
+    .price-range {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 12px 0;
+    }
+
+    .pricing-desc {
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      flex-grow: 1;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .pricing-features {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 25px;
+      text-align: left;
+    }
+
+    .pricing-features li {
+      padding: 6px 0;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pricing-features li i {
+      color: var(--accent-glow);
+      font-size: 0.8rem;
+    }
+
+    .downpayment-note {
+      background: rgba(22, 88, 250, 0.1);
+      border: 1px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      margin-top: 30px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+
+    .downpayment-note i {
+      color: var(--primary);
+      margin-right: 6px;
+    }
+
     .process-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 30px;
     }
 
-    @media (max-width: 768px) {
-      .process-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
-    }
-
-    @media (max-width: 480px) {
-      .process-grid { grid-template-columns: 1fr; gap: 15px; }
-    }
+    @media (max-width: 768px) { .process-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; } }
+    @media (max-width: 480px) { .process-grid { grid-template-columns: 1fr; gap: 15px; } }
 
     .process-step {
       background: var(--glass);
@@ -632,67 +673,8 @@
       -webkit-text-fill-color: transparent;
     }
 
-    @media (max-width: 480px) {
-      .process-number { font-size: 2.2rem; }
-    }
+    @media (max-width: 480px) { .process-number { font-size: 2.2rem; } }
 
-    /* Portfolio */
-    .portfolio-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 25px;
-    }
-
-    @media (max-width: 768px) {
-      .portfolio-grid { grid-template-columns: 1fr; gap: 20px; }
-    }
-
-    /* Pricing */
-    .pricing-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 30px;
-    }
-
-    @media (max-width: 768px) {
-      .pricing-grid { grid-template-columns: 1fr; max-width: 450px; margin: 0 auto; gap: 20px; }
-    }
-
-    .pricing-card {
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-2xl);
-      padding: 40px 30px;
-      text-align: center;
-      transition: all 0.3s;
-    }
-
-    @media (max-width: 480px) {
-      .pricing-card { padding: 30px 22px; }
-    }
-
-    .pricing-card.featured {
-      border-color: var(--primary);
-      box-shadow: 0 0 50px rgba(22, 88, 250, 0.2);
-    }
-
-    .pricing-card:hover {
-      border-color: var(--primary);
-      transform: translateY(-6px);
-    }
-
-    .price {
-      font-family: var(--font-display);
-      font-size: 3.5rem;
-      font-weight: 800;
-      color: var(--text);
-    }
-
-    @media (max-width: 480px) {
-      .price { font-size: 2.5rem; }
-    }
-
-    /* FAQ */
     .faq-item {
       background: var(--glass);
       border: 1px solid var(--glass-border);
@@ -711,9 +693,7 @@
       transition: 0.2s;
     }
 
-    @media (max-width: 480px) {
-      .faq-question { padding: 18px 20px; font-size: 0.95rem; }
-    }
+    @media (max-width: 480px) { .faq-question { padding: 18px 20px; font-size: 0.95rem; } }
 
     .faq-answer {
       max-height: 0;
@@ -727,11 +707,8 @@
       padding: 0 28px 22px;
     }
 
-    @media (max-width: 480px) {
-      .faq-item.active .faq-answer { padding: 0 20px 18px; }
-    }
+    @media (max-width: 480px) { .faq-item.active .faq-answer { padding: 0 20px 18px; } }
 
-    /* Contact */
     .contact-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -740,11 +717,41 @@
       margin: 0 auto;
     }
 
-    @media (max-width: 768px) {
-      .contact-grid { grid-template-columns: 1fr; gap: 30px; }
+    @media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; gap: 30px; } }
+
+    /* Selected package display */
+    .selected-package {
+      display: none;
+      background: rgba(22, 88, 250, 0.15);
+      border: 1px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 14px 20px;
+      margin-bottom: 20px;
+      color: var(--text);
+      font-weight: 500;
+      align-items: center;
+      gap: 10px;
     }
 
-    /* Footer */
+    .selected-package.show {
+      display: flex;
+    }
+
+    .selected-package i {
+      color: var(--primary);
+    }
+
+    .selected-package .remove-package {
+      margin-left: auto;
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .selected-package .remove-package:hover {
+      color: #ff5050;
+    }
+
     footer {
       background: var(--glass);
       border-top: 1px solid var(--glass-border);
@@ -752,9 +759,7 @@
       margin-top: 80px;
     }
 
-    @media (max-width: 480px) {
-      footer { padding: 40px 0 20px; margin-top: 40px; }
-    }
+    @media (max-width: 480px) { footer { padding: 40px 0 20px; margin-top: 40px; } }
 
     .footer-grid {
       display: grid;
@@ -762,13 +767,8 @@
       gap: 40px;
     }
 
-    @media (max-width: 768px) {
-      .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 30px; }
-    }
-
-    @media (max-width: 480px) {
-      .footer-grid { grid-template-columns: 1fr 1fr; gap: 25px; }
-    }
+    @media (max-width: 768px) { .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 30px; } }
+    @media (max-width: 480px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 25px; } }
 
     .social-icon {
       display: inline-flex;
@@ -791,11 +791,8 @@
       box-shadow: 0 0 25px rgba(22, 88, 250, 0.4);
     }
 
-    @media (max-width: 480px) {
-      .social-icon { width: 38px; height: 38px; font-size: 0.9rem; }
-    }
+    @media (max-width: 480px) { .social-icon { width: 38px; height: 38px; font-size: 0.9rem; } }
 
-    /* Modal */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -819,15 +816,9 @@
       overflow-y: auto;
     }
 
-    @media (max-width: 768px) {
-      .modal-content { padding: 30px 25px; border-radius: var(--radius-xl); }
-    }
+    @media (max-width: 768px) { .modal-content { padding: 30px 25px; border-radius: var(--radius-xl); } }
+    @media (max-width: 480px) { .modal-content { padding: 25px 18px; border-radius: var(--radius-lg); } }
 
-    @media (max-width: 480px) {
-      .modal-content { padding: 25px 18px; border-radius: var(--radius-lg); }
-    }
-
-    /* Form */
     .form-control {
       width: 100%;
       padding: 16px 22px;
@@ -840,9 +831,7 @@
       margin-bottom: 16px;
     }
 
-    @media (max-width: 480px) {
-      .form-control { padding: 14px 18px; font-size: 0.95rem; }
-    }
+    @media (max-width: 480px) { .form-control { padding: 14px 18px; font-size: 0.95rem; } }
 
     .form-control:focus {
       border-color: var(--primary);
@@ -868,19 +857,27 @@
     .status-msg.error { display: block; background: rgba(255,80,80,0.15); border: 1px solid #ff5050; color: #ff5050; }
     .status-msg.sending { display: block; background: rgba(22,88,250,0.15); border: 1px solid var(--primary); color: var(--primary); }
 
-    /* Utility */
     .text-center { text-align: center; }
     .mt-20 { margin-top: 20px; }
     .mt-40 { margin-top: 40px; }
     .mb-20 { margin-bottom: 20px; }
     .gap-12 { gap: 12px; }
-    .flex-wrap { flex-wrap: wrap; }
     .flex { display: flex; }
-    .flex-col { flex-direction: column; }
-    .items-center { align-items: center; }
+    .flex-wrap { flex-wrap: wrap; }
 
-    @media (max-width: 480px) {
-      .hide-mobile { display: none; }
+    .fes-feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .fes-feature-item {
+      background: rgba(22, 88, 250, 0.06);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      border-left: 3px solid var(--primary);
     }
   </style>
 </head>
@@ -898,8 +895,8 @@
           <a href="#home">Home</a>
           <a href="#about">About</a>
           <a href="#services">Services</a>
-          <a href="#portfolio">Portfolio</a>
           <a href="#pricing">Pricing</a>
+          <a href="#portfolio">Portfolio</a>
           <a href="#contact">Contact</a>
         </div>
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme"><i class="fas fa-sun"></i></button>
@@ -916,7 +913,7 @@
         <p class="hero-subtitle">We design and develop enterprise-grade SaaS platforms, AI-driven solutions, and bulletproof cybersecurity infrastructure for forward-thinking companies.</p>
         <div class="hero-buttons">
           <a href="#contact" class="btn-primary">Start a project <i class="fas fa-arrow-right"></i></a>
-          <a href="#portfolio" class="btn-outline">View our work</a>
+          <a href="#pricing" class="btn-outline">View pricing</a>
         </div>
         <div class="stats-row">
           <div class="stat-card"><span class="stat-number">150+</span><p>Projects delivered</p></div>
@@ -965,26 +962,133 @@
     </div>
   </section>
 
+  <!-- PRICING SECTION -->
+  <section id="pricing">
+    <div class="container">
+      <h2>💰 Service Rates & Packages</h2>
+      <p style="text-align: center; color: var(--text-muted); margin-bottom: 3rem; font-size: 1.1rem;">Transparent pricing. No hidden fees. Click "Avail this package" to automatically include it in your inquiry 🙂</p>
+      <div class="pricing-grid">
+        <!-- Simple Store Website -->
+        <div class="pricing-card">
+          <div class="pricing-icon">🌐</div>
+          <h3>Simple Store Website</h3>
+          <p class="pricing-desc">Landing page, business info, menu, gallery, contact page — perfect for small businesses establishing their online presence.</p>
+          <div class="price-range">₱3,000 – ₱8,000</div>
+          <ul class="pricing-features">
+            <li><i class="fas fa-check-circle"></i> Responsive landing page</li>
+            <li><i class="fas fa-check-circle"></i> Business information section</li>
+            <li><i class="fas fa-check-circle"></i> Menu / Services display</li>
+            <li><i class="fas fa-check-circle"></i> Image gallery</li>
+            <li><i class="fas fa-check-circle"></i> Contact form & map</li>
+            <li><i class="fas fa-check-circle"></i> Mobile-friendly design</li>
+          </ul>
+          <a href="#contact" class="btn-outline mt-20 avail-btn" data-package="🌐 Simple Store Website (₱3,000 – ₱8,000)">Avail this package</a>
+        </div>
+
+        <!-- Modern Business Website -->
+        <div class="pricing-card featured">
+          <div class="pricing-icon">🚀</div>
+          <h3>Modern Business Website</h3>
+          <p class="pricing-desc">Admin panel, responsive design, animations, modern UI/UX — built to impress and convert visitors into customers.</p>
+          <div class="price-range">₱8,000 – ₱20,000+</div>
+          <ul class="pricing-features">
+            <li><i class="fas fa-check-circle"></i> Custom admin dashboard</li>
+            <li><i class="fas fa-check-circle"></i> Fully responsive design</li>
+            <li><i class="fas fa-check-circle"></i> Smooth animations & transitions</li>
+            <li><i class="fas fa-check-circle"></i> Modern UI/UX principles</li>
+            <li><i class="fas fa-check-circle"></i> SEO optimization</li>
+            <li><i class="fas fa-check-circle"></i> Content management system</li>
+          </ul>
+          <a href="#contact" class="btn-primary mt-20 avail-btn" data-package="🚀 Modern Business Website (₱8,000 – ₱20,000+)">Avail this package</a>
+        </div>
+
+        <!-- Coffee Shop with Ordering System -->
+        <div class="pricing-card">
+          <div class="pricing-icon">☕</div>
+          <h3>Coffee Shop with Ordering</h3>
+          <p class="pricing-desc">Online ordering, admin dashboard, menu management, responsive system — complete e-commerce solution for food businesses.</p>
+          <div class="price-range">₱15,000 – ₱40,000+</div>
+          <ul class="pricing-features">
+            <li><i class="fas fa-check-circle"></i> Online ordering system</li>
+            <li><i class="fas fa-check-circle"></i> Admin dashboard & analytics</li>
+            <li><i class="fas fa-check-circle"></i> Menu management (CRUD)</li>
+            <li><i class="fas fa-check-circle"></i> Order tracking & notifications</li>
+            <li><i class="fas fa-check-circle"></i> Payment integration</li>
+            <li><i class="fas fa-check-circle"></i> Inventory management</li>
+          </ul>
+          <a href="#contact" class="btn-outline mt-20 avail-btn" data-package="☕ Coffee Shop with Ordering System (₱15,000 – ₱40,000+)">Avail this package</a>
+        </div>
+
+        <!-- Capstone: Simple System -->
+        <div class="pricing-card">
+          <div class="pricing-icon">🎓</div>
+          <h3>Capstone · Simple System</h3>
+          <p class="pricing-desc">Login, CRUD operations, basic database system — ideal for academic projects with straightforward requirements.</p>
+          <div class="price-range">₱5,000 – ₱15,000</div>
+          <ul class="pricing-features">
+            <li><i class="fas fa-check-circle"></i> User authentication (login/register)</li>
+            <li><i class="fas fa-check-circle"></i> CRUD operations</li>
+            <li><i class="fas fa-check-circle"></i> Basic database system</li>
+            <li><i class="fas fa-check-circle"></i> Simple dashboard</li>
+            <li><i class="fas fa-check-circle"></i> Documentation included</li>
+            <li><i class="fas fa-check-circle"></i> Source code delivery</li>
+          </ul>
+          <a href="#contact" class="btn-outline mt-20 avail-btn" data-package="🎓 Capstone · Simple System (₱5,000 – ₱15,000)">Avail this package</a>
+        </div>
+
+        <!-- Capstone: Advanced AI / Thesis -->
+        <div class="pricing-card featured">
+          <div class="pricing-icon">🤖</div>
+          <h3>Capstone · Advanced AI / Thesis</h3>
+          <p class="pricing-desc">AI features, analytics, automation, advanced dashboards, APIs — for cutting-edge academic and research projects.</p>
+          <div class="price-range">₱20,000 – ₱80,000+</div>
+          <ul class="pricing-features">
+            <li><i class="fas fa-check-circle"></i> AI / Machine learning features</li>
+            <li><i class="fas fa-check-circle"></i> Advanced analytics dashboard</li>
+            <li><i class="fas fa-check-circle"></i> Automation & workflows</li>
+            <li><i class="fas fa-check-circle"></i> API development & integration</li>
+            <li><i class="fas fa-check-circle"></i> Complex database architecture</li>
+            <li><i class="fas fa-check-circle"></i> Full documentation & support</li>
+          </ul>
+          <a href="#contact" class="btn-primary mt-20 avail-btn" data-package="🤖 Capstone · Advanced AI / Thesis (₱20,000 – ₱80,000+)">Avail this package</a>
+        </div>
+      </div>
+
+      <!-- Downpayment Note -->
+      <div class="downpayment-note">
+        <p><i class="fas fa-info-circle"></i> <strong>📌 50% Downpayment Required Before Starting</strong></p>
+        <p><i class="fas fa-info-circle"></i> <strong>📌 Remaining Balance Upon Completion</strong></p>
+        <p style="margin-top: 10px; color: var(--text-muted);">Click any "Avail this package" button and the package name will be automatically included in your message 🙂</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO SECTION -->
   <section id="portfolio">
     <div class="container">
-      <h2>Featured projects</h2>
-      <div class="portfolio-grid">
-        <div class="glass-card" style="padding: 30px; cursor: pointer;" id="fesCard">
-          <i class="fas fa-chalkboard-teacher" style="font-size: 2.5rem; color: var(--primary);"></i>
-          <h3 style="margin-top: 15px;">Faculty Evaluation System</h3>
-          <p style="color: var(--text-muted);">Automated FES for Palompon Institute of Technology. Aligned with CHED CMO No. 19, s. 2025.</p>
-          <button class="btn-outline mt-20" id="openFesBtn">View case study</button>
+      <h2>Featured project</h2>
+      <div class="glass-card" style="padding: 40px; cursor: pointer;" id="fesCard">
+        <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap; margin-bottom: 20px;">
+          <i class="fas fa-chalkboard-teacher" style="font-size: 3rem; color: var(--primary);"></i>
+          <div>
+            <h3 style="font-size: 2rem;">Faculty Evaluation System (FES)</h3>
+            <p style="color: var(--secondary);">Palompon Institute of Technology – Tabango Campus</p>
+          </div>
         </div>
-        <div class="glass-card" style="padding: 30px;">
-          <i class="fas fa-cloud-upload-alt" style="font-size: 2.5rem; color: var(--secondary);"></i>
-          <h3 style="margin-top: 15px;">SaaS Dashboard</h3>
-          <p style="color: var(--text-muted);">Real-time analytics dashboard for a logistics startup. Handled 10k+ concurrent users.</p>
+        <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 1.05rem; line-height: 1.7;">
+          An online, automated platform that digitizes the entire faculty evaluation process — from secure authentication and structured online questionnaires to automated computation, encrypted data storage, and real-time report generation. Aligned with <strong>CHED CMO No. 19, s. 2025</strong>.
+        </p>
+        <div class="fes-feature-grid">
+          <div class="fes-feature-item"><i class="fas fa-user-shield" style="color: var(--primary);"></i> <strong>Role-Based Access Control</strong><br>Admin, dean, faculty, student roles</div>
+          <div class="fes-feature-item"><i class="fas fa-calendar-check" style="color: var(--accent-glow);"></i> <strong>Evaluation Scheduling</strong><br>Automated evaluation periods</div>
+          <div class="fes-feature-item"><i class="fas fa-calculator" style="color: var(--secondary);"></i> <strong>Weighted Mean Computation</strong><br>Automated scoring & averages</div>
+          <div class="fes-feature-item"><i class="fas fa-file-pdf" style="color: #ff6b6b;"></i> <strong>PDF Report Generation</strong><br>Individual & department summaries</div>
+          <div class="fes-feature-item"><i class="fas fa-chart-bar" style="color: var(--accent-glow);"></i> <strong>Real-Time Analytics</strong><br>Dashboard with charts & graphs</div>
+          <div class="fes-feature-item"><i class="fas fa-database" style="color: var(--primary);"></i> <strong>Centralized Database</strong><br>Encrypted, organized storage</div>
+          <div class="fes-feature-item"><i class="fas fa-user-check" style="color: #a56eff;"></i> <strong>Supervisor Evaluation (SEF)</strong><br>Multi-source feedback framework</div>
+          <div class="fes-feature-item"><i class="fas fa-mobile-alt" style="color: var(--primary);"></i> <strong>Responsive Web Design</strong><br>Desktop, tablet, mobile access</div>
         </div>
-        <div class="glass-card" style="padding: 30px;">
-          <i class="fas fa-lock" style="font-size: 2.5rem; color: var(--accent-glow);"></i>
-          <h3 style="margin-top: 15px;">Security Audit Tool</h3>
-          <p style="color: var(--text-muted);">Automated vulnerability scanner used by 3 universities in Leyte.</p>
-        </div>
+        <button class="btn-primary mt-20" id="openFesBtn"><i class="fas fa-search"></i> Explore full case study</button>
       </div>
     </div>
   </section>
@@ -1001,47 +1105,13 @@
     </div>
   </section>
 
-  <section id="pricing">
-    <div class="container">
-      <h2>Pricing plans</h2>
-      <div class="pricing-grid">
-        <div class="pricing-card">
-          <h3>Starter</h3>
-          <p class="price">$1,500</p>
-          <p style="color: var(--text-muted);">Landing page or small web app</p>
-          <a href="#contact" class="btn-outline mt-20">Get started</a>
-        </div>
-        <div class="pricing-card featured">
-          <h3>Professional ⭐</h3>
-          <p class="price">$5,000</p>
-          <p style="color: var(--text-muted);">Full SaaS MVP or custom platform</p>
-          <a href="#contact" class="btn-primary mt-20">Get started</a>
-        </div>
-        <div class="pricing-card">
-          <h3>Enterprise</h3>
-          <p class="price">Custom</p>
-          <p style="color: var(--text-muted);">Large-scale secure systems</p>
-          <a href="#contact" class="btn-outline mt-20">Contact us</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <section>
     <div class="container">
       <h2>FAQ</h2>
-      <div class="faq-item">
-        <div class="faq-question">What technologies do you use? <i class="fas fa-chevron-down"></i></div>
-        <div class="faq-answer"><p>React, Next.js, Node, Python, AWS, Docker, and more. We choose the best stack for each project.</p></div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-question">How long does a typical project take? <i class="fas fa-chevron-down"></i></div>
-        <div class="faq-answer"><p>MVP typically 4-8 weeks. Enterprise projects are scoped individually.</p></div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-question">Do you provide ongoing support? <i class="fas fa-chevron-down"></i></div>
-        <div class="faq-answer"><p>Yes, all projects include 30 days of post-launch support with optional maintenance retainers.</p></div>
-      </div>
+      <div class="faq-item"><div class="faq-question">What technologies do you use? <i class="fas fa-chevron-down"></i></div><div class="faq-answer"><p>React, Next.js, Node, Python, PHP, MySQL, AWS, Docker, and more. We choose the best stack for each project.</p></div></div>
+      <div class="faq-item"><div class="faq-question">How long does a typical project take? <i class="fas fa-chevron-down"></i></div><div class="faq-answer"><p>Simple websites: 1-2 weeks. Business sites: 2-4 weeks. Capstone/Advanced systems: 4-12 weeks depending on complexity.</p></div></div>
+      <div class="faq-item"><div class="faq-question">Do you provide ongoing support? <i class="fas fa-chevron-down"></i></div><div class="faq-answer"><p>Yes, all projects include 30 days of post-launch support with optional maintenance retainers available.</p></div></div>
+      <div class="faq-item"><div class="faq-question">What is the payment process? <i class="fas fa-chevron-down"></i></div><div class="faq-answer"><p>50% downpayment to start, remaining 50% upon completion and approval. We accept GCash, Maya, and bank transfers.</p></div></div>
     </div>
   </section>
 
@@ -1060,9 +1130,16 @@
       <h2>Get in touch</h2>
       <div class="contact-grid">
         <form id="contactForm">
+          <!-- Selected Package Display -->
+          <div class="selected-package" id="selectedPackageDisplay">
+            <i class="fas fa-box"></i>
+            <span id="selectedPackageName"></span>
+            <span class="remove-package" id="removePackage" title="Remove package"><i class="fas fa-times-circle"></i></span>
+          </div>
+          <input type="hidden" id="selectedPackage" name="selectedPackage" value="">
           <input type="text" class="form-control" id="senderName" placeholder="Full name" required>
           <input type="email" class="form-control" id="senderEmail" placeholder="Email address" required>
-          <textarea class="form-control" id="senderMessage" rows="5" placeholder="Your message..." required></textarea>
+          <textarea class="form-control" id="senderMessage" rows="5" placeholder="Tell me about your project..." required></textarea>
           <button type="submit" class="btn-primary" id="sendBtn" style="width: 100%;">💬 Send message</button>
           <div class="status-msg" id="formStatus"></div>
         </form>
@@ -1083,25 +1160,10 @@
   <footer>
     <div class="container">
       <div class="footer-grid">
-        <div>
-          <h3 style="font-size: 1.5rem;">RHYZILTECH</h3>
-          <p style="color: var(--text-muted);">Elite SaaS & cybersecurity agency.</p>
-        </div>
-        <div>
-          <h4>Services</h4>
-          <p style="color: var(--text-muted);">Web Dev<br>SaaS<br>Cybersecurity<br>AI</p>
-        </div>
-        <div>
-          <h4>Company</h4>
-          <p style="color: var(--text-muted);">About<br>Projects<br>Pricing<br>Contact</p>
-        </div>
-        <div>
-          <h4>Social</h4>
-          <div class="flex gap-12">
-            <a href="https://www.facebook.com/profile.php?id=61584139169630" target="_blank" rel="noopener" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://www.tiktok.com/@rhyzil_" target="_blank" rel="noopener" class="social-icon"><i class="fab fa-tiktok"></i></a>
-          </div>
-        </div>
+        <div><h3 style="font-size: 1.5rem;">RHYZILTECH</h3><p style="color: var(--text-muted);">Elite SaaS & cybersecurity agency.</p></div>
+        <div><h4>Services</h4><p style="color: var(--text-muted);">Web Dev<br>SaaS<br>Cybersecurity<br>AI</p></div>
+        <div><h4>Company</h4><p style="color: var(--text-muted);">About<br>Projects<br>Pricing<br>Contact</p></div>
+        <div><h4>Social</h4><div class="flex gap-12"><a href="https://www.facebook.com/profile.php?id=61584139169630" target="_blank" rel="noopener" class="social-icon"><i class="fab fa-facebook-f"></i></a><a href="https://www.tiktok.com/@rhyzil_" target="_blank" rel="noopener" class="social-icon"><i class="fab fa-tiktok"></i></a></div></div>
       </div>
       <div style="text-align: center; margin-top: 40px; color: var(--text-muted); font-size: 0.9rem;">© 2026 Rhyziltech. Secure by design.</div>
     </div>
@@ -1111,11 +1173,15 @@
   <div class="modal-overlay" id="fesModal">
     <div class="modal-content">
       <button id="closeFesModal" style="float:right; background:none; border:none; color:var(--text); font-size:2rem; cursor:pointer;">&times;</button>
-      <h2 style="margin-bottom: 15px;">Faculty Evaluation System</h2>
-      <p style="color: var(--text-muted); margin-bottom: 15px;">Palompon Institute of Technology – Tabango Campus</p>
-      <p style="margin-bottom: 15px;">Automated evaluation with RBAC, weighted mean computation, PDF reports, supervisor evaluation (SEF), and real-time dashboards. Aligned with CHED CMO No. 19, s. 2025.</p>
-      <p><strong>Tech:</strong> PHP, MySQL, JavaScript, Bootstrap, XAMPP, Chart.js</p>
-      <a href="#contact" class="btn-primary mt-20" onclick="document.getElementById('fesModal').style.display='none';">Discuss this project</a>
+      <h2 style="margin-bottom: 10px;">📋 Faculty Evaluation System · Full Case Study</h2>
+      <p style="color: var(--secondary); margin-bottom: 20px;">Palompon Institute of Technology – Tabango Campus | CHED CMO No. 19, s. 2025</p>
+      <h3 style="color: var(--text);">🎯 Problem Statement</h3>
+      <p style="color: var(--text-muted); margin-bottom: 15px;">Manual paper‑based evaluations caused delays, clerical errors, and difficulty in aggregating feedback. Data redundancy and lack of real‑time reports hindered decision‑making.</p>
+      <h3 style="color: var(--text);">💡 Solution</h3>
+      <p style="color: var(--text-muted); margin-bottom: 15px;">Automated online platform with role‑based access. Real‑time dashboards, automated computation of weighted means, and encrypted data storage ensure reliability and CHED compliance.</p>
+      <h3 style="color: var(--text);">🛠️ Tech Stack</h3>
+      <p style="color: var(--text-muted); margin-bottom: 15px;">PHP · MySQL · JavaScript · Bootstrap · XAMPP · Chart.js</p>
+      <a href="#contact" class="btn-primary mt-20" onclick="document.getElementById('fesModal').style.display='none';">💬 Discuss this project</a>
     </div>
   </div>
 
@@ -1136,7 +1202,6 @@
         setTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
       });
 
-      // Mobile menu
       const menuBtn = document.getElementById('menuToggle');
       const navLinks = document.getElementById('navLinks');
       menuBtn.addEventListener('click', () => navLinks.classList.toggle('show'));
@@ -1144,26 +1209,45 @@
         a.addEventListener('click', () => navLinks.classList.remove('show'));
       });
 
-      // FAQ accordion
       document.querySelectorAll('.faq-question').forEach(q => {
         q.addEventListener('click', () => q.parentElement.classList.toggle('active'));
       });
 
-      // FES modal
       const modal = document.getElementById('fesModal');
       const openBtn = document.getElementById('openFesBtn');
       const closeBtn = document.getElementById('closeFesModal');
       openBtn.addEventListener('click', () => { modal.style.display = 'flex'; document.body.style.overflow = 'hidden'; });
       closeBtn.addEventListener('click', () => { modal.style.display = 'none'; document.body.style.overflow = 'auto'; });
       window.addEventListener('click', (e) => { if (e.target === modal) { modal.style.display = 'none'; document.body.style.overflow = 'auto'; } });
-      document.getElementById('fesCard').addEventListener('click', function(e) {
-        if (e.target.tagName !== 'BUTTON' && !e.target.closest('button')) {
-          modal.style.display = 'flex';
-          document.body.style.overflow = 'hidden';
-        }
+
+      // ============================================================
+      // PACKAGE SELECTION SYSTEM
+      // ============================================================
+      const selectedPackageInput = document.getElementById('selectedPackage');
+      const selectedPackageDisplay = document.getElementById('selectedPackageDisplay');
+      const selectedPackageName = document.getElementById('selectedPackageName');
+      const removePackageBtn = document.getElementById('removePackage');
+
+      // Handle all "Avail this package" buttons
+      document.querySelectorAll('.avail-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          const packageName = this.getAttribute('data-package');
+          selectedPackageInput.value = packageName;
+          selectedPackageName.textContent = 'Selected: ' + packageName;
+          selectedPackageDisplay.classList.add('show');
+        });
       });
 
-      // EmailJS
+      // Remove package selection
+      removePackageBtn.addEventListener('click', function() {
+        selectedPackageInput.value = '';
+        selectedPackageName.textContent = '';
+        selectedPackageDisplay.classList.remove('show');
+      });
+
+      // ============================================================
+      // EMAILJS
+      // ============================================================
       emailjs.init("UV2MXRtD7FcyZXQ3F");
       const form = document.getElementById('contactForm');
       const status = document.getElementById('formStatus');
@@ -1180,6 +1264,8 @@
         const name = document.getElementById('senderName').value.trim();
         const email = document.getElementById('senderEmail').value.trim();
         const msg = document.getElementById('senderMessage').value.trim();
+        const selectedPackage = selectedPackageInput.value;
+
         if (!name || !email || !msg) {
           status.className = 'status-msg error';
           status.textContent = '⚠️ All fields are required.';
@@ -1195,16 +1281,27 @@
         sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
         status.className = 'status-msg sending';
         status.textContent = '📤 Sending your message...';
+
+        // Build the full message with package info
+        let fullMessage = msg;
+        if (selectedPackage) {
+          fullMessage = '📦 AVAILED PACKAGE: ' + selectedPackage + '\n\n--- Client Message ---\n' + msg;
+        }
+
         emailjs.send("service_ad1l4qy", "template_mphmqzv", {
           from_name: name,
           from_email: email,
-          message: msg,
+          message: fullMessage,
           to_email: "businessrhyziltech@gmail.com",
-          reply_to: email
+          reply_to: email,
+          package_name: selectedPackage || 'No package selected'
         }).then(() => {
           status.className = 'status-msg success';
-          status.textContent = '✅ Message sent! Reply within 12 hours.';
+          const pkgMsg = selectedPackage ? ' Package: ' + selectedPackage + '.' : '';
+          status.textContent = '✅ Message sent!' + pkgMsg + ' Reply within 12 hours.';
           form.reset();
+          selectedPackageInput.value = '';
+          selectedPackageDisplay.classList.remove('show');
           sendBtn.disabled = false;
           sendBtn.innerHTML = '💬 Send message';
           setTimeout(() => { status.className = 'status-msg'; status.textContent = ''; }, 6000);
@@ -1215,8 +1312,6 @@
           sendBtn.innerHTML = '💬 Send message';
         });
       });
-
-      console.log('✅ Rhyziltech — fully responsive, all systems operational');
     })();
   </script>
 </body>

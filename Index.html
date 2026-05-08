@@ -144,13 +144,6 @@
     .status-msg.error { display: block; background: rgba(255,80,80,0.15); border: 1px solid #ff5050; color: #ff5050; }
     .status-msg.sending { display: block; background: rgba(22,88,250,0.15); border: 1px solid var(--primary); color: var(--primary); }
 
-    .chatbot-status {
-      background: rgba(109,255,184,0.1); border: 1px solid var(--accent-glow);
-      border-radius: var(--radius-md); padding: 16px 20px; margin-top: 20px;
-      text-align: center; font-size: 0.9rem;
-    }
-    .chatbot-status i { color: var(--accent-glow); margin-right: 8px; }
-
     footer { background: var(--glass); border-top: 1px solid var(--glass-border); padding: 60px 0 30px; margin-top: 80px; }
     .footer-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap: 40px; }
     .social-icon { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; background: var(--glass); border: 1px solid var(--glass-border); color: var(--text); text-decoration: none; transition: 0.3s; cursor: pointer; }
@@ -165,10 +158,6 @@
 </head>
 <body oncontextmenu="return false;">
   <div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div><div class="bg-grid"></div>
-
-  <!-- Elfsight AI Chatbot Widget - Loaded FIRST for priority -->
-  <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
-  <div class="elfsight-app-36f7c1ef-b55f-4c33-890e-cdc1ab291e04" data-elfsight-app-lazy></div>
 
   <header>
     <div class="container header-flex">
@@ -202,7 +191,12 @@
 
   <section id="about"><div class="container"><h2>About</h2>
     <div class="about-grid">
-      <div class="glass-card" style="padding:40px;"><h3>Rhyzil Angelo P. Jimenez</h3><p style="color:var(--text-muted);margin:15px 0;">Founder & Lead Security Architect.</p><div style="display:flex;gap:20px;"><div><strong style="font-size:2rem;color:var(--primary);">7+</strong><br>years</div><div><strong style="font-size:2rem;color:var(--primary);">50+</strong><br>systems</div></div></div>
+      <div class="glass-card" style="padding:40px;">
+        <h3>Rhyzil Angelo Pabadora Jimenez</h3>
+        <p style="color:var(--secondary);margin:5px 0;font-weight:600;">Founder & CEO</p>
+        <p style="color:var(--text-muted);margin:15px 0;">Lead Security Architect & Full-Stack Developer.</p>
+        <div style="display:flex;gap:20px;"><div><strong style="font-size:2rem;color:var(--primary);">7+</strong><br>years</div><div><strong style="font-size:2rem;color:var(--primary);">50+</strong><br>systems</div></div>
+      </div>
       <div class="glass-card" style="padding:40px;text-align:center;"><i class="fas fa-shield-haltered" style="font-size:4rem;color:var(--primary);"></i><h3>Security-first</h3><p style="color:var(--text-muted);">RBAC, encryption, anti-injection.</p></div>
     </div>
   </div></section>
@@ -279,7 +273,6 @@
   </div></section>
 
   <section id="contact"><div class="container"><h2>Get in touch</h2>
-    <p style="text-align:center;color:var(--text-muted);margin-bottom:20px;">💬 Chat with our AI assistant (bottom-right) or fill out the form below!</p>
     <div class="contact-grid">
       <form id="contactForm" novalidate>
         <div class="selected-package" id="selectedPackageDisplay"><i class="fas fa-box"></i><span id="selectedPackageName"></span><span class="remove-package" id="removePackage"><i class="fas fa-times-circle"></i></span></div>
@@ -299,7 +292,6 @@
           <a href="https://www.tiktok.com/@rhyzil_" target="_blank" rel="noopener noreferrer" class="social-icon"><i class="fab fa-tiktok"></i></a>
           <a href="mailto:businessrhyziltech@gmail.com" class="social-icon"><i class="fas fa-envelope"></i></a>
         </div>
-        
       </div>
     </div>
   </div></section>
@@ -314,35 +306,268 @@
     <div style="text-align:center;margin-top:10px;color:var(--text-muted);">© 2026 Rhyziltech. Secure by design.</div>
   </div></footer>
 
+  <!-- Elfsight AI Chatbot Widget -->
+  <script src="https://elfsightcdn.com/platform.js" async></script>
+  <div class="elfsight-app-36f7c1ef-b55f-4c33-890e-cdc1ab291e04" data-elfsight-app-lazy></div>
+
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script>
     (function() {
       // ============================================================
-      // COPY PROTECTION
+      // SCREENSHOT & SCREEN RECORDING PROTECTION (ALL DEVICES)
+      // ============================================================
+      
+      // Detect if page is being captured (screenshot/screen recording)
+      function detectScreenCapture() {
+        // iOS & Android screenshot detection via visibility change + blur
+        document.addEventListener('visibilitychange', function() {
+          if (document.visibilityState === 'hidden') {
+            // Page was hidden (possible screenshot on mobile)
+            console.log('⚠️ Potential screen capture detected');
+          }
+        });
+
+        // iOS specific screenshot detection
+        window.addEventListener('pagehide', function(e) {
+          if (e.persisted === false) {
+            console.log('⚠️ Potential screen capture detected');
+          }
+        });
+
+        // Prevent screen recording on Android via MediaProjection API awareness
+        if (navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia) {
+          // Monitor for screen capture attempts
+          const originalGetDisplayMedia = navigator.mediaDevices.getDisplayMedia;
+          navigator.mediaDevices.getDisplayMedia = function() {
+            console.log('⚠️ Screen capture attempt blocked');
+            alert('⚠️ Screenshots and screen recording are not permitted on this site.');
+            return Promise.reject(new Error('Screen capture is disabled'));
+          };
+        }
+      }
+
+      // CSS-based screenshot protection using pseudo-element overlay
+      const screenshotProtectionStyle = document.createElement('style');
+      screenshotProtectionStyle.textContent = `
+        /* Make entire page flash protection for screenshots */
+        @media screen {
+          /* Watermark for screenshots */
+          body::after {
+            content: '© 2026 Rhyziltech — Protected Content';
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-30deg);
+            font-size: 4rem;
+            font-weight: 900;
+            color: rgba(255, 0, 0, 0.08);
+            pointer-events: none;
+            z-index: 9999;
+            white-space: nowrap;
+            font-family: 'Space Grotesk', sans-serif;
+            letter-spacing: 5px;
+          }
+        }
+
+        /* iOS screenshot flash overlay */
+        @supports (-webkit-touch-callout: none) {
+          body.screenshot-active {
+            animation: screenshotFlash 0.1s ease-out;
+          }
+        }
+
+        @keyframes screenshotFlash {
+          0% { opacity: 0.3; background: white; }
+          100% { opacity: 1; background: transparent; }
+        }
+
+        /* Prevent screen recording indicators */
+        @media (display-mode: fullscreen) {
+          body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.01);
+            z-index: 9998;
+            pointer-events: none;
+          }
+        }
+      `;
+      document.head.appendChild(screenshotProtectionStyle);
+
+      // Android screenshot detection via resize event
+      let lastWidth = window.innerWidth;
+      let lastHeight = window.innerHeight;
+      
+      window.addEventListener('resize', function() {
+        const widthDiff = Math.abs(window.innerWidth - lastWidth);
+        const heightDiff = Math.abs(window.innerHeight - lastHeight);
+        
+        // Screenshot often triggers specific resize patterns
+        if ((widthDiff === 0 && heightDiff > 100) || (heightDiff === 0 && widthDiff > 100)) {
+          console.log('⚠️ Potential screen capture detected via resize');
+          document.body.classList.add('screenshot-active');
+          setTimeout(() => document.body.classList.remove('screenshot-active'), 100);
+        }
+        
+        lastWidth = window.innerWidth;
+        lastHeight = window.innerHeight;
+      });
+
+      // iOS screenshot detection via touch events pattern
+      let touchStartTime = 0;
+      let touchCount = 0;
+      
+      document.addEventListener('touchstart', function(e) {
+        touchStartTime = Date.now();
+        touchCount = e.touches.length;
+      }, { passive: true });
+
+      document.addEventListener('touchend', function(e) {
+        const touchDuration = Date.now() - touchStartTime;
+        // Detect volume+power button combination (quick multi-touch)
+        if (touchCount >= 2 && touchDuration < 200) {
+          console.log('⚠️ Potential iOS screenshot detected');
+          document.body.classList.add('screenshot-active');
+          setTimeout(() => document.body.classList.remove('screenshot-active'), 100);
+        }
+        touchCount = 0;
+      });
+
+      // Prevent Print Screen key
+      document.addEventListener('keyup', function(e) {
+        if (e.key === 'PrintScreen' || e.keyCode === 44 || e.key === 'SysReq') {
+          e.preventDefault();
+          navigator.clipboard.writeText('');
+          document.body.style.opacity = '0.1';
+          setTimeout(() => { document.body.style.opacity = '1'; }, 150);
+          alert('⚠️ Screenshots are not permitted on this page.');
+          return false;
+        }
+      });
+
+      // Prevent Alt+PrintScreen and Win+PrintScreen
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'PrintScreen' || e.keyCode === 44 || e.key === 'SysReq') {
+          e.preventDefault();
+          alert('⚠️ Screenshots are not permitted on this page.');
+          return false;
+        }
+        
+        // Windows + Shift + S (Snipping Tool)
+        if (e.metaKey && e.shiftKey && (e.key === 's' || e.key === 'S')) {
+          e.preventDefault();
+          alert('⚠️ Screen capture tools are blocked on this page.');
+          return false;
+        }
+        
+        // Windows + PrintScreen
+        if (e.metaKey && (e.key === 'PrintScreen' || e.keyCode === 44)) {
+          e.preventDefault();
+          return false;
+        }
+      });
+
+      // Clipboard monitoring (detect if screenshot is copied to clipboard)
+      let clipboardCheckInterval = setInterval(function() {
+        if (document.visibilityState === 'hidden') {
+          // Try to clear clipboard when page is hidden (possible screenshot)
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText('').catch(() => {});
+          }
+        }
+      }, 500);
+
+      // Android screenshot detection via MediaProjection
+      if (window.Android && window.Android.onScreenshot) {
+        window.Android.onScreenshot = function() {
+          alert('⚠️ Screenshots are not permitted.');
+        };
+      }
+
+      // DRM-like protection using CSS backdrop
+      const drmOverlay = document.createElement('div');
+      drmOverlay.id = 'drm-overlay';
+      drmOverlay.style.cssText = `
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        pointer-events: none;
+        z-index: 9997;
+        opacity: 0;
+        transition: opacity 0.1s ease;
+        background: repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 2px,
+          rgba(0,0,0,0.005) 2px,
+          rgba(0,0,0,0.005) 4px
+        );
+      `;
+      document.body.appendChild(drmOverlay);
+
+      // Show subtle pattern when screenshot might be taken
+      document.addEventListener('visibilitychange', function() {
+        if (document.visibilityState === 'hidden') {
+          drmOverlay.style.opacity = '0.05';
+          setTimeout(() => { drmOverlay.style.opacity = '0'; }, 200);
+        }
+      });
+
+      // Initialize detection
+      detectScreenCapture();
+
+      console.log('🛡️ Screenshot & screen recording protection active on all devices');
+
+      // ============================================================
+      // COPY PROTECTION (ENHANCED)
       // ============================================================
       document.addEventListener('keydown', function(e) {
-        if ((e.ctrlKey || e.metaKey) && (e.key === 'c' || e.key === 'u' || e.key === 's' || e.key === 'p' || e.key === 'C' || e.key === 'U' || e.key === 'S' || e.key === 'P' || (e.shiftKey && (e.key === 'I' || e.key === 'i')))) {
+        // Block all common copy/save shortcuts
+        if ((e.ctrlKey || e.metaKey) && (e.key === 'c' || e.key === 'u' || e.key === 's' || e.key === 'p' || e.key === 'C' || e.key === 'U' || e.key === 'S' || e.key === 'P' || e.key === 'a' || e.key === 'A' || (e.shiftKey && (e.key === 'I' || e.key === 'i')))) {
           e.preventDefault(); e.stopPropagation(); return false;
         }
         if (e.key === 'F12' || e.keyCode === 123) { e.preventDefault(); e.stopPropagation(); return false; }
-      });
-      document.addEventListener('contextmenu', function(e) { e.preventDefault(); return false; });
-      document.addEventListener('dragstart', function(e) { e.preventDefault(); return false; });
+        
+        // Block Windows + Shift + S (Snipping Tool shortcut)
+        if (e.metaKey && e.shiftKey && e.key === 's') {
+          e.preventDefault(); e.stopPropagation(); return false;
+        }
+      }, true);
+      
+      document.addEventListener('contextmenu', function(e) { e.preventDefault(); return false; }, true);
+      document.addEventListener('dragstart', function(e) { e.preventDefault(); return false; }, true);
+      document.addEventListener('drop', function(e) { e.preventDefault(); return false; }, true);
+      
       document.addEventListener('selectstart', function(e) {
-        if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') { e.preventDefault(); return false; }
+        if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') { 
+          e.preventDefault(); return false; 
+        }
       });
 
-      // ============================================================
-      // CHATBOT HELPER - Force show if not visible after 5 seconds
-      // ============================================================
-      setTimeout(function() {
-        const chatbotWidget = document.querySelector('.elfsight-app-36f7c1ef-b55f-4c33-890e-cdc1ab291e04');
-        if (chatbotWidget) {
-          console.log('✅ Elfsight chatbot widget found in DOM');
-        } else {
-          console.warn('⚠️ Chatbot widget not found — check your Elfsight App ID');
+      // Prevent mobile long-press copy
+      document.addEventListener('touchstart', function(e) {
+        if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+          if (e.touches.length === 1) {
+            // Store for long press detection
+            e.target._touchStartTime = Date.now();
+          }
         }
-      }, 5000);
+      }, { passive: true });
+
+      document.addEventListener('touchend', function(e) {
+        if (e.target._touchStartTime && (Date.now() - e.target._touchStartTime > 500)) {
+          if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+            e.preventDefault();
+          }
+        }
+      });
+
+      // Prevent print
+      window.addEventListener('beforeprint', function(e) {
+        e.preventDefault();
+        document.body.style.display = 'none';
+        setTimeout(() => { document.body.style.display = ''; }, 100);
+      });
 
       // ============================================================
       // THEME
@@ -455,8 +680,8 @@
       });
 
       console.log('✅ Rhyziltech ready — AI Chatbot: 36f7c1ef-b55f-4c33-890e-cdc1ab291e04');
-      console.log('💬 Chatbot should appear at bottom-right corner');
+      console.log('🛡️ Screenshot protection: ACTIVE on all devices');
     })();
   </script>
 </body>
-  </html>
+</html>

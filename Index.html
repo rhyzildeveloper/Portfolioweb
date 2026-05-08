@@ -79,8 +79,8 @@
     header { position: fixed; top: 0; left: 0; width: 100%; padding: 18px 0; background: rgba(1,2,5,0.75); backdrop-filter: blur(30px); border-bottom: 1px solid var(--glass-border); z-index: 1000; }
     .header-flex { display: flex; justify-content: space-between; align-items: center; }
     .logo { font-family: var(--font-display); font-size: 1.8rem; font-weight: 800; background: linear-gradient(135deg,var(--primary),#fff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-decoration: none; }
-    .nav-links { display: flex; gap: 2rem; align-items: center; }
-    .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: 0.2s; cursor: pointer; }
+    .nav-links { display: flex; gap: 2rem; align-items: center; position: relative; }
+    .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: 0.2s; cursor: pointer; position: relative; }
     .nav-links a:hover { color: var(--text); }
     .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--primary); transition: width 0.3s; }
     .nav-links a:hover::after { width: 100%; }
@@ -143,6 +143,18 @@
     .status-msg.success { display: block; background: rgba(76,142,251,0.15); border: 1px solid var(--secondary); color: var(--secondary); }
     .status-msg.error { display: block; background: rgba(255,80,80,0.15); border: 1px solid #ff5050; color: #ff5050; }
     .status-msg.sending { display: block; background: rgba(22,88,250,0.15); border: 1px solid var(--primary); color: var(--primary); }
+
+    /* Chatbot notice */
+    .chatbot-notice {
+      position: fixed; bottom: 100px; right: 25px;
+      background: var(--primary); color: #fff; padding: 12px 20px;
+      border-radius: 40px; font-size: 0.85rem; font-weight: 500;
+      box-shadow: 0 10px 30px rgba(22,88,250,0.4); z-index: 998;
+      animation: fadeInUp 0.5s ease, fadeOut 0.5s ease 4.5s forwards;
+      cursor: pointer; max-width: 250px; text-align: center;
+    }
+    @keyframes fadeInUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes fadeOut { from { opacity:1; } to { opacity:0; } }
 
     footer { background: var(--glass); border-top: 1px solid var(--glass-border); padding: 60px 0 30px; margin-top: 80px; }
     .footer-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap: 40px; }
@@ -268,6 +280,7 @@
   </div></section>
 
   <section id="contact"><div class="container"><h2>Get in touch</h2>
+    <p style="text-align:center;color:var(--text-muted);margin-bottom:20px;">Or chat with our AI assistant 24/7 for instant answers! 💬</p>
     <div class="contact-grid">
       <form id="contactForm" novalidate>
         <div class="selected-package" id="selectedPackageDisplay"><i class="fas fa-box"></i><span id="selectedPackageName"></span><span class="remove-package" id="removePackage"><i class="fas fa-times-circle"></i></span></div>
@@ -300,6 +313,10 @@
     <div style="text-align:center;margin-top:20px;color:var(--text-muted);"><i class="fas fa-shield-alt"></i> Protected by Rhyziltech Security <i class="fas fa-lock"></i></div>
     <div style="text-align:center;margin-top:10px;color:var(--text-muted);">© 2026 Rhyziltech. Secure by design.</div>
   </div></footer>
+
+  <!-- Elfsight AI Chatbot Widget -->
+  <script src="https://static.elfsight.com/platform/platform.js" async></script>
+  <div class="elfsight-app-REPLACE_WITH_YOUR_APP_ID" data-elfsight-app-lazy></div>
 
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script>
@@ -382,26 +399,17 @@
       }
 
       document.querySelectorAll('.clickable-service').forEach(tag => {
-        tag.addEventListener('click', function() {
-          addService(this.getAttribute('data-service'));
-        });
+        tag.addEventListener('click', function() { addService(this.getAttribute('data-service')); });
       });
-
       document.querySelectorAll('.clickable-rate').forEach(row => {
-        row.addEventListener('click', function() {
-          addService(this.getAttribute('data-service'));
-        });
+        row.addEventListener('click', function() { addService(this.getAttribute('data-service')); });
       });
-
       document.getElementById('removePackage').addEventListener('click', () => { selectedServices = []; updatePackageDisplay(); });
 
       // ============================================================
-      // EMAILJS - SIMPLE & WORKING
-      // Only sends notification to your email (no auto-reply to avoid template errors)
+      // EMAILJS
       // ============================================================
       emailjs.init("UV2MXRtD7FcyZXQ3F");
-      console.log('✅ EmailJS ready');
-      
       const form = document.getElementById('contactForm');
       const status = document.getElementById('formStatus');
       const sendBtn = document.getElementById('sendBtn');
@@ -409,70 +417,36 @@
 
       form.addEventListener('submit', function(e) {
         e.preventDefault();
-        console.log('📤 Form submitted');
-        
-        if (Date.now() - lastSubmit < 10000) { 
-          status.className = 'status-msg error'; 
-          status.textContent = '⚠️ Please wait 10 seconds before sending again.'; 
-          return; 
-        }
-        
+        if (Date.now() - lastSubmit < 10000) { status.className = 'status-msg error'; status.textContent = '⚠️ Please wait 10 seconds.'; return; }
         const name = document.getElementById('senderName').value.trim();
         const email = document.getElementById('senderEmail').value.trim();
         const msg = document.getElementById('senderMessage').value.trim();
         const pkg = selectedPackageInput.value;
-        
-        if (!name || !email || !msg) { 
-          status.className = 'status-msg error'; 
-          status.textContent = '⚠️ Please fill in all fields.'; 
-          return; 
-        }
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { 
-          status.className = 'status-msg error'; 
-          status.textContent = '⚠️ Please enter a valid email address.'; 
-          return; 
-        }
-        
+        if (!name || !email || !msg) { status.className = 'status-msg error'; status.textContent = '⚠️ All fields required.'; return; }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { status.className = 'status-msg error'; status.textContent = '⚠️ Valid email required.'; return; }
         lastSubmit = Date.now();
         sendBtn.disabled = true;
         sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
         status.className = 'status-msg sending';
-        status.textContent = '📤 Sending your message...';
-        
+        status.textContent = '📤 Sending...';
         let fullMsg = pkg ? '📦 SELECTED: ' + pkg + '\n\n📝 FROM: ' + name + ' (' + email + ')\n\n💬 MESSAGE:\n' + msg : '📝 FROM: ' + name + ' (' + email + ')\n\n💬 MESSAGE:\n' + msg;
-        
-        // ONLY send one email - the notification to you
-        emailjs.send("service_ad1l4qy", "template_mphmqzv", { 
-          from_name: name, 
-          from_email: email, 
-          message: fullMsg, 
-          reply_to: email 
-        })
+        emailjs.send("service_ad1l4qy", "template_mphmqzv", { from_name: name, from_email: email, message: fullMsg, reply_to: email })
         .then(function(response) {
-          console.log('✅ Email sent! Status:', response.status);
           status.className = 'status-msg success';
-          status.textContent = '✅ Message sent successfully! I\'ll get back to you within 12 hours.';
-          form.reset(); 
-          selectedServices = []; 
-          updatePackageDisplay();
-          sendBtn.disabled = false; 
-          sendBtn.innerHTML = '💬 Send message';
-          setTimeout(function() { status.className = 'status-msg'; status.textContent = ''; }, 6000);
+          status.textContent = '✅ Sent! I\'ll reply within 12 hours.';
+          form.reset(); selectedServices = []; updatePackageDisplay();
+          sendBtn.disabled = false; sendBtn.innerHTML = '💬 Send message';
+          setTimeout(() => { status.className = 'status-msg'; status.textContent = ''; }, 6000);
         })
-        .catch(function(error) {
-          console.error('❌ EmailJS error:', error);
-          // Fallback: open email client
-          const subject = encodeURIComponent('Project Inquiry from ' + name);
-          const body = encodeURIComponent((pkg ? 'SELECTED: ' + pkg + '\n\n' : '') + 'Name: ' + name + '\nEmail: ' + email + '\n\nMessage:\n' + msg);
-          window.location.href = 'mailto:businessrhyziltech@gmail.com?subject=' + subject + '&body=' + body;
+        .catch(function() {
+          window.location.href = 'mailto:businessrhyziltech@gmail.com?subject=Project Inquiry&body=' + encodeURIComponent(fullMsg);
           status.className = 'status-msg error';
-          status.innerHTML = 'Opening your email client... <a href="mailto:businessrhyziltech@gmail.com" style="color:var(--secondary);">Click here</a> if nothing happens.';
-          sendBtn.disabled = false; 
-          sendBtn.innerHTML = '💬 Send message';
+          status.innerHTML = 'Opening email client... <a href="mailto:businessrhyziltech@gmail.com" style="color:var(--secondary);">Click here</a>';
+          sendBtn.disabled = false; sendBtn.innerHTML = '💬 Send message';
         });
       });
 
-      console.log('✅ Contact form ready - sends directly to businessrhyziltech@gmail.com');
+      console.log('✅ Rhyziltech ready — contact form + AI chatbot active');
     })();
   </script>
 </body>

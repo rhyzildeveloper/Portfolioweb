@@ -203,6 +203,7 @@
   </div></section>
 
   <section id="pricing"><div class="container"><h2>💰 Service Rates</h2>
+    <p style="text-align:center;color:var(--text-muted);margin-bottom:2rem;">Click "Avail" to include the package in your inquiry</p>
     <div class="pricing-grid">
       <div class="pricing-card"><div class="pricing-icon">🌐</div><h3>Simple Store</h3><p class="pricing-desc">Landing page, info, gallery, contact.</p><div class="price-range">₱3k-₱8k</div><a href="#contact" class="btn-outline mt-20 avail-btn" data-package="🌐 Simple Store (₱3k-₱8k)">Avail</a></div>
       <div class="pricing-card featured"><div class="pricing-icon">🚀</div><h3>Modern Business</h3><p class="pricing-desc">Admin panel, animations, UI/UX.</p><div class="price-range">₱8k-₱20k+</div><a href="#contact" class="btn-primary mt-20 avail-btn" data-package="🚀 Modern Business (₱8k-₱20k+)">Avail</a></div>
@@ -300,20 +301,20 @@
       document.getElementById('removePackage').addEventListener('click', () => { selectedPackageInput.value = ''; selectedPackageDisplay.classList.remove('show'); });
 
       // ============================================================
-      // AUTO-REPLY MESSAGE
+      // UPDATED AUTO-REPLY MESSAGE
       // ============================================================
-      const AUTO_REPLY_MESSAGE = `Hello! Thank you for messaging Rhyzil Tech.
+      const AUTO_REPLY_MESSAGE = `Hello! Thank you for reaching out to Rhyzil Tech.
 
-Before I provide the final quotation, may I ask a few details about the website or system you want?
+Before I provide the final quotation, I'd like to ask a few quick questions so I can better understand your website or system requirements.
 
-• What type of business or project is it?
-• What features do you need?
-• Do you already have a logo, design, or content?
-• Do you need an admin dashboard or online ordering system?
-• How many pages would you like?
-• What is your target deadline?
+• What type of business or project do you have?
+• What features would you like to include?
+• Do you already have a logo, design, or content prepared?
+• Will you need an admin dashboard or online ordering system?
+• Approximately how many pages do you want?
+• Do you have a target deadline for the project?
 
-Once I have these details, I can give you a more accurate quotation. Thank you!`;
+Once I have these details, I can provide a more accurate quotation. 🙂`;
 
       // ============================================================
       // EMAILJS CONFIGURATION
@@ -361,10 +362,10 @@ Once I have these details, I can give you a more accurate quotation. Thank you!`
         // Build message with package
         let fullMessage = msg;
         if (selectedPackage) {
-          fullMessage = '📦 PACKAGE: ' + selectedPackage + '\n\n📝 MESSAGE:\n' + msg;
+          fullMessage = '📦 PACKAGE AVAILED: ' + selectedPackage + '\n\n📝 CLIENT MESSAGE:\n' + msg;
         }
 
-        // 1. Send notification to businessrhyziltech@gmail.com
+        // 1. Notification to businessrhyziltech@gmail.com
         const notificationPromise = emailjs.send("service_ad1l4qy", "template_mphmqzv", {
           from_name: name,
           from_email: email,
@@ -372,26 +373,22 @@ Once I have these details, I can give you a more accurate quotation. Thank you!`
           reply_to: email
         });
 
-        // 2. Send auto-reply to the client using the SAME template
-        // The template_mphmqzv sends to the email configured in EmailJS dashboard
-        // For auto-reply, we send with the client's email and the auto-reply message
+        // 2. Auto-reply to client
         const autoReplyPromise = emailjs.send("service_ad1l4qy", "template_mphmqzv", {
           from_name: "Rhyzil Tech",
           from_email: "businessrhyziltech@gmail.com",
           message: AUTO_REPLY_MESSAGE,
           reply_to: "businessrhyziltech@gmail.com",
           to_email: email
-        }).catch(function(autoReplyError) {
-          console.warn('⚠️ Auto-reply failed (non-critical):', autoReplyError);
+        }).catch(function(err) {
+          console.warn('⚠️ Auto-reply note (non-critical):', err);
           return Promise.resolve();
         });
 
-        // Wait for both
         Promise.all([notificationPromise, autoReplyPromise])
           .then(function() {
-            console.log('✅ Emails processed!');
             status.className = 'status-msg success';
-            status.textContent = '✅ Message sent! Check your email for our auto-reply with next steps. We\'ll respond within 12 hours.';
+            status.textContent = '✅ Message sent! Check your inbox for our auto-reply with next steps. We\'ll respond within 12 hours.';
             form.reset();
             selectedPackageInput.value = '';
             selectedPackageDisplay.classList.remove('show');
@@ -412,7 +409,7 @@ Once I have these details, I can give you a more accurate quotation. Thank you!`
           });
       });
 
-      console.log('✅ Rhyziltech ready with auto-reply feature');
+      console.log('✅ Rhyziltech ready — auto-reply active');
     })();
   </script>
 </body>

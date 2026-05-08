@@ -39,7 +39,6 @@
       -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;
     }
 
-    /* Allow selection in form fields only */
     input, textarea {
       -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text;
     }
@@ -57,31 +56,31 @@
     .orb-3 { width: 350px; height: 350px; background: var(--accent-glow); top: 50%; left: 50%; animation-delay: -8s; }
     @keyframes orbFloat { 0%,100% { transform: translate(0,0) scale(1); } 33% { transform: translate(40px,-30px) scale(1.08); } 66% { transform: translate(-25px,35px) scale(0.94); } }
 
-    @media (max-width:768px) { .orb-1 { width:300px; height:300px; top:-80px; left:-60px; } .orb-2 { width:250px; height:250px; bottom:-60px; right:-60px; } .orb-3 { width:200px; height:200px; } }
+    @media (max-width:768px) { .orb-1 { width:300px; height:300px; } .orb-2 { width:250px; height:250px; } .orb-3 { width:200px; height:200px; } }
 
     .container { width: 100%; max-width: 1340px; margin: 0 auto; padding: 0 28px; }
     @media (max-width:768px) { .container { padding: 0 20px; } }
     @media (max-width:480px) { .container { padding: 0 16px; } }
 
-    h1,h2,h3,h4 { font-family: var(--font-display); font-weight: 700; line-height: 1.15; color: var(--text); letter-spacing: -0.02em; }
+    h1,h2,h3 { font-family: var(--font-display); font-weight: 700; line-height: 1.15; color: var(--text); letter-spacing: -0.02em; }
     h1 { font-size: clamp(2.5rem,8vw,6rem); background: linear-gradient(135deg,#ffffff 0%,var(--secondary) 50%,var(--primary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     h2 { font-size: clamp(1.8rem,5vw,3.5rem); text-align: center; margin-bottom: 1.5rem; position: relative; }
     h2::after { content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 80px; height: 3px; background: linear-gradient(90deg,transparent,var(--primary),transparent); border-radius: 4px; }
 
-    .glass-card { background: var(--glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: var(--radius-2xl); transition: all 0.35s cubic-bezier(0.25,0.8,0.25,1.2); }
+    .glass-card { background: var(--glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: var(--radius-2xl); transition: all 0.35s; }
     .glass-card:hover { border-color: var(--primary); box-shadow: 0 20px 60px rgba(22,88,250,0.12); transform: translateY(-6px); }
 
     .btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 16px 38px; background: linear-gradient(135deg,var(--primary),var(--secondary)); color: #fff; font-weight: 600; font-family: var(--font-display); font-size: 1.05rem; border-radius: 60px; text-decoration: none; border: none; cursor: pointer; transition: 0.3s; box-shadow: 0 8px 30px rgba(22,88,250,0.35); }
     .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 18px 45px rgba(22,88,250,0.5); }
     .btn-outline { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 16px 38px; background: transparent; color: var(--text); font-weight: 600; font-family: var(--font-display); font-size: 1.05rem; border-radius: 60px; text-decoration: none; border: 1.5px solid var(--glass-border); cursor: pointer; transition: 0.3s; }
     .btn-outline:hover { border-color: var(--primary); background: rgba(22,88,250,0.06); box-shadow: 0 8px 30px rgba(22,88,250,0.15); }
-    .btn-primary:disabled, .btn-outline:disabled { opacity: 0.6; cursor: not-allowed; }
+    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
 
     header { position: fixed; top: 0; left: 0; width: 100%; padding: 18px 0; background: rgba(1,2,5,0.75); backdrop-filter: blur(30px); border-bottom: 1px solid var(--glass-border); z-index: 1000; }
     .header-flex { display: flex; justify-content: space-between; align-items: center; }
     .logo { font-family: var(--font-display); font-size: 1.8rem; font-weight: 800; background: linear-gradient(135deg,var(--primary),#fff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-decoration: none; }
     .nav-links { display: flex; gap: 2rem; align-items: center; }
-    .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: 0.2s; position: relative; cursor: pointer; }
+    .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: 0.2s; cursor: pointer; }
     .nav-links a:hover { color: var(--text); }
     .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--primary); transition: width 0.3s; }
     .nav-links a:hover::after { width: 100%; }
@@ -114,19 +113,17 @@
     .tab-btn.active { background: var(--primary); border-color: var(--primary); color: #fff; }
     @media (max-width:480px) { .tab-btn { padding: 10px 16px; font-size: 0.8rem; } }
 
-    .service-subcategory { margin-bottom: 25px; }
-    .service-subcategory h4 { font-size: 1.05rem; color: var(--text); margin-bottom: 12px; padding-left: 10px; border-left: 3px solid var(--secondary); }
-    .service-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+    .service-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
     .service-tag { background: var(--glass); border: 1px solid var(--glass-border); border-radius: 30px; padding: 8px 18px; font-size: 0.88rem; color: var(--text-muted); transition: all 0.3s; cursor: pointer; }
     .service-tag:hover { border-color: var(--primary); color: var(--text); background: rgba(22,88,250,0.15); }
 
     .rate-table { width: 100%; border-collapse: separate; border-spacing: 0 8px; margin-bottom: 30px; }
-    .rate-table th { text-align: left; padding: 14px 20px; color: var(--secondary); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; }
-    .rate-table td { padding: 14px 20px; background: var(--glass); color: var(--text); font-size: 0.95rem; transition: all 0.3s; }
+    .rate-table th { text-align: left; padding: 14px 20px; color: var(--secondary); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; }
+    .rate-table td { padding: 14px 20px; background: var(--glass); color: var(--text); font-size: 0.95rem; }
     .rate-table td:first-child { border-radius: var(--radius-md) 0 0 var(--radius-md); }
     .rate-table td:last-child { border-radius: 0 var(--radius-md) var(--radius-md) 0; text-align: right; font-weight: 600; color: var(--secondary); white-space: nowrap; }
     .rate-table tr { cursor: pointer; transition: all 0.3s; }
-    .rate-table tr:hover td { background: rgba(22,88,250,0.15); border-color: var(--primary); }
+    .rate-table tr:hover td { background: rgba(22,88,250,0.15); }
     @media (max-width:600px) { .rate-table td, .rate-table th { padding: 10px 12px; font-size: 0.82rem; } }
 
     .downpayment-note { background: rgba(22,88,250,0.1); border: 1px solid var(--primary); border-radius: var(--radius-md); padding: 16px 20px; margin-top: 40px; text-align: center; }
@@ -142,8 +139,7 @@
     textarea.form-control { border-radius: 28px; resize: vertical; min-height: 120px; }
     .form-control:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 25px rgba(22,88,250,0.2); }
 
-    .status-msg { display: none; padding: 14px 22px; border-radius: 40px; margin-top: 16px; font-weight: 500; text-align: center; animation: fadeIn 0.3s ease; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+    .status-msg { display: none; padding: 14px 22px; border-radius: 40px; margin-top: 16px; font-weight: 500; text-align: center; }
     .status-msg.success { display: block; background: rgba(76,142,251,0.15); border: 1px solid var(--secondary); color: var(--secondary); }
     .status-msg.error { display: block; background: rgba(255,80,80,0.15); border: 1px solid #ff5050; color: #ff5050; }
     .status-msg.sending { display: block; background: rgba(22,88,250,0.15); border: 1px solid var(--primary); color: var(--primary); }
@@ -156,14 +152,11 @@
     .fes-feature-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); gap: 16px; margin-top: 20px; }
     .fes-feature-item { background: rgba(22,88,250,0.06); border: 1px solid var(--glass-border); border-radius: var(--radius-md); padding: 16px; border-left: 3px solid var(--primary); }
 
-    .security-footer { text-align: center; margin-top: 10px; font-size: 0.8rem; color: var(--text-muted); }
-    .security-footer i { color: var(--accent-glow); margin: 0 4px; }
-
     .text-center { text-align: center; } .mt-20 { margin-top: 20px; } .mb-20 { margin-bottom: 20px; }
     .gap-12 { gap: 12px; } .flex { display: flex; } .flex-wrap { flex-wrap: wrap; }
   </style>
 </head>
-<body oncontextmenu="return false;" onselectstart="return false;" ondragstart="return false;">
+<body oncontextmenu="return false;">
   <div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div><div class="bg-grid"></div>
 
   <header>
@@ -204,7 +197,7 @@
   </div></section>
 
   <section id="services"><div class="container"><h2>🛠️ What I Can Build For You</h2>
-    <p style="text-align:center;color:var(--text-muted);margin-bottom:40px;">Click on any service tag to add it to your inquiry</p>
+    <p style="text-align:center;color:var(--text-muted);margin-bottom:40px;">Click any service tag to add it to your inquiry</p>
     <div class="tabs-nav" id="servicesTabs">
       <button class="tab-btn active" data-tab="frontend">🎨 Front-End</button>
       <button class="tab-btn" data-tab="backend">⚙️ Back-End</button>
@@ -212,23 +205,20 @@
       <button class="tab-btn" data-tab="additional">🔧 Additional</button>
     </div>
     <div class="service-content" id="frontend">
-      <div class="service-subcategory"><h4>Website UI</h4><div class="service-tags"><span class="service-tag clickable-service" data-service="Landing Pages">Landing Pages</span><span class="service-tag clickable-service" data-service="Corporate Websites">Corporate</span><span class="service-tag clickable-service" data-service="Portfolio">Portfolio</span><span class="service-tag clickable-service" data-service="Business Websites">Business</span></div></div>
-      <div class="service-subcategory"><h4>Frameworks</h4><div class="service-tags"><span class="service-tag clickable-service" data-service="React">React</span><span class="service-tag clickable-service" data-service="Next.js">Next.js</span><span class="service-tag clickable-service" data-service="Vue.js">Vue.js</span><span class="service-tag clickable-service" data-service="Angular">Angular</span></div></div>
+      <div class="service-tags"><span class="service-tag clickable-service" data-service="Landing Pages">Landing Pages</span><span class="service-tag clickable-service" data-service="Corporate Websites">Corporate</span><span class="service-tag clickable-service" data-service="React">React</span><span class="service-tag clickable-service" data-service="Next.js">Next.js</span><span class="service-tag clickable-service" data-service="Vue.js">Vue.js</span></div>
     </div>
     <div class="service-content" id="backend" style="display:none;">
-      <div class="service-subcategory"><h4>Server-Side</h4><div class="service-tags"><span class="service-tag clickable-service" data-service="REST API">REST API</span><span class="service-tag clickable-service" data-service="GraphQL">GraphQL</span><span class="service-tag clickable-service" data-service="Auth Systems">Auth</span></div></div>
-      <div class="service-subcategory"><h4>Databases</h4><div class="service-tags"><span class="service-tag clickable-service" data-service="MySQL">MySQL</span><span class="service-tag clickable-service" data-service="MongoDB">MongoDB</span><span class="service-tag clickable-service" data-service="Firebase">Firebase</span></div></div>
+      <div class="service-tags"><span class="service-tag clickable-service" data-service="REST API">REST API</span><span class="service-tag clickable-service" data-service="MySQL">MySQL</span><span class="service-tag clickable-service" data-service="MongoDB">MongoDB</span><span class="service-tag clickable-service" data-service="Auth Systems">Auth</span></div>
     </div>
     <div class="service-content" id="fullstack" style="display:none;">
-      <div class="service-subcategory"><h4>Applications</h4><div class="service-tags"><span class="service-tag clickable-service" data-service="SaaS">SaaS</span><span class="service-tag clickable-service" data-service="CRM">CRM</span><span class="service-tag clickable-service" data-service="LMS">LMS</span></div></div>
+      <div class="service-tags"><span class="service-tag clickable-service" data-service="SaaS">SaaS</span><span class="service-tag clickable-service" data-service="CRM">CRM</span><span class="service-tag clickable-service" data-service="LMS">LMS</span></div>
     </div>
     <div class="service-content" id="additional" style="display:none;">
-      <div class="service-subcategory"><h4>Security</h4><div class="service-tags"><span class="service-tag clickable-service" data-service="Pen Testing">Pen Testing</span><span class="service-tag clickable-service" data-service="Security Audit">Audit</span></div></div>
+      <div class="service-tags"><span class="service-tag clickable-service" data-service="Pen Testing">Pen Testing</span><span class="service-tag clickable-service" data-service="Security Audit">Audit</span></div>
     </div>
   </div></section>
 
   <section id="pricing"><div class="container"><h2>💰 Web Development Service Rates</h2>
-    <p style="text-align:center;color:var(--text-muted);margin-bottom:40px;">Click any row to select a service for your inquiry</p>
     <div class="tabs-nav" id="rateTabs">
       <button class="tab-btn active" data-rate="frontend-rates">🎨 Front-End</button>
       <button class="tab-btn" data-rate="backend-rates">⚙️ Back-End</button>
@@ -239,26 +229,25 @@
       <table class="rate-table"><thead><tr><th>Service</th><th>Rate</th></tr></thead><tbody>
         <tr class="clickable-rate" data-service="Landing Page (₱3k-₱15k)"><td>Landing Page</td><td>₱3,000 – ₱15,000</td></tr>
         <tr class="clickable-rate" data-service="Business Website (₱8k-₱40k)"><td>Business Website</td><td>₱8,000 – ₱40,000</td></tr>
-        <tr class="clickable-rate" data-service="React/Next.js (₱10k-₱80k+)"><td>React / Next.js Front-End</td><td>₱10,000 – ₱80,000+</td></tr>
+        <tr class="clickable-rate" data-service="React/Next.js (₱10k-₱80k+)"><td>React / Next.js</td><td>₱10,000 – ₱80,000+</td></tr>
       </tbody></table>
     </div>
     <div class="rate-content" id="backend-rates" style="display:none;">
       <table class="rate-table"><thead><tr><th>Service</th><th>Rate</th></tr></thead><tbody>
-        <tr class="clickable-rate" data-service="REST API (₱5k-₱50k)"><td>REST API Development</td><td>₱5,000 – ₱50,000</td></tr>
-        <tr class="clickable-rate" data-service="Auth System (₱3k-₱20k)"><td>Authentication System</td><td>₱3,000 – ₱20,000</td></tr>
-        <tr class="clickable-rate" data-service="Full Custom Backend (₱30k-₱250k+)"><td>Full Custom Backend</td><td>₱30,000 – ₱250,000+</td></tr>
+        <tr class="clickable-rate" data-service="REST API (₱5k-₱50k)"><td>REST API</td><td>₱5,000 – ₱50,000</td></tr>
+        <tr class="clickable-rate" data-service="Auth System (₱3k-₱20k)"><td>Auth System</td><td>₱3,000 – ₱20,000</td></tr>
       </tbody></table>
     </div>
     <div class="rate-content" id="fullstack-rates" style="display:none;">
       <table class="rate-table"><thead><tr><th>Service</th><th>Rate</th></tr></thead><tbody>
-        <tr class="clickable-rate" data-service="Full Business Site (₱15k-₱80k)"><td>Full Business Website</td><td>₱15,000 – ₱80,000</td></tr>
-        <tr class="clickable-rate" data-service="SaaS MVP (₱50k-₱500k+)"><td>SaaS MVP Development</td><td>₱50,000 – ₱500,000+</td></tr>
+        <tr class="clickable-rate" data-service="Full Business (₱15k-₱80k)"><td>Full Business</td><td>₱15,000 – ₱80,000</td></tr>
+        <tr class="clickable-rate" data-service="SaaS MVP (₱50k-₱500k+)"><td>SaaS MVP</td><td>₱50,000 – ₱500,000+</td></tr>
       </tbody></table>
     </div>
     <div class="rate-content" id="security-rates" style="display:none;">
       <table class="rate-table"><thead><tr><th>Service</th><th>Rate</th></tr></thead><tbody>
-        <tr class="clickable-rate" data-service="Security Audit (₱5k-₱50k)"><td>Website Security Audit</td><td>₱5,000 – ₱50,000</td></tr>
-        <tr class="clickable-rate" data-service="Pen Testing (₱10k-₱150k)"><td>Penetration Testing</td><td>₱10,000 – ₱150,000</td></tr>
+        <tr class="clickable-rate" data-service="Security Audit (₱5k-₱50k)"><td>Security Audit</td><td>₱5,000 – ₱50,000</td></tr>
+        <tr class="clickable-rate" data-service="Pen Testing (₱10k-₱150k)"><td>Pen Testing</td><td>₱10,000 – ₱150,000</td></tr>
       </tbody></table>
     </div>
     <div class="downpayment-note"><strong>📌 50% Downpayment | Balance Upon Completion</strong></div>
@@ -280,7 +269,7 @@
 
   <section id="contact"><div class="container"><h2>Get in touch</h2>
     <div class="contact-grid">
-      <form id="contactForm">
+      <form id="contactForm" novalidate>
         <div class="selected-package" id="selectedPackageDisplay"><i class="fas fa-box"></i><span id="selectedPackageName"></span><span class="remove-package" id="removePackage"><i class="fas fa-times-circle"></i></span></div>
         <input type="hidden" id="selectedPackage" value="">
         <input type="text" class="form-control" id="senderName" placeholder="Full name" required autocomplete="name">
@@ -308,7 +297,7 @@
       <div><h4>Links</h4><p style="color:var(--text-muted);"><a href="#services" style="color:var(--text-muted);text-decoration:none;">Services</a><br><a href="#pricing" style="color:var(--text-muted);text-decoration:none;">Rates</a><br><a href="#contact" style="color:var(--text-muted);text-decoration:none;">Contact</a></p></div>
       <div><h4>Social</h4><div class="flex gap-12"><a href="https://www.facebook.com/profile.php?id=61584139169630" target="_blank" rel="noopener noreferrer" class="social-icon"><i class="fab fa-facebook-f"></i></a><a href="https://www.tiktok.com/@rhyzil_" target="_blank" rel="noopener noreferrer" class="social-icon"><i class="fab fa-tiktok"></i></a></div></div>
     </div>
-    <div class="security-footer"><i class="fas fa-shield-alt"></i> Protected by Rhyziltech Security <i class="fas fa-lock"></i></div>
+    <div style="text-align:center;margin-top:20px;color:var(--text-muted);"><i class="fas fa-shield-alt"></i> Protected by Rhyziltech Security <i class="fas fa-lock"></i></div>
     <div style="text-align:center;margin-top:10px;color:var(--text-muted);">© 2026 Rhyziltech. Secure by design.</div>
   </div></footer>
 
@@ -319,56 +308,16 @@
       // COPY PROTECTION
       // ============================================================
       document.addEventListener('keydown', function(e) {
-        // Block Ctrl+C, Ctrl+U, Ctrl+S, Ctrl+P, Ctrl+Shift+I, F12
-        if ((e.ctrlKey || e.metaKey) && 
-            (e.key === 'c' || e.key === 'u' || e.key === 's' || e.key === 'p' || 
-             e.key === 'C' || e.key === 'U' || e.key === 'S' || e.key === 'P' ||
-             (e.shiftKey && e.key === 'I') || (e.shiftKey && e.key === 'i'))) {
-          e.preventDefault();
-          e.stopPropagation();
-          return false;
+        if ((e.ctrlKey || e.metaKey) && (e.key === 'c' || e.key === 'u' || e.key === 's' || e.key === 'p' || e.key === 'C' || e.key === 'U' || e.key === 'S' || e.key === 'P' || (e.shiftKey && (e.key === 'I' || e.key === 'i')))) {
+          e.preventDefault(); e.stopPropagation(); return false;
         }
-        // Block F12
-        if (e.key === 'F12' || e.keyCode === 123) {
-          e.preventDefault();
-          e.stopPropagation();
-          return false;
-        }
+        if (e.key === 'F12' || e.keyCode === 123) { e.preventDefault(); e.stopPropagation(); return false; }
       });
-
-      // Block right-click context menu
-      document.addEventListener('contextmenu', function(e) {
-        e.preventDefault();
-        return false;
-      });
-
-      // Block drag
-      document.addEventListener('dragstart', function(e) {
-        e.preventDefault();
-        return false;
-      });
-
-      // Block select
+      document.addEventListener('contextmenu', function(e) { e.preventDefault(); return false; });
+      document.addEventListener('dragstart', function(e) { e.preventDefault(); return false; });
       document.addEventListener('selectstart', function(e) {
-        if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
-          e.preventDefault();
-          return false;
-        }
+        if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') { e.preventDefault(); return false; }
       });
-
-      // DevTools detection
-      setInterval(function() {
-        const threshold = 160;
-        if (window.outerWidth - window.innerWidth > threshold || 
-            window.outerHeight - window.innerHeight > threshold) {
-          document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;color:#fff;background:#010205;font-family:sans-serif;text-align:center;padding:20px;"><div><h1 style="font-size:3rem;">⚠️ Security Alert</h1><p style="margin:20px 0;">Developer tools detected. This action has been logged.</p><p style="color:#8892b0;">Rhyziltech Security System</p></div></div>';
-        }
-      }, 1000);
-
-      console.log('🛡️ Rhyziltech Security - Copy Protection Active');
-      console.log('🔒 Right-click blocked');
-      console.log('🔒 Ctrl+C blocked');
-      console.log('🔒 DevTools monitored');
 
       // ============================================================
       // THEME
@@ -390,14 +339,12 @@
       // TABS
       // ============================================================
       function setupTabs(tabSelector, contentSelector, dataAttr) {
-        const tabs = document.querySelectorAll(tabSelector);
-        const contents = document.querySelectorAll(contentSelector);
-        tabs.forEach(tab => {
+        document.querySelectorAll(tabSelector).forEach(tab => {
           tab.addEventListener('click', function() {
-            tabs.forEach(t => t.classList.remove('active'));
+            document.querySelectorAll(tabSelector).forEach(t => t.classList.remove('active'));
             this.classList.add('active');
+            document.querySelectorAll(contentSelector).forEach(c => { if(c) c.style.display = 'none'; });
             const target = this.getAttribute(dataAttr);
-            contents.forEach(c => { if(c) c.style.display = 'none'; });
             if (target) { const el = document.getElementById(target); if (el) el.style.display = 'block'; }
           });
         });
@@ -436,38 +383,24 @@
 
       document.querySelectorAll('.clickable-service').forEach(tag => {
         tag.addEventListener('click', function() {
-          const service = this.getAttribute('data-service');
-          addService(service);
-          this.style.borderColor = 'var(--primary)';
-          this.style.background = 'rgba(22,88,250,0.2)';
-          setTimeout(() => { this.style.borderColor = ''; this.style.background = ''; }, 1500);
+          addService(this.getAttribute('data-service'));
         });
       });
 
       document.querySelectorAll('.clickable-rate').forEach(row => {
         row.addEventListener('click', function() {
-          const service = this.getAttribute('data-service');
-          addService(service);
-          this.style.background = 'rgba(22,88,250,0.2)';
-          setTimeout(() => { this.style.background = ''; }, 2000);
+          addService(this.getAttribute('data-service'));
         });
       });
 
-      document.getElementById('removePackage').addEventListener('click', () => { 
-        selectedServices = []; 
-        updatePackageDisplay(); 
-      });
+      document.getElementById('removePackage').addEventListener('click', () => { selectedServices = []; updatePackageDisplay(); });
 
       // ============================================================
-      // AUTO-REPLY MESSAGE
-      // ============================================================
-      const AUTO_REPLY = `Hello! Thank you for reaching out to Rhyzil Tech.\n\nBefore I provide the final quotation, I'd like to ask a few quick questions so I can better understand your website or system requirements.\n\n• What type of business or project do you have?\n• What features would you like to include?\n• Do you already have a logo, design, or content prepared?\n• Will you need an admin dashboard or online ordering system?\n• Approximately how many pages do you want?\n• Do you have a target deadline for the project?\n\nOnce I have these details, I can provide a more accurate quotation. 🙂`;
-
-      // ============================================================
-      // EMAILJS - WORKING CONTACT FORM
+      // EMAILJS - SIMPLE & WORKING
+      // Only sends notification to your email (no auto-reply to avoid template errors)
       // ============================================================
       emailjs.init("UV2MXRtD7FcyZXQ3F");
-      console.log('✅ EmailJS initialized');
+      console.log('✅ EmailJS ready');
       
       const form = document.getElementById('contactForm');
       const status = document.getElementById('formStatus');
@@ -478,7 +411,6 @@
         e.preventDefault();
         console.log('📤 Form submitted');
         
-        // Rate limiting - 10 seconds between submissions
         if (Date.now() - lastSubmit < 10000) { 
           status.className = 'status-msg error'; 
           status.textContent = '⚠️ Please wait 10 seconds before sending again.'; 
@@ -490,29 +422,14 @@
         const msg = document.getElementById('senderMessage').value.trim();
         const pkg = selectedPackageInput.value;
         
-        // Validation
-        if (!name) { 
+        if (!name || !email || !msg) { 
           status.className = 'status-msg error'; 
-          status.textContent = '⚠️ Please enter your full name.'; 
-          document.getElementById('senderName').focus();
-          return; 
-        }
-        if (!email) { 
-          status.className = 'status-msg error'; 
-          status.textContent = '⚠️ Please enter your email address.'; 
-          document.getElementById('senderEmail').focus();
+          status.textContent = '⚠️ Please fill in all fields.'; 
           return; 
         }
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { 
           status.className = 'status-msg error'; 
           status.textContent = '⚠️ Please enter a valid email address.'; 
-          document.getElementById('senderEmail').focus();
-          return; 
-        }
-        if (!msg) { 
-          status.className = 'status-msg error'; 
-          status.textContent = '⚠️ Please tell me about your project.'; 
-          document.getElementById('senderMessage').focus();
           return; 
         }
         
@@ -522,56 +439,40 @@
         status.className = 'status-msg sending';
         status.textContent = '📤 Sending your message...';
         
-        let fullMsg = pkg ? '📦 SELECTED SERVICES: ' + pkg + '\n\n📝 MESSAGE:\n' + msg : msg;
+        let fullMsg = pkg ? '📦 SELECTED: ' + pkg + '\n\n📝 FROM: ' + name + ' (' + email + ')\n\n💬 MESSAGE:\n' + msg : '📝 FROM: ' + name + ' (' + email + ')\n\n💬 MESSAGE:\n' + msg;
         
-        // Send notification to business email
-        const notificationPromise = emailjs.send("service_ad1l4qy", "template_mphmqzv", { 
+        // ONLY send one email - the notification to you
+        emailjs.send("service_ad1l4qy", "template_mphmqzv", { 
           from_name: name, 
           from_email: email, 
           message: fullMsg, 
           reply_to: email 
+        })
+        .then(function(response) {
+          console.log('✅ Email sent! Status:', response.status);
+          status.className = 'status-msg success';
+          status.textContent = '✅ Message sent successfully! I\'ll get back to you within 12 hours.';
+          form.reset(); 
+          selectedServices = []; 
+          updatePackageDisplay();
+          sendBtn.disabled = false; 
+          sendBtn.innerHTML = '💬 Send message';
+          setTimeout(function() { status.className = 'status-msg'; status.textContent = ''; }, 6000);
+        })
+        .catch(function(error) {
+          console.error('❌ EmailJS error:', error);
+          // Fallback: open email client
+          const subject = encodeURIComponent('Project Inquiry from ' + name);
+          const body = encodeURIComponent((pkg ? 'SELECTED: ' + pkg + '\n\n' : '') + 'Name: ' + name + '\nEmail: ' + email + '\n\nMessage:\n' + msg);
+          window.location.href = 'mailto:businessrhyziltech@gmail.com?subject=' + subject + '&body=' + body;
+          status.className = 'status-msg error';
+          status.innerHTML = 'Opening your email client... <a href="mailto:businessrhyziltech@gmail.com" style="color:var(--secondary);">Click here</a> if nothing happens.';
+          sendBtn.disabled = false; 
+          sendBtn.innerHTML = '💬 Send message';
         });
-        
-        // Send auto-reply to client
-        const autoReplyPromise = emailjs.send("service_ad1l4qy", "template_mphmqzv", { 
-          from_name: "Rhyzil Tech", 
-          from_email: "businessrhyziltech@gmail.com", 
-          message: AUTO_REPLY, 
-          reply_to: "businessrhyziltech@gmail.com", 
-          to_email: email 
-        }).catch(function(err) { 
-          console.warn('Auto-reply note (non-critical):', err); 
-          return Promise.resolve(); 
-        });
-        
-        Promise.all([notificationPromise, autoReplyPromise])
-          .then(function() {
-            console.log('✅ All emails sent successfully');
-            status.className = 'status-msg success';
-            status.textContent = '✅ Message sent successfully! Check your inbox for our auto-reply. We\'ll respond within 12 hours.';
-            form.reset(); 
-            selectedServices = []; 
-            updatePackageDisplay();
-            sendBtn.disabled = false; 
-            sendBtn.innerHTML = '💬 Send message';
-            setTimeout(function() { 
-              status.className = 'status-msg'; 
-              status.textContent = ''; 
-            }, 8000);
-          })
-          .catch(function(error) {
-            console.error('❌ Send failed:', error);
-            status.className = 'status-msg error';
-            status.innerHTML = '❌ Unable to send. Please email us directly at <a href="mailto:businessrhyziltech@gmail.com" style="color:var(--secondary);text-decoration:underline;">businessrhyziltech@gmail.com</a>';
-            sendBtn.disabled = false; 
-            sendBtn.innerHTML = '💬 Send message';
-          });
       });
 
-      console.log('✅ Rhyziltech fully operational');
-      console.log('🛡️ Copy protection: ACTIVE');
-      console.log('📧 Contact form: WORKING');
-      console.log('🔒 Security measures: ACTIVE');
+      console.log('✅ Contact form ready - sends directly to businessrhyziltech@gmail.com');
     })();
   </script>
 </body>

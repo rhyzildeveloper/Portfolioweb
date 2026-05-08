@@ -65,12 +65,13 @@
     .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 18px 45px rgba(22,88,250,0.5); }
     .btn-outline { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 16px 38px; background: transparent; color: var(--text); font-weight: 600; font-family: var(--font-display); font-size: 1.05rem; border-radius: 60px; text-decoration: none; border: 1.5px solid var(--glass-border); cursor: pointer; transition: 0.3s; }
     .btn-outline:hover { border-color: var(--primary); background: rgba(22,88,250,0.06); box-shadow: 0 8px 30px rgba(22,88,250,0.15); }
+    .btn-primary:disabled, .btn-outline:disabled { opacity: 0.6; cursor: not-allowed; }
 
     header { position: fixed; top: 0; left: 0; width: 100%; padding: 18px 0; background: rgba(1,2,5,0.75); backdrop-filter: blur(30px); border-bottom: 1px solid var(--glass-border); z-index: 1000; }
     .header-flex { display: flex; justify-content: space-between; align-items: center; }
     .logo { font-family: var(--font-display); font-size: 1.8rem; font-weight: 800; background: linear-gradient(135deg,var(--primary),#fff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-decoration: none; }
     .nav-links { display: flex; gap: 2rem; align-items: center; }
-    .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: 0.2s; position: relative; }
+    .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: 0.2s; position: relative; cursor: pointer; }
     .nav-links a:hover { color: var(--text); }
     .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--primary); transition: width 0.3s; }
     .nav-links a:hover::after { width: 100%; }
@@ -97,7 +98,6 @@
     .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
     @media (max-width:768px) { .about-grid { grid-template-columns: 1fr; } }
 
-    /* Services tabs */
     .tabs-nav { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 40px; }
     .tab-btn { padding: 12px 26px; border-radius: 40px; cursor: pointer; font-weight: 600; font-family: var(--font-display); font-size: 0.9rem; border: 1.5px solid var(--glass-border); background: transparent; color: var(--text-muted); transition: all 0.3s; white-space: nowrap; }
     .tab-btn:hover { border-color: var(--primary); color: var(--text); }
@@ -107,16 +107,17 @@
     .service-subcategory { margin-bottom: 25px; }
     .service-subcategory h4 { font-size: 1.05rem; color: var(--text); margin-bottom: 12px; padding-left: 10px; border-left: 3px solid var(--secondary); }
     .service-tags { display: flex; flex-wrap: wrap; gap: 10px; }
-    .service-tag { background: var(--glass); border: 1px solid var(--glass-border); border-radius: 30px; padding: 8px 18px; font-size: 0.88rem; color: var(--text-muted); transition: all 0.3s; cursor: default; }
-    .service-tag:hover { border-color: var(--primary); color: var(--text); background: rgba(22,88,250,0.1); }
+    .service-tag { background: var(--glass); border: 1px solid var(--glass-border); border-radius: 30px; padding: 8px 18px; font-size: 0.88rem; color: var(--text-muted); transition: all 0.3s; cursor: pointer; }
+    .service-tag:hover { border-color: var(--primary); color: var(--text); background: rgba(22,88,250,0.15); }
 
-    /* Rate tables */
     .rate-table { width: 100%; border-collapse: separate; border-spacing: 0 8px; margin-bottom: 30px; }
     .rate-table th { text-align: left; padding: 14px 20px; color: var(--secondary); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; }
-    .rate-table td { padding: 14px 20px; background: var(--glass); color: var(--text); font-size: 0.95rem; }
+    .rate-table td { padding: 14px 20px; background: var(--glass); color: var(--text); font-size: 0.95rem; transition: all 0.3s; }
     .rate-table td:first-child { border-radius: var(--radius-md) 0 0 var(--radius-md); }
     .rate-table td:last-child { border-radius: 0 var(--radius-md) var(--radius-md) 0; text-align: right; font-weight: 600; color: var(--secondary); white-space: nowrap; }
-    .rate-table tr:hover td { background: rgba(22,88,250,0.12); }
+    .rate-table tr { cursor: pointer; transition: all 0.3s; }
+    .rate-table tr:hover td { background: rgba(22,88,250,0.15); border-color: var(--primary); }
+    .rate-table tr.selected td { background: rgba(22,88,250,0.2); border-color: var(--primary); }
     @media (max-width:600px) {
       .rate-table td, .rate-table th { padding: 10px 12px; font-size: 0.82rem; }
     }
@@ -145,7 +146,7 @@
 
     footer { background: var(--glass); border-top: 1px solid var(--glass-border); padding: 60px 0 30px; margin-top: 80px; }
     .footer-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap: 40px; }
-    .social-icon { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; background: var(--glass); border: 1px solid var(--glass-border); color: var(--text); text-decoration: none; transition: 0.3s; }
+    .social-icon { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; background: var(--glass); border: 1px solid var(--glass-border); color: var(--text); text-decoration: none; transition: 0.3s; cursor: pointer; }
     .social-icon:hover { border-color: var(--primary); color: var(--primary); box-shadow: 0 0 25px rgba(22,88,250,0.4); }
 
     .fes-feature-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); gap: 16px; margin-top: 20px; }
@@ -153,6 +154,7 @@
 
     .text-center { text-align: center; } .mt-20 { margin-top: 20px; } .mb-20 { margin-bottom: 20px; }
     .gap-12 { gap: 12px; } .flex { display: flex; } .flex-wrap { flex-wrap: wrap; }
+    .items-center { align-items: center; }
   </style>
 </head>
 <body>
@@ -161,7 +163,7 @@
   <header>
     <div class="container header-flex">
       <a href="#" class="logo">RHYZILTECH</a>
-      <div style="display: flex; align-items: center; gap: 1rem;">
+      <div class="flex items-center gap-12">
         <div class="nav-links" id="navLinks">
           <a href="#home">Home</a><a href="#about">About</a><a href="#services">Services</a><a href="#pricing">Rates</a><a href="#portfolio">Portfolio</a><a href="#contact">Contact</a>
         </div>
@@ -197,7 +199,7 @@
 
   <!-- SERVICES SECTION -->
   <section id="services"><div class="container"><h2>🛠️ What I Can Build For You</h2>
-    <p style="text-align:center;color:var(--text-muted);margin-bottom:40px;">From front-end interfaces to back-end systems and full-stack platforms</p>
+    <p style="text-align:center;color:var(--text-muted);margin-bottom:40px;">Click on any service tag to add it to your inquiry</p>
     <div class="tabs-nav" id="servicesTabs">
       <button class="tab-btn active" data-tab="frontend">🎨 Front-End</button>
       <button class="tab-btn" data-tab="backend">⚙️ Back-End</button>
@@ -205,45 +207,45 @@
       <button class="tab-btn" data-tab="additional">🔧 Additional</button>
     </div>
     <div class="service-content" id="frontend">
-      <div class="service-subcategory"><h4>Website UI Development</h4><div class="service-tags"><span class="service-tag">Landing Pages</span><span class="service-tag">Corporate Websites</span><span class="service-tag">Portfolio Websites</span><span class="service-tag">Business Websites</span><span class="service-tag">SaaS Dashboards</span><span class="service-tag">Blog & News</span><span class="service-tag">Educational</span><span class="service-tag">Membership</span></div></div>
-      <div class="service-subcategory"><h4>Responsive Design</h4><div class="service-tags"><span class="service-tag">Mobile-Friendly</span><span class="service-tag">Tablet Optimization</span><span class="service-tag">Cross-Browser</span><span class="service-tag">Adaptive UI</span></div></div>
-      <div class="service-subcategory"><h4>Modern Frameworks</h4><div class="service-tags"><span class="service-tag">React</span><span class="service-tag">Next.js</span><span class="service-tag">Vue.js</span><span class="service-tag">Nuxt.js</span><span class="service-tag">Angular</span><span class="service-tag">Svelte</span></div></div>
-      <div class="service-subcategory"><h4>UI/UX Enhancement</h4><div class="service-tags"><span class="service-tag">Animations</span><span class="service-tag">Microinteractions</span><span class="service-tag">Transitions</span><span class="service-tag">Dark/Light Mode</span><span class="service-tag">Accessibility</span></div></div>
-      <div class="service-subcategory"><h4>Performance</h4><div class="service-tags"><span class="service-tag">Faster Loading</span><span class="service-tag">Lazy Loading</span><span class="service-tag">Image Optimization</span><span class="service-tag">SEO-Friendly</span><span class="service-tag">Core Web Vitals</span></div></div>
-      <div class="service-subcategory"><h4>Design Implementation</h4><div class="service-tags"><span class="service-tag">Figma to HTML</span><span class="service-tag">Figma to React</span><span class="service-tag">PSD to Website</span><span class="service-tag">Adobe XD to Website</span></div></div>
-      <div class="service-subcategory"><h4>Integrations</h4><div class="service-tags"><span class="service-tag">API Integration</span><span class="service-tag">Payment Gateway UI</span><span class="service-tag">Chat Systems</span><span class="service-tag">Maps</span><span class="service-tag">Auth UI</span></div></div>
-      <div class="service-subcategory"><h4>E-Commerce Front-End</h4><div class="service-tags"><span class="service-tag">Product Pages</span><span class="service-tag">Shopping Cart</span><span class="service-tag">Checkout</span><span class="service-tag">Customer Dashboards</span></div></div>
+      <div class="service-subcategory"><h4>Website UI Development</h4><div class="service-tags"><span class="service-tag clickable-service" data-service="Landing Pages">Landing Pages</span><span class="service-tag clickable-service" data-service="Corporate Websites">Corporate Websites</span><span class="service-tag clickable-service" data-service="Portfolio Websites">Portfolio Websites</span><span class="service-tag clickable-service" data-service="Business Websites">Business Websites</span><span class="service-tag clickable-service" data-service="SaaS Dashboards">SaaS Dashboards</span><span class="service-tag clickable-service" data-service="Blog & News">Blog & News</span><span class="service-tag clickable-service" data-service="Educational">Educational</span><span class="service-tag clickable-service" data-service="Membership">Membership</span></div></div>
+      <div class="service-subcategory"><h4>Responsive Design</h4><div class="service-tags"><span class="service-tag clickable-service" data-service="Mobile-Friendly">Mobile-Friendly</span><span class="service-tag clickable-service" data-service="Tablet Optimization">Tablet Optimization</span><span class="service-tag clickable-service" data-service="Cross-Browser">Cross-Browser</span><span class="service-tag clickable-service" data-service="Adaptive UI">Adaptive UI</span></div></div>
+      <div class="service-subcategory"><h4>Modern Frameworks</h4><div class="service-tags"><span class="service-tag clickable-service" data-service="React">React</span><span class="service-tag clickable-service" data-service="Next.js">Next.js</span><span class="service-tag clickable-service" data-service="Vue.js">Vue.js</span><span class="service-tag clickable-service" data-service="Nuxt.js">Nuxt.js</span><span class="service-tag clickable-service" data-service="Angular">Angular</span><span class="service-tag clickable-service" data-service="Svelte">Svelte</span></div></div>
+      <div class="service-subcategory"><h4>UI/UX Enhancement</h4><div class="service-tags"><span class="service-tag clickable-service" data-service="Animations">Animations</span><span class="service-tag clickable-service" data-service="Microinteractions">Microinteractions</span><span class="service-tag clickable-service" data-service="Transitions">Transitions</span><span class="service-tag clickable-service" data-service="Dark/Light Mode">Dark/Light Mode</span><span class="service-tag clickable-service" data-service="Accessibility">Accessibility</span></div></div>
+      <div class="service-subcategory"><h4>Performance</h4><div class="service-tags"><span class="service-tag clickable-service" data-service="Faster Loading">Faster Loading</span><span class="service-tag clickable-service" data-service="Lazy Loading">Lazy Loading</span><span class="service-tag clickable-service" data-service="Image Optimization">Image Optimization</span><span class="service-tag clickable-service" data-service="SEO-Friendly">SEO-Friendly</span><span class="service-tag clickable-service" data-service="Core Web Vitals">Core Web Vitals</span></div></div>
+      <div class="service-subcategory"><h4>Design Implementation</h4><div class="service-tags"><span class="service-tag clickable-service" data-service="Figma to HTML">Figma to HTML</span><span class="service-tag clickable-service" data-service="Figma to React">Figma to React</span><span class="service-tag clickable-service" data-service="PSD to Website">PSD to Website</span><span class="service-tag clickable-service" data-service="Adobe XD to Website">Adobe XD to Website</span></div></div>
+      <div class="service-subcategory"><h4>Integrations</h4><div class="service-tags"><span class="service-tag clickable-service" data-service="API Integration">API Integration</span><span class="service-tag clickable-service" data-service="Payment Gateway UI">Payment Gateway UI</span><span class="service-tag clickable-service" data-service="Chat Systems">Chat Systems</span><span class="service-tag clickable-service" data-service="Maps">Maps</span><span class="service-tag clickable-service" data-service="Auth UI">Auth UI</span></div></div>
+      <div class="service-subcategory"><h4>E-Commerce Front-End</h4><div class="service-tags"><span class="service-tag clickable-service" data-service="Product Pages">Product Pages</span><span class="service-tag clickable-service" data-service="Shopping Cart">Shopping Cart</span><span class="service-tag clickable-service" data-service="Checkout">Checkout</span><span class="service-tag clickable-service" data-service="Customer Dashboards">Customer Dashboards</span></div></div>
     </div>
     <div class="service-content" id="backend" style="display:none;">
-      <div class="service-subcategory"><h4>Server-Side</h4><div class="service-tags"><span class="service-tag">REST API</span><span class="service-tag">GraphQL</span><span class="service-tag">Auth Systems</span><span class="service-tag">RBAC</span><span class="service-tag">Session Mgmt</span></div></div>
-      <div class="service-subcategory"><h4>Databases</h4><div class="service-tags"><span class="service-tag">MySQL</span><span class="service-tag">PostgreSQL</span><span class="service-tag">MongoDB</span><span class="service-tag">Firebase</span><span class="service-tag">Supabase</span><span class="service-tag">Redis</span></div></div>
-      <div class="service-subcategory"><h4>Auth & Security</h4><div class="service-tags"><span class="service-tag">JWT</span><span class="service-tag">OAuth</span><span class="service-tag">Google/FB Login</span><span class="service-tag">2FA</span><span class="service-tag">Encryption</span></div></div>
-      <div class="service-subcategory"><h4>CMS</h4><div class="service-tags"><span class="service-tag">Custom Admin Panels</span><span class="service-tag">Headless CMS</span><span class="service-tag">WordPress</span><span class="service-tag">Shopify</span></div></div>
-      <div class="service-subcategory"><h4>E-Commerce Back-End</h4><div class="service-tags"><span class="service-tag">Inventory</span><span class="service-tag">Order Mgmt</span><span class="service-tag">Payments</span><span class="service-tag">Subscriptions</span></div></div>
-      <div class="service-subcategory"><h4>Cloud & Hosting</h4><div class="service-tags"><span class="service-tag">VPS</span><span class="service-tag">Cloud Deploy</span><span class="service-tag">Docker</span><span class="service-tag">CI/CD</span><span class="service-tag">CDN</span></div></div>
-      <div class="service-subcategory"><h4>Automation</h4><div class="service-tags"><span class="service-tag">Email</span><span class="service-tag">SMS</span><span class="service-tag">Scheduled Tasks</span><span class="service-tag">AI Automation</span></div></div>
-      <div class="service-subcategory"><h4>Real-Time</h4><div class="service-tags"><span class="service-tag">Live Chat</span><span class="service-tag">Notifications</span><span class="service-tag">Dashboards</span><span class="service-tag">WebSockets</span></div></div>
-      <div class="service-subcategory"><h4>Performance</h4><div class="service-tags"><span class="service-tag">DB Optimization</span><span class="service-tag">API Optimization</span><span class="service-tag">Caching</span><span class="service-tag">Scalability</span></div></div>
+      <div class="service-subcategory"><h4>Server-Side</h4><div class="service-tags"><span class="service-tag clickable-service" data-service="REST API">REST API</span><span class="service-tag clickable-service" data-service="GraphQL">GraphQL</span><span class="service-tag clickable-service" data-service="Auth Systems">Auth Systems</span><span class="service-tag clickable-service" data-service="RBAC">RBAC</span><span class="service-tag clickable-service" data-service="Session Mgmt">Session Mgmt</span></div></div>
+      <div class="service-subcategory"><h4>Databases</h4><div class="service-tags"><span class="service-tag clickable-service" data-service="MySQL">MySQL</span><span class="service-tag clickable-service" data-service="PostgreSQL">PostgreSQL</span><span class="service-tag clickable-service" data-service="MongoDB">MongoDB</span><span class="service-tag clickable-service" data-service="Firebase">Firebase</span><span class="service-tag clickable-service" data-service="Supabase">Supabase</span><span class="service-tag clickable-service" data-service="Redis">Redis</span></div></div>
+      <div class="service-subcategory"><h4>Auth & Security</h4><div class="service-tags"><span class="service-tag clickable-service" data-service="JWT">JWT</span><span class="service-tag clickable-service" data-service="OAuth">OAuth</span><span class="service-tag clickable-service" data-service="Google/FB Login">Google/FB Login</span><span class="service-tag clickable-service" data-service="2FA">2FA</span><span class="service-tag clickable-service" data-service="Encryption">Encryption</span></div></div>
+      <div class="service-subcategory"><h4>CMS</h4><div class="service-tags"><span class="service-tag clickable-service" data-service="Custom Admin Panels">Custom Admin Panels</span><span class="service-tag clickable-service" data-service="Headless CMS">Headless CMS</span><span class="service-tag clickable-service" data-service="WordPress">WordPress</span><span class="service-tag clickable-service" data-service="Shopify">Shopify</span></div></div>
+      <div class="service-subcategory"><h4>E-Commerce Back-End</h4><div class="service-tags"><span class="service-tag clickable-service" data-service="Inventory">Inventory</span><span class="service-tag clickable-service" data-service="Order Mgmt">Order Mgmt</span><span class="service-tag clickable-service" data-service="Payments">Payments</span><span class="service-tag clickable-service" data-service="Subscriptions">Subscriptions</span></div></div>
+      <div class="service-subcategory"><h4>Cloud & Hosting</h4><div class="service-tags"><span class="service-tag clickable-service" data-service="VPS">VPS</span><span class="service-tag clickable-service" data-service="Cloud Deploy">Cloud Deploy</span><span class="service-tag clickable-service" data-service="Docker">Docker</span><span class="service-tag clickable-service" data-service="CI/CD">CI/CD</span><span class="service-tag clickable-service" data-service="CDN">CDN</span></div></div>
+      <div class="service-subcategory"><h4>Automation</h4><div class="service-tags"><span class="service-tag clickable-service" data-service="Email Automation">Email Automation</span><span class="service-tag clickable-service" data-service="SMS">SMS</span><span class="service-tag clickable-service" data-service="Scheduled Tasks">Scheduled Tasks</span><span class="service-tag clickable-service" data-service="AI Automation">AI Automation</span></div></div>
+      <div class="service-subcategory"><h4>Real-Time</h4><div class="service-tags"><span class="service-tag clickable-service" data-service="Live Chat">Live Chat</span><span class="service-tag clickable-service" data-service="Notifications">Notifications</span><span class="service-tag clickable-service" data-service="Dashboards">Dashboards</span><span class="service-tag clickable-service" data-service="WebSockets">WebSockets</span></div></div>
+      <div class="service-subcategory"><h4>Performance</h4><div class="service-tags"><span class="service-tag clickable-service" data-service="DB Optimization">DB Optimization</span><span class="service-tag clickable-service" data-service="API Optimization">API Optimization</span><span class="service-tag clickable-service" data-service="Caching">Caching</span><span class="service-tag clickable-service" data-service="Scalability">Scalability</span></div></div>
     </div>
     <div class="service-content" id="fullstack" style="display:none;">
-      <div class="service-subcategory"><h4>Full Web Applications</h4><div class="service-tags"><span class="service-tag">SaaS Platforms</span><span class="service-tag">CRM</span><span class="service-tag">ERP</span><span class="service-tag">Booking Systems</span><span class="service-tag">LMS</span><span class="service-tag">Social Platforms</span><span class="service-tag">AI Platforms</span><span class="service-tag">Marketplaces</span></div></div>
-      <div class="service-subcategory"><h4>Custom Systems</h4><div class="service-tags"><span class="service-tag">School Mgmt</span><span class="service-tag">Hospital Systems</span><span class="service-tag">HR Mgmt</span><span class="service-tag">POS</span><span class="service-tag">Inventory</span><span class="service-tag">Attendance</span></div></div>
-      <div class="service-subcategory"><h4>Startup MVP</h4><div class="service-tags"><span class="service-tag">MVP Design</span><span class="service-tag">Rapid Prototyping</span><span class="service-tag">Scalable Architecture</span><span class="service-tag">Investor-Ready</span></div></div>
+      <div class="service-subcategory"><h4>Full Web Applications</h4><div class="service-tags"><span class="service-tag clickable-service" data-service="SaaS Platforms">SaaS Platforms</span><span class="service-tag clickable-service" data-service="CRM">CRM</span><span class="service-tag clickable-service" data-service="ERP">ERP</span><span class="service-tag clickable-service" data-service="Booking Systems">Booking Systems</span><span class="service-tag clickable-service" data-service="LMS">LMS</span><span class="service-tag clickable-service" data-service="Social Platforms">Social Platforms</span><span class="service-tag clickable-service" data-service="AI Platforms">AI Platforms</span><span class="service-tag clickable-service" data-service="Marketplaces">Marketplaces</span></div></div>
+      <div class="service-subcategory"><h4>Custom Systems</h4><div class="service-tags"><span class="service-tag clickable-service" data-service="School Mgmt">School Mgmt</span><span class="service-tag clickable-service" data-service="Hospital Systems">Hospital Systems</span><span class="service-tag clickable-service" data-service="HR Mgmt">HR Mgmt</span><span class="service-tag clickable-service" data-service="POS">POS</span><span class="service-tag clickable-service" data-service="Inventory System">Inventory System</span><span class="service-tag clickable-service" data-service="Attendance">Attendance</span></div></div>
+      <div class="service-subcategory"><h4>Startup MVP</h4><div class="service-tags"><span class="service-tag clickable-service" data-service="MVP Design">MVP Design</span><span class="service-tag clickable-service" data-service="Rapid Prototyping">Rapid Prototyping</span><span class="service-tag clickable-service" data-service="Scalable Architecture">Scalable Architecture</span><span class="service-tag clickable-service" data-service="Investor-Ready">Investor-Ready</span></div></div>
     </div>
     <div class="service-content" id="additional" style="display:none;">
-      <div class="service-subcategory"><h4>SEO</h4><div class="service-tags"><span class="service-tag">Technical SEO</span><span class="service-tag">On-Page</span><span class="service-tag">Speed Optimization</span></div></div>
-      <div class="service-subcategory"><h4>Maintenance</h4><div class="service-tags"><span class="service-tag">Website Maintenance</span><span class="service-tag">Bug Fixing</span><span class="service-tag">Security Updates</span><span class="service-tag">Backups</span></div></div>
-      <div class="service-subcategory"><h4>Cybersecurity</h4><div class="service-tags"><span class="service-tag">Pen Testing</span><span class="service-tag">Security Audits</span><span class="service-tag">Vulnerability Scan</span><span class="service-tag">Malware Removal</span><span class="service-tag">Hardening</span></div></div>
-      <div class="service-subcategory"><h4>AI & Modern Tech</h4><div class="service-tags"><span class="service-tag">AI Chatbots</span><span class="service-tag">OpenAI API</span><span class="service-tag">Automation Tools</span></div></div>
-      <div class="service-subcategory"><h4>DevOps</h4><div class="service-tags"><span class="service-tag">GitHub Mgmt</span><span class="service-tag">Deployment</span><span class="service-tag">Linux Server</span><span class="service-tag">Monitoring</span></div></div>
-      <div class="service-subcategory"><h4>Analytics</h4><div class="service-tags"><span class="service-tag">Google Analytics</span><span class="service-tag">Heatmaps</span><span class="service-tag">User Tracking</span></div></div>
-      <div class="service-subcategory"><h4>Consultation</h4><div class="service-tags"><span class="service-tag">Tech Consultation</span><span class="service-tag">Architecture</span><span class="service-tag">Audits</span><span class="service-tag">Scaling Advice</span></div></div>
+      <div class="service-subcategory"><h4>SEO</h4><div class="service-tags"><span class="service-tag clickable-service" data-service="Technical SEO">Technical SEO</span><span class="service-tag clickable-service" data-service="On-Page SEO">On-Page SEO</span><span class="service-tag clickable-service" data-service="Speed Optimization">Speed Optimization</span></div></div>
+      <div class="service-subcategory"><h4>Maintenance</h4><div class="service-tags"><span class="service-tag clickable-service" data-service="Website Maintenance">Website Maintenance</span><span class="service-tag clickable-service" data-service="Bug Fixing">Bug Fixing</span><span class="service-tag clickable-service" data-service="Security Updates">Security Updates</span><span class="service-tag clickable-service" data-service="Backups">Backups</span></div></div>
+      <div class="service-subcategory"><h4>Cybersecurity</h4><div class="service-tags"><span class="service-tag clickable-service" data-service="Pen Testing">Pen Testing</span><span class="service-tag clickable-service" data-service="Security Audits">Security Audits</span><span class="service-tag clickable-service" data-service="Vulnerability Scan">Vulnerability Scan</span><span class="service-tag clickable-service" data-service="Malware Removal">Malware Removal</span><span class="service-tag clickable-service" data-service="Hardening">Hardening</span></div></div>
+      <div class="service-subcategory"><h4>AI & Modern Tech</h4><div class="service-tags"><span class="service-tag clickable-service" data-service="AI Chatbots">AI Chatbots</span><span class="service-tag clickable-service" data-service="OpenAI API">OpenAI API</span><span class="service-tag clickable-service" data-service="Automation Tools">Automation Tools</span></div></div>
+      <div class="service-subcategory"><h4>DevOps</h4><div class="service-tags"><span class="service-tag clickable-service" data-service="GitHub Mgmt">GitHub Mgmt</span><span class="service-tag clickable-service" data-service="Deployment">Deployment</span><span class="service-tag clickable-service" data-service="Linux Server">Linux Server</span><span class="service-tag clickable-service" data-service="Monitoring">Monitoring</span></div></div>
+      <div class="service-subcategory"><h4>Analytics</h4><div class="service-tags"><span class="service-tag clickable-service" data-service="Google Analytics">Google Analytics</span><span class="service-tag clickable-service" data-service="Heatmaps">Heatmaps</span><span class="service-tag clickable-service" data-service="User Tracking">User Tracking</span></div></div>
+      <div class="service-subcategory"><h4>Consultation</h4><div class="service-tags"><span class="service-tag clickable-service" data-service="Tech Consultation">Tech Consultation</span><span class="service-tag clickable-service" data-service="Architecture">Architecture</span><span class="service-tag clickable-service" data-service="Audits">Audits</span><span class="service-tag clickable-service" data-service="Scaling Advice">Scaling Advice</span></div></div>
     </div>
   </div></section>
 
   <!-- PRICING / RATES SECTION -->
   <section id="pricing"><div class="container"><h2>💰 Web Development Service Rates</h2>
-    <p style="text-align:center;color:var(--text-muted);margin-bottom:40px;">Transparent pricing — click "Avail" on any row to include it in your inquiry</p>
+    <p style="text-align:center;color:var(--text-muted);margin-bottom:40px;">Click any row to select a service for your inquiry</p>
     
     <div class="tabs-nav" id="rateTabs">
       <button class="tab-btn active" data-rate="frontend-rates">🎨 Front-End</button>
@@ -255,113 +257,85 @@
       <button class="tab-btn" data-rate="addon-rates">⭐ Add-Ons</button>
     </div>
 
-    <!-- Front-End Rates -->
     <div class="rate-content" id="frontend-rates">
-      <table class="rate-table">
-        <thead><tr><th>Service</th><th>Estimated Rate</th></tr></thead>
-        <tbody>
-          <tr><td>Landing Page</td><td>₱3,000 – ₱15,000</td></tr>
-          <tr><td>Business Website</td><td>₱8,000 – ₱40,000</td></tr>
-          <tr><td>Portfolio Website</td><td>₱5,000 – ₱20,000</td></tr>
-          <tr><td>Responsive Design Optimization</td><td>₱2,000 – ₱8,000</td></tr>
-          <tr><td>Figma to HTML/React</td><td>₱3,000 – ₱25,000</td></tr>
-          <tr><td>React / Next.js Front-End</td><td>₱10,000 – ₱80,000+</td></tr>
-          <tr><td>UI Animation & Effects</td><td>₱2,000 – ₱15,000</td></tr>
-          <tr><td>Dashboard UI</td><td>₱8,000 – ₱50,000</td></tr>
-          <tr><td>E-Commerce Front-End</td><td>₱15,000 – ₱70,000</td></tr>
-        </tbody>
-      </table>
+      <table class="rate-table"><thead><tr><th>Service</th><th>Estimated Rate</th></tr></thead><tbody>
+        <tr class="clickable-rate" data-service="Landing Page" data-rate="₱3,000 – ₱15,000"><td>Landing Page</td><td>₱3,000 – ₱15,000</td></tr>
+        <tr class="clickable-rate" data-service="Business Website" data-rate="₱8,000 – ₱40,000"><td>Business Website</td><td>₱8,000 – ₱40,000</td></tr>
+        <tr class="clickable-rate" data-service="Portfolio Website" data-rate="₱5,000 – ₱20,000"><td>Portfolio Website</td><td>₱5,000 – ₱20,000</td></tr>
+        <tr class="clickable-rate" data-service="Responsive Design Optimization" data-rate="₱2,000 – ₱8,000"><td>Responsive Design Optimization</td><td>₱2,000 – ₱8,000</td></tr>
+        <tr class="clickable-rate" data-service="Figma to HTML/React" data-rate="₱3,000 – ₱25,000"><td>Figma to HTML/React</td><td>₱3,000 – ₱25,000</td></tr>
+        <tr class="clickable-rate" data-service="React / Next.js Front-End" data-rate="₱10,000 – ₱80,000+"><td>React / Next.js Front-End</td><td>₱10,000 – ₱80,000+</td></tr>
+        <tr class="clickable-rate" data-service="UI Animation & Effects" data-rate="₱2,000 – ₱15,000"><td>UI Animation & Effects</td><td>₱2,000 – ₱15,000</td></tr>
+        <tr class="clickable-rate" data-service="Dashboard UI" data-rate="₱8,000 – ₱50,000"><td>Dashboard UI</td><td>₱8,000 – ₱50,000</td></tr>
+        <tr class="clickable-rate" data-service="E-Commerce Front-End" data-rate="₱15,000 – ₱70,000"><td>E-Commerce Front-End</td><td>₱15,000 – ₱70,000</td></tr>
+      </tbody></table>
     </div>
 
-    <!-- Back-End Rates -->
     <div class="rate-content" id="backend-rates" style="display:none;">
-      <table class="rate-table">
-        <thead><tr><th>Service</th><th>Estimated Rate</th></tr></thead>
-        <tbody>
-          <tr><td>REST API Development</td><td>₱5,000 – ₱50,000</td></tr>
-          <tr><td>Authentication System</td><td>₱3,000 – ₱20,000</td></tr>
-          <tr><td>Admin Dashboard System</td><td>₱10,000 – ₱60,000</td></tr>
-          <tr><td>Database Design</td><td>₱5,000 – ₱25,000</td></tr>
-          <tr><td>Payment Gateway Integration</td><td>₱5,000 – ₱30,000</td></tr>
-          <tr><td>Real-Time Chat System</td><td>₱10,000 – ₱50,000</td></tr>
-          <tr><td>Booking System</td><td>₱15,000 – ₱80,000</td></tr>
-          <tr><td>Inventory Management System</td><td>₱20,000 – ₱120,000</td></tr>
-          <tr><td>Full Custom Backend</td><td>₱30,000 – ₱250,000+</td></tr>
-        </tbody>
-      </table>
+      <table class="rate-table"><thead><tr><th>Service</th><th>Estimated Rate</th></tr></thead><tbody>
+        <tr class="clickable-rate" data-service="REST API Development" data-rate="₱5,000 – ₱50,000"><td>REST API Development</td><td>₱5,000 – ₱50,000</td></tr>
+        <tr class="clickable-rate" data-service="Authentication System" data-rate="₱3,000 – ₱20,000"><td>Authentication System</td><td>₱3,000 – ₱20,000</td></tr>
+        <tr class="clickable-rate" data-service="Admin Dashboard System" data-rate="₱10,000 – ₱60,000"><td>Admin Dashboard System</td><td>₱10,000 – ₱60,000</td></tr>
+        <tr class="clickable-rate" data-service="Database Design" data-rate="₱5,000 – ₱25,000"><td>Database Design</td><td>₱5,000 – ₱25,000</td></tr>
+        <tr class="clickable-rate" data-service="Payment Gateway Integration" data-rate="₱5,000 – ₱30,000"><td>Payment Gateway Integration</td><td>₱5,000 – ₱30,000</td></tr>
+        <tr class="clickable-rate" data-service="Real-Time Chat System" data-rate="₱10,000 – ₱50,000"><td>Real-Time Chat System</td><td>₱10,000 – ₱50,000</td></tr>
+        <tr class="clickable-rate" data-service="Booking System" data-rate="₱15,000 – ₱80,000"><td>Booking System</td><td>₱15,000 – ₱80,000</td></tr>
+        <tr class="clickable-rate" data-service="Inventory Management System" data-rate="₱20,000 – ₱120,000"><td>Inventory Management System</td><td>₱20,000 – ₱120,000</td></tr>
+        <tr class="clickable-rate" data-service="Full Custom Backend" data-rate="₱30,000 – ₱250,000+"><td>Full Custom Backend</td><td>₱30,000 – ₱250,000+</td></tr>
+      </tbody></table>
     </div>
 
-    <!-- Full-Stack Rates -->
     <div class="rate-content" id="fullstack-rates" style="display:none;">
-      <table class="rate-table">
-        <thead><tr><th>Service</th><th>Estimated Rate</th></tr></thead>
-        <tbody>
-          <tr><td>Full Business Website</td><td>₱15,000 – ₱80,000</td></tr>
-          <tr><td>E-Commerce Website</td><td>₱25,000 – ₱150,000</td></tr>
-          <tr><td>SaaS MVP Development</td><td>₱50,000 – ₱500,000+</td></tr>
-          <tr><td>CRM System</td><td>₱40,000 – ₱300,000</td></tr>
-          <tr><td>School Management System</td><td>₱50,000 – ₱250,000</td></tr>
-          <tr><td>Custom Web Application</td><td>₱30,000 – ₱500,000+</td></tr>
-          <tr><td>AI-Powered Website</td><td>₱40,000 – ₱300,000+</td></tr>
-        </tbody>
-      </table>
+      <table class="rate-table"><thead><tr><th>Service</th><th>Estimated Rate</th></tr></thead><tbody>
+        <tr class="clickable-rate" data-service="Full Business Website" data-rate="₱15,000 – ₱80,000"><td>Full Business Website</td><td>₱15,000 – ₱80,000</td></tr>
+        <tr class="clickable-rate" data-service="E-Commerce Website" data-rate="₱25,000 – ₱150,000"><td>E-Commerce Website</td><td>₱25,000 – ₱150,000</td></tr>
+        <tr class="clickable-rate" data-service="SaaS MVP Development" data-rate="₱50,000 – ₱500,000+"><td>SaaS MVP Development</td><td>₱50,000 – ₱500,000+</td></tr>
+        <tr class="clickable-rate" data-service="CRM System" data-rate="₱40,000 – ₱300,000"><td>CRM System</td><td>₱40,000 – ₱300,000</td></tr>
+        <tr class="clickable-rate" data-service="School Management System" data-rate="₱50,000 – ₱250,000"><td>School Management System</td><td>₱50,000 – ₱250,000</td></tr>
+        <tr class="clickable-rate" data-service="Custom Web Application" data-rate="₱30,000 – ₱500,000+"><td>Custom Web Application</td><td>₱30,000 – ₱500,000+</td></tr>
+        <tr class="clickable-rate" data-service="AI-Powered Website" data-rate="₱40,000 – ₱300,000+"><td>AI-Powered Website</td><td>₱40,000 – ₱300,000+</td></tr>
+      </tbody></table>
     </div>
 
-    <!-- Security Rates -->
     <div class="rate-content" id="security-rates" style="display:none;">
-      <table class="rate-table">
-        <thead><tr><th>Service</th><th>Estimated Rate</th></tr></thead>
-        <tbody>
-          <tr><td>Website Security Audit</td><td>₱5,000 – ₱50,000</td></tr>
-          <tr><td>Penetration Testing</td><td>₱10,000 – ₱150,000</td></tr>
-          <tr><td>Website Hardening</td><td>₱5,000 – ₱30,000</td></tr>
-          <tr><td>Malware Removal</td><td>₱3,000 – ₱20,000</td></tr>
-          <tr><td>Cloud Security Setup</td><td>₱10,000 – ₱80,000</td></tr>
-        </tbody>
-      </table>
+      <table class="rate-table"><thead><tr><th>Service</th><th>Estimated Rate</th></tr></thead><tbody>
+        <tr class="clickable-rate" data-service="Website Security Audit" data-rate="₱5,000 – ₱50,000"><td>Website Security Audit</td><td>₱5,000 – ₱50,000</td></tr>
+        <tr class="clickable-rate" data-service="Penetration Testing" data-rate="₱10,000 – ₱150,000"><td>Penetration Testing</td><td>₱10,000 – ₱150,000</td></tr>
+        <tr class="clickable-rate" data-service="Website Hardening" data-rate="₱5,000 – ₱30,000"><td>Website Hardening</td><td>₱5,000 – ₱30,000</td></tr>
+        <tr class="clickable-rate" data-service="Malware Removal" data-rate="₱3,000 – ₱20,000"><td>Malware Removal</td><td>₱3,000 – ₱20,000</td></tr>
+        <tr class="clickable-rate" data-service="Cloud Security Setup" data-rate="₱10,000 – ₱80,000"><td>Cloud Security Setup</td><td>₱10,000 – ₱80,000</td></tr>
+      </tbody></table>
     </div>
 
-    <!-- Maintenance Rates -->
     <div class="rate-content" id="maintenance-rates" style="display:none;">
-      <table class="rate-table">
-        <thead><tr><th>Service</th><th>Estimated Rate</th></tr></thead>
-        <tbody>
-          <tr><td>Monthly Website Maintenance</td><td>₱2,000 – ₱20,000/mo</td></tr>
-          <tr><td>Bug Fixes</td><td>₱500 – ₱10,000</td></tr>
-          <tr><td>Speed Optimization</td><td>₱2,000 – ₱15,000</td></tr>
-          <tr><td>SEO Optimization</td><td>₱3,000 – ₱30,000</td></tr>
-          <tr><td>Hosting & Deployment Setup</td><td>₱2,000 – ₱15,000</td></tr>
-        </tbody>
-      </table>
+      <table class="rate-table"><thead><tr><th>Service</th><th>Estimated Rate</th></tr></thead><tbody>
+        <tr class="clickable-rate" data-service="Monthly Website Maintenance" data-rate="₱2,000 – ₱20,000/mo"><td>Monthly Website Maintenance</td><td>₱2,000 – ₱20,000/mo</td></tr>
+        <tr class="clickable-rate" data-service="Bug Fixes" data-rate="₱500 – ₱10,000"><td>Bug Fixes</td><td>₱500 – ₱10,000</td></tr>
+        <tr class="clickable-rate" data-service="Speed Optimization" data-rate="₱2,000 – ₱15,000"><td>Speed Optimization</td><td>₱2,000 – ₱15,000</td></tr>
+        <tr class="clickable-rate" data-service="SEO Optimization" data-rate="₱3,000 – ₱30,000"><td>SEO Optimization</td><td>₱3,000 – ₱30,000</td></tr>
+        <tr class="clickable-rate" data-service="Hosting & Deployment Setup" data-rate="₱2,000 – ₱15,000"><td>Hosting & Deployment Setup</td><td>₱2,000 – ₱15,000</td></tr>
+      </tbody></table>
     </div>
 
-    <!-- Hourly Rates -->
     <div class="rate-content" id="hourly-rates" style="display:none;">
-      <table class="rate-table">
-        <thead><tr><th>Skill Level</th><th>Hourly Rate</th></tr></thead>
-        <tbody>
-          <tr><td>Beginner Developer</td><td>₱200 – ₱500/hr</td></tr>
-          <tr><td>Intermediate Developer</td><td>₱500 – ₱1,500/hr</td></tr>
-          <tr><td>Advanced Developer</td><td>₱1,500 – ₱5,000+/hr</td></tr>
-        </tbody>
-      </table>
+      <table class="rate-table"><thead><tr><th>Skill Level</th><th>Hourly Rate</th></tr></thead><tbody>
+        <tr class="clickable-rate" data-service="Beginner Developer" data-rate="₱200 – ₱500/hr"><td>Beginner Developer</td><td>₱200 – ₱500/hr</td></tr>
+        <tr class="clickable-rate" data-service="Intermediate Developer" data-rate="₱500 – ₱1,500/hr"><td>Intermediate Developer</td><td>₱500 – ₱1,500/hr</td></tr>
+        <tr class="clickable-rate" data-service="Advanced Developer" data-rate="₱1,500 – ₱5,000+/hr"><td>Advanced Developer</td><td>₱1,500 – ₱5,000+/hr</td></tr>
+      </tbody></table>
     </div>
 
-    <!-- Add-Ons Rates -->
     <div class="rate-content" id="addon-rates" style="display:none;">
-      <table class="rate-table">
-        <thead><tr><th>Add-On</th><th>Estimated Rate</th></tr></thead>
-        <tbody>
-          <tr><td>AI Chatbot Integration</td><td>₱5,000 – ₱50,000</td></tr>
-          <tr><td>Custom Animations</td><td>₱3,000 – ₱20,000</td></tr>
-          <tr><td>Multi-Language Support</td><td>₱5,000 – ₱25,000</td></tr>
-          <tr><td>API Integrations</td><td>₱3,000 – ₱30,000</td></tr>
-          <tr><td>Advanced Admin Panel</td><td>₱10,000 – ₱80,000</td></tr>
-        </tbody>
-      </table>
+      <table class="rate-table"><thead><tr><th>Add-On</th><th>Estimated Rate</th></tr></thead><tbody>
+        <tr class="clickable-rate" data-service="AI Chatbot Integration" data-rate="₱5,000 – ₱50,000"><td>AI Chatbot Integration</td><td>₱5,000 – ₱50,000</td></tr>
+        <tr class="clickable-rate" data-service="Custom Animations" data-rate="₱3,000 – ₱20,000"><td>Custom Animations</td><td>₱3,000 – ₱20,000</td></tr>
+        <tr class="clickable-rate" data-service="Multi-Language Support" data-rate="₱5,000 – ₱25,000"><td>Multi-Language Support</td><td>₱5,000 – ₱25,000</td></tr>
+        <tr class="clickable-rate" data-service="API Integrations" data-rate="₱3,000 – ₱30,000"><td>API Integrations</td><td>₱3,000 – ₱30,000</td></tr>
+        <tr class="clickable-rate" data-service="Advanced Admin Panel" data-rate="₱10,000 – ₱80,000"><td>Advanced Admin Panel</td><td>₱10,000 – ₱80,000</td></tr>
+      </tbody></table>
     </div>
 
-    <div class="downpayment-note"><strong>📌 50% Downpayment Required | Remaining Balance Upon Completion</strong><br><span style="color:var(--text-muted);">Contact me for a custom quote based on your specific requirements</span></div>
+    <div class="downpayment-note"><strong>📌 50% Downpayment Required | Remaining Balance Upon Completion</strong><br><span style="color:var(--text-muted);">Click any service row or tag above to add it to your inquiry form</span></div>
   </div></section>
 
   <section id="portfolio"><div class="container"><h2>Featured Project</h2>
@@ -400,7 +374,7 @@
       </form>
       <div>
         <div class="mb-20"><i class="fas fa-phone" style="color:var(--primary);"></i> +63 993 679 6302</div>
-        <div class="mb-20"><i class="fas fa-envelope" style="color:var(--primary);"></i> businessrhyziltech@gmail.com</div>
+        <div class="mb-20"><i class="fas fa-envelope" style="color:var(--primary);"></i> <a href="mailto:businessrhyziltech@gmail.com" style="color:var(--text);text-decoration:none;">businessrhyziltech@gmail.com</a></div>
         <div class="mb-20"><i class="fas fa-map-pin" style="color:var(--primary);"></i> Crossing Otabon, Tabango, Leyte</div>
         <div class="flex gap-12 mt-20">
           <a href="https://www.facebook.com/profile.php?id=61584139169630" target="_blank" rel="noopener" class="social-icon"><i class="fab fa-facebook-f"></i></a>
@@ -414,8 +388,8 @@
   <footer><div class="container">
     <div class="footer-grid">
       <div><h3>RHYZILTECH</h3><p style="color:var(--text-muted);">Elite SaaS & cybersecurity.</p></div>
-      <div><h4>Services</h4><p style="color:var(--text-muted);">Front-End<br>Back-End<br>Full-Stack<br>Security</p></div>
-      <div><h4>Company</h4><p style="color:var(--text-muted);">About<br>Rates<br>Contact</p></div>
+      <div><h4>Services</h4><p style="color:var(--text-muted);"><a href="#services" style="color:var(--text-muted);text-decoration:none;">Front-End</a><br><a href="#services" style="color:var(--text-muted);text-decoration:none;">Back-End</a><br><a href="#services" style="color:var(--text-muted);text-decoration:none;">Full-Stack</a><br><a href="#services" style="color:var(--text-muted);text-decoration:none;">Security</a></p></div>
+      <div><h4>Company</h4><p style="color:var(--text-muted);"><a href="#about" style="color:var(--text-muted);text-decoration:none;">About</a><br><a href="#pricing" style="color:var(--text-muted);text-decoration:none;">Rates</a><br><a href="#contact" style="color:var(--text-muted);text-decoration:none;">Contact</a></p></div>
       <div><h4>Social</h4><div class="flex gap-12"><a href="https://www.facebook.com/profile.php?id=61584139169630" target="_blank" rel="noopener" class="social-icon"><i class="fab fa-facebook-f"></i></a><a href="https://www.tiktok.com/@rhyzil_" target="_blank" rel="noopener" class="social-icon"><i class="fab fa-tiktok"></i></a></div></div>
     </div>
     <div style="text-align:center;margin-top:40px;color:var(--text-muted);">© 2026 Rhyziltech. Secure by design.</div>
@@ -424,15 +398,20 @@
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script>
     (function() {
+      console.log('🚀 Rhyziltech initializing...');
+
       const html = document.documentElement;
       const themeToggle = document.getElementById('themeToggle');
       const icon = themeToggle.querySelector('i');
       function setTheme(t) { html.setAttribute('data-theme', t); localStorage.setItem('theme', t); icon.className = t === 'dark' ? 'fas fa-sun' : 'fas fa-moon'; }
       setTheme(localStorage.getItem('theme') || 'dark');
       themeToggle.addEventListener('click', () => setTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
+      console.log('✅ Theme toggle ready');
 
+      // Mobile menu
       document.getElementById('menuToggle').addEventListener('click', () => document.getElementById('navLinks').classList.toggle('show'));
       document.querySelectorAll('.nav-links a').forEach(a => a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('show')));
+      console.log('✅ Mobile menu ready');
 
       // Tab switching function
       function setupTabs(tabSelector, contentSelector, dataAttr) {
@@ -443,7 +422,7 @@
             tabs.forEach(t => t.classList.remove('active'));
             this.classList.add('active');
             const target = this.getAttribute(dataAttr);
-            contents.forEach(c => c.style.display = 'none');
+            contents.forEach(c => { if(c) c.style.display = 'none'; });
             if (target) {
               const el = document.getElementById(target);
               if (el) el.style.display = 'block';
@@ -452,31 +431,74 @@
         });
       }
 
-      // Services tabs
       setupTabs('#servicesTabs .tab-btn', '.service-content', 'data-tab');
-      // Rate tabs
       setupTabs('#rateTabs .tab-btn', '.rate-content', 'data-rate');
+      console.log('✅ All tabs ready');
 
       // Package selection
       const selectedPackageInput = document.getElementById('selectedPackage');
       const selectedPackageDisplay = document.getElementById('selectedPackageDisplay');
       const selectedPackageName = document.getElementById('selectedPackageName');
-      document.querySelectorAll('.avail-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-          e.preventDefault();
-          const pkg = this.getAttribute('data-package');
-          selectedPackageInput.value = pkg;
-          selectedPackageName.textContent = 'Selected: ' + pkg;
+      let selectedServices = [];
+
+      function updatePackageDisplay() {
+        if (selectedServices.length === 0) {
+          selectedPackageInput.value = '';
+          selectedPackageName.textContent = '';
+          selectedPackageDisplay.classList.remove('show');
+        } else {
+          const display = selectedServices.join(' | ');
+          selectedPackageInput.value = display;
+          selectedPackageName.textContent = 'Selected: ' + display;
           selectedPackageDisplay.classList.add('show');
+        }
+      }
+
+      function addService(serviceName) {
+        if (!selectedServices.includes(serviceName)) {
+          selectedServices.push(serviceName);
+          updatePackageDisplay();
           document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+
+      // Clickable service tags
+      document.querySelectorAll('.clickable-service').forEach(tag => {
+        tag.addEventListener('click', function() {
+          const service = this.getAttribute('data-service');
+          addService(service);
+          this.style.borderColor = 'var(--primary)';
+          this.style.background = 'rgba(22,88,250,0.2)';
+          setTimeout(() => { this.style.borderColor = ''; this.style.background = ''; }, 1500);
         });
       });
-      document.getElementById('removePackage').addEventListener('click', () => { selectedPackageInput.value = ''; selectedPackageDisplay.classList.remove('show'); });
+      console.log('✅ Service tags clickable');
+
+      // Clickable rate table rows
+      document.querySelectorAll('.clickable-rate').forEach(row => {
+        row.addEventListener('click', function() {
+          const service = this.getAttribute('data-service');
+          addService(service);
+          this.classList.add('selected');
+          setTimeout(() => { this.classList.remove('selected'); }, 2000);
+        });
+      });
+      console.log('✅ Rate table rows clickable');
+
+      // Remove package
+      document.getElementById('removePackage').addEventListener('click', () => { 
+        selectedServices = []; 
+        updatePackageDisplay(); 
+      });
+      console.log('✅ Remove package ready');
 
       // Auto-reply
       const AUTO_REPLY = `Hello! Thank you for reaching out to Rhyzil Tech.\n\nBefore I provide the final quotation, I'd like to ask a few quick questions so I can better understand your website or system requirements.\n\n• What type of business or project do you have?\n• What features would you like to include?\n• Do you already have a logo, design, or content prepared?\n• Will you need an admin dashboard or online ordering system?\n• Approximately how many pages do you want?\n• Do you have a target deadline for the project?\n\nOnce I have these details, I can provide a more accurate quotation. 🙂`;
 
+      // EmailJS
       emailjs.init("UV2MXRtD7FcyZXQ3F");
+      console.log('✅ EmailJS initialized');
+      
       const form = document.getElementById('contactForm');
       const status = document.getElementById('formStatus');
       const sendBtn = document.getElementById('sendBtn');
@@ -484,33 +506,69 @@
 
       form.addEventListener('submit', function(e) {
         e.preventDefault();
-        if (Date.now() - lastSubmit < 10000) { status.className = 'status-msg error'; status.textContent = '⚠️ Please wait before sending again.'; return; }
+        console.log('📤 Form submitted');
+        
+        if (Date.now() - lastSubmit < 10000) { 
+          status.className = 'status-msg error'; 
+          status.textContent = '⚠️ Please wait before sending again.'; 
+          return; 
+        }
+        
         const name = document.getElementById('senderName').value.trim();
         const email = document.getElementById('senderEmail').value.trim();
         const msg = document.getElementById('senderMessage').value.trim();
         const pkg = selectedPackageInput.value;
-        if (!name || !email || !msg) { status.className = 'status-msg error'; status.textContent = '⚠️ All fields required.'; return; }
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { status.className = 'status-msg error'; status.textContent = '⚠️ Valid email required.'; return; }
+        
+        if (!name || !email || !msg) { 
+          status.className = 'status-msg error'; 
+          status.textContent = '⚠️ All fields required.'; 
+          return; 
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { 
+          status.className = 'status-msg error'; 
+          status.textContent = '⚠️ Valid email required.'; 
+          return; 
+        }
+        
         lastSubmit = Date.now();
         sendBtn.disabled = true;
         sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
         status.className = 'status-msg sending';
         status.textContent = '📤 Sending...';
-        let fullMsg = pkg ? '📦 PACKAGE: ' + pkg + '\n\n📝 MESSAGE:\n' + msg : msg;
-        const p1 = emailjs.send("service_ad1l4qy", "template_mphmqzv", { from_name: name, from_email: email, message: fullMsg, reply_to: email });
-        const p2 = emailjs.send("service_ad1l4qy", "template_mphmqzv", { from_name: "Rhyzil Tech", from_email: "businessrhyziltech@gmail.com", message: AUTO_REPLY, reply_to: "businessrhyziltech@gmail.com", to_email: email }).catch(() => Promise.resolve());
+        
+        let fullMsg = pkg ? '📦 SELECTED SERVICES: ' + pkg + '\n\n📝 MESSAGE:\n' + msg : msg;
+        
+        console.log('Sending notification...');
+        const p1 = emailjs.send("service_ad1l4qy", "template_mphmqzv", { 
+          from_name: name, from_email: email, message: fullMsg, reply_to: email 
+        });
+        
+        console.log('Sending auto-reply...');
+        const p2 = emailjs.send("service_ad1l4qy", "template_mphmqzv", { 
+          from_name: "Rhyzil Tech", from_email: "businessrhyziltech@gmail.com", 
+          message: AUTO_REPLY, reply_to: "businessrhyziltech@gmail.com", to_email: email 
+        }).catch(err => { console.warn('Auto-reply note:', err); return Promise.resolve(); });
+        
         Promise.all([p1, p2]).then(() => {
+          console.log('✅ All emails sent');
           status.className = 'status-msg success';
           status.textContent = '✅ Sent! Check your inbox for our auto-reply. Response within 12h.';
-          form.reset(); selectedPackageInput.value = ''; selectedPackageDisplay.classList.remove('show');
-          sendBtn.disabled = false; sendBtn.innerHTML = '💬 Send message';
+          form.reset(); 
+          selectedServices = []; 
+          updatePackageDisplay();
+          sendBtn.disabled = false; 
+          sendBtn.innerHTML = '💬 Send message';
           setTimeout(() => { status.className = 'status-msg'; status.textContent = ''; }, 8000);
-        }).catch(() => {
+        }).catch(err => {
+          console.error('❌ Error:', err);
           status.className = 'status-msg error';
           status.innerHTML = '⚠️ Email us: <a href="mailto:businessrhyziltech@gmail.com" style="color:var(--secondary);">businessrhyziltech@gmail.com</a>';
-          sendBtn.disabled = false; sendBtn.innerHTML = '💬 Send message';
+          sendBtn.disabled = false; 
+          sendBtn.innerHTML = '💬 Send message';
         });
       });
+
+      console.log('✅ Rhyziltech fully operational — all features clickable and functional');
     })();
   </script>
 </body>

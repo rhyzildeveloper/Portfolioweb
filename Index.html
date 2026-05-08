@@ -48,15 +48,14 @@
     @keyframes orbFloat { 0%,100% { transform: translate(0,0) scale(1); } 33% { transform: translate(40px,-30px) scale(1.08); } 66% { transform: translate(-25px,35px) scale(0.94); } }
 
     @media (max-width:768px) { .orb-1 { width:300px; height:300px; top:-80px; left:-60px; } .orb-2 { width:250px; height:250px; bottom:-60px; right:-60px; } .orb-3 { width:200px; height:200px; } }
-    @media (max-width:480px) { .orb-1 { width:200px; height:200px; } .orb-2 { width:180px; height:180px; } .orb-3 { width:150px; height:150px; } }
 
     .container { width: 100%; max-width: 1340px; margin: 0 auto; padding: 0 28px; }
     @media (max-width:768px) { .container { padding: 0 20px; } }
     @media (max-width:480px) { .container { padding: 0 16px; } }
 
-    h1,h2,h3 { font-family: var(--font-display); font-weight: 700; line-height: 1.15; color: var(--text); letter-spacing: -0.02em; }
+    h1,h2,h3,h4 { font-family: var(--font-display); font-weight: 700; line-height: 1.15; color: var(--text); letter-spacing: -0.02em; }
     h1 { font-size: clamp(2.5rem,8vw,6rem); background: linear-gradient(135deg,#ffffff 0%,var(--secondary) 50%,var(--primary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    h2 { font-size: clamp(1.8rem,5vw,3.5rem); text-align: center; margin-bottom: 3rem; position: relative; }
+    h2 { font-size: clamp(1.8rem,5vw,3.5rem); text-align: center; margin-bottom: 1.5rem; position: relative; }
     h2::after { content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 80px; height: 3px; background: linear-gradient(90deg,transparent,var(--primary),transparent); border-radius: 4px; }
 
     .glass-card { background: var(--glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: var(--radius-2xl); transition: all 0.35s cubic-bezier(0.25,0.8,0.25,1.2); }
@@ -66,7 +65,6 @@
     .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 18px 45px rgba(22,88,250,0.5); }
     .btn-outline { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 16px 38px; background: transparent; color: var(--text); font-weight: 600; font-family: var(--font-display); font-size: 1.05rem; border-radius: 60px; text-decoration: none; border: 1.5px solid var(--glass-border); cursor: pointer; transition: 0.3s; }
     .btn-outline:hover { border-color: var(--primary); background: rgba(22,88,250,0.06); box-shadow: 0 8px 30px rgba(22,88,250,0.15); }
-    .btn-primary:disabled, .btn-outline:disabled { opacity: 0.6; cursor: not-allowed; }
 
     header { position: fixed; top: 0; left: 0; width: 100%; padding: 18px 0; background: rgba(1,2,5,0.75); backdrop-filter: blur(30px); border-bottom: 1px solid var(--glass-border); z-index: 1000; }
     .header-flex { display: flex; justify-content: space-between; align-items: center; }
@@ -98,24 +96,32 @@
 
     .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
     @media (max-width:768px) { .about-grid { grid-template-columns: 1fr; } }
-    .services-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap: 25px; }
-    .service-card { background: var(--glass); border: 1px solid var(--glass-border); border-radius: var(--radius-2xl); padding: 35px 28px; transition: all 0.35s; }
-    .service-card:hover { border-color: var(--primary); transform: translateY(-8px); }
-    .service-icon { font-size: 2.2rem; color: var(--primary); margin-bottom: 18px; }
 
-    .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); gap: 30px; }
-    @media (max-width:768px) { .pricing-grid { grid-template-columns: 1fr; max-width: 550px; margin: 0 auto; } }
-    .pricing-card { background: var(--glass); border: 1px solid var(--glass-border); border-radius: var(--radius-2xl); padding: 35px 30px; display: flex; flex-direction: column; }
-    .pricing-card.featured { border-color: var(--primary); box-shadow: 0 0 50px rgba(22,88,250,0.2); position: relative; }
-    .pricing-card.featured::before { content: 'BEST VALUE'; position: absolute; top: -14px; right: 25px; background: var(--primary); color: #fff; padding: 6px 18px; border-radius: 25px; font-size: 0.75rem; font-weight: 700; }
-    .pricing-card:hover { border-color: var(--primary); transform: translateY(-6px); }
-    .pricing-icon { font-size: 2.5rem; margin-bottom: 15px; }
-    .price-range { font-family: var(--font-display); font-size: 1.8rem; font-weight: 800; background: linear-gradient(135deg,var(--primary),var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 12px 0; }
-    .pricing-desc { color: var(--text-muted); margin-bottom: 20px; flex-grow: 1; }
-    .pricing-features { list-style: none; padding: 0; margin-bottom: 25px; }
-    .pricing-features li { padding: 6px 0; color: var(--text-muted); font-size: 0.9rem; display: flex; align-items: center; gap: 8px; }
-    .pricing-features li i { color: var(--accent-glow); }
-    .downpayment-note { background: rgba(22,88,250,0.1); border: 1px solid var(--primary); border-radius: var(--radius-md); padding: 16px 20px; margin-top: 30px; text-align: center; }
+    /* Services tabs */
+    .tabs-nav { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 40px; }
+    .tab-btn { padding: 12px 26px; border-radius: 40px; cursor: pointer; font-weight: 600; font-family: var(--font-display); font-size: 0.9rem; border: 1.5px solid var(--glass-border); background: transparent; color: var(--text-muted); transition: all 0.3s; white-space: nowrap; }
+    .tab-btn:hover { border-color: var(--primary); color: var(--text); }
+    .tab-btn.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+    @media (max-width:480px) { .tab-btn { padding: 10px 16px; font-size: 0.8rem; } }
+
+    .service-subcategory { margin-bottom: 25px; }
+    .service-subcategory h4 { font-size: 1.05rem; color: var(--text); margin-bottom: 12px; padding-left: 10px; border-left: 3px solid var(--secondary); }
+    .service-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+    .service-tag { background: var(--glass); border: 1px solid var(--glass-border); border-radius: 30px; padding: 8px 18px; font-size: 0.88rem; color: var(--text-muted); transition: all 0.3s; cursor: default; }
+    .service-tag:hover { border-color: var(--primary); color: var(--text); background: rgba(22,88,250,0.1); }
+
+    /* Rate tables */
+    .rate-table { width: 100%; border-collapse: separate; border-spacing: 0 8px; margin-bottom: 30px; }
+    .rate-table th { text-align: left; padding: 14px 20px; color: var(--secondary); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    .rate-table td { padding: 14px 20px; background: var(--glass); color: var(--text); font-size: 0.95rem; }
+    .rate-table td:first-child { border-radius: var(--radius-md) 0 0 var(--radius-md); }
+    .rate-table td:last-child { border-radius: 0 var(--radius-md) var(--radius-md) 0; text-align: right; font-weight: 600; color: var(--secondary); white-space: nowrap; }
+    .rate-table tr:hover td { background: rgba(22,88,250,0.12); }
+    @media (max-width:600px) {
+      .rate-table td, .rate-table th { padding: 10px 12px; font-size: 0.82rem; }
+    }
+
+    .downpayment-note { background: rgba(22,88,250,0.1); border: 1px solid var(--primary); border-radius: var(--radius-md); padding: 16px 20px; margin-top: 40px; text-align: center; }
 
     .process-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 30px; }
     .process-step { background: var(--glass); border: 1px solid var(--glass-border); border-radius: var(--radius-2xl); padding: 35px 25px; text-align: center; }
@@ -157,7 +163,7 @@
       <a href="#" class="logo">RHYZILTECH</a>
       <div style="display: flex; align-items: center; gap: 1rem;">
         <div class="nav-links" id="navLinks">
-          <a href="#home">Home</a><a href="#about">About</a><a href="#services">Services</a><a href="#pricing">Pricing</a><a href="#portfolio">Portfolio</a><a href="#contact">Contact</a>
+          <a href="#home">Home</a><a href="#about">About</a><a href="#services">Services</a><a href="#pricing">Rates</a><a href="#portfolio">Portfolio</a><a href="#contact">Contact</a>
         </div>
         <button class="theme-toggle" id="themeToggle"><i class="fas fa-sun"></i></button>
         <button class="mobile-btn" id="menuToggle"><i class="fas fa-bars"></i></button>
@@ -171,7 +177,7 @@
         <div class="hero-badge"><i class="fas fa-shield-alt"></i> Elite SaaS & Cybersecurity Agency</div>
         <h1>Building the future, one secure system at a time.</h1>
         <p class="hero-subtitle">Enterprise-grade SaaS, AI solutions, and cybersecurity infrastructure.</p>
-        <div class="hero-buttons"><a href="#contact" class="btn-primary">Start a project <i class="fas fa-arrow-right"></i></a><a href="#pricing" class="btn-outline">View pricing</a></div>
+        <div class="hero-buttons"><a href="#contact" class="btn-primary">Start a project <i class="fas fa-arrow-right"></i></a><a href="#pricing" class="btn-outline">View rates</a></div>
         <div class="stats-row">
           <div class="stat-card"><span class="stat-number">150+</span><p>Projects</p></div>
           <div class="stat-card"><span class="stat-number">98%</span><p>Retention</p></div>
@@ -189,29 +195,173 @@
     </div>
   </div></section>
 
-  <section id="services"><div class="container"><h2>Services</h2>
-    <div class="services-grid">
-      <div class="service-card"><i class="fas fa-code service-icon"></i><h3>Web Dev</h3></div>
-      <div class="service-card"><i class="fas fa-cloud service-icon"></i><h3>SaaS</h3></div>
-      <div class="service-card"><i class="fas fa-paint-brush service-icon"></i><h3>UI/UX</h3></div>
-      <div class="service-card"><i class="fas fa-shield service-icon"></i><h3>Cybersecurity</h3></div>
-      <div class="service-card"><i class="fas fa-robot service-icon"></i><h3>AI Solutions</h3></div>
-      <div class="service-card"><i class="fas fa-server service-icon"></i><h3>Cloud</h3></div>
-      <div class="service-card"><i class="fas fa-cogs service-icon"></i><h3>Automation</h3></div>
-      <div class="service-card"><i class="fas fa-cube service-icon"></i><h3>Product Design</h3></div>
+  <!-- SERVICES SECTION -->
+  <section id="services"><div class="container"><h2>🛠️ What I Can Build For You</h2>
+    <p style="text-align:center;color:var(--text-muted);margin-bottom:40px;">From front-end interfaces to back-end systems and full-stack platforms</p>
+    <div class="tabs-nav" id="servicesTabs">
+      <button class="tab-btn active" data-tab="frontend">🎨 Front-End</button>
+      <button class="tab-btn" data-tab="backend">⚙️ Back-End</button>
+      <button class="tab-btn" data-tab="fullstack">🚀 Full-Stack</button>
+      <button class="tab-btn" data-tab="additional">🔧 Additional</button>
+    </div>
+    <div class="service-content" id="frontend">
+      <div class="service-subcategory"><h4>Website UI Development</h4><div class="service-tags"><span class="service-tag">Landing Pages</span><span class="service-tag">Corporate Websites</span><span class="service-tag">Portfolio Websites</span><span class="service-tag">Business Websites</span><span class="service-tag">SaaS Dashboards</span><span class="service-tag">Blog & News</span><span class="service-tag">Educational</span><span class="service-tag">Membership</span></div></div>
+      <div class="service-subcategory"><h4>Responsive Design</h4><div class="service-tags"><span class="service-tag">Mobile-Friendly</span><span class="service-tag">Tablet Optimization</span><span class="service-tag">Cross-Browser</span><span class="service-tag">Adaptive UI</span></div></div>
+      <div class="service-subcategory"><h4>Modern Frameworks</h4><div class="service-tags"><span class="service-tag">React</span><span class="service-tag">Next.js</span><span class="service-tag">Vue.js</span><span class="service-tag">Nuxt.js</span><span class="service-tag">Angular</span><span class="service-tag">Svelte</span></div></div>
+      <div class="service-subcategory"><h4>UI/UX Enhancement</h4><div class="service-tags"><span class="service-tag">Animations</span><span class="service-tag">Microinteractions</span><span class="service-tag">Transitions</span><span class="service-tag">Dark/Light Mode</span><span class="service-tag">Accessibility</span></div></div>
+      <div class="service-subcategory"><h4>Performance</h4><div class="service-tags"><span class="service-tag">Faster Loading</span><span class="service-tag">Lazy Loading</span><span class="service-tag">Image Optimization</span><span class="service-tag">SEO-Friendly</span><span class="service-tag">Core Web Vitals</span></div></div>
+      <div class="service-subcategory"><h4>Design Implementation</h4><div class="service-tags"><span class="service-tag">Figma to HTML</span><span class="service-tag">Figma to React</span><span class="service-tag">PSD to Website</span><span class="service-tag">Adobe XD to Website</span></div></div>
+      <div class="service-subcategory"><h4>Integrations</h4><div class="service-tags"><span class="service-tag">API Integration</span><span class="service-tag">Payment Gateway UI</span><span class="service-tag">Chat Systems</span><span class="service-tag">Maps</span><span class="service-tag">Auth UI</span></div></div>
+      <div class="service-subcategory"><h4>E-Commerce Front-End</h4><div class="service-tags"><span class="service-tag">Product Pages</span><span class="service-tag">Shopping Cart</span><span class="service-tag">Checkout</span><span class="service-tag">Customer Dashboards</span></div></div>
+    </div>
+    <div class="service-content" id="backend" style="display:none;">
+      <div class="service-subcategory"><h4>Server-Side</h4><div class="service-tags"><span class="service-tag">REST API</span><span class="service-tag">GraphQL</span><span class="service-tag">Auth Systems</span><span class="service-tag">RBAC</span><span class="service-tag">Session Mgmt</span></div></div>
+      <div class="service-subcategory"><h4>Databases</h4><div class="service-tags"><span class="service-tag">MySQL</span><span class="service-tag">PostgreSQL</span><span class="service-tag">MongoDB</span><span class="service-tag">Firebase</span><span class="service-tag">Supabase</span><span class="service-tag">Redis</span></div></div>
+      <div class="service-subcategory"><h4>Auth & Security</h4><div class="service-tags"><span class="service-tag">JWT</span><span class="service-tag">OAuth</span><span class="service-tag">Google/FB Login</span><span class="service-tag">2FA</span><span class="service-tag">Encryption</span></div></div>
+      <div class="service-subcategory"><h4>CMS</h4><div class="service-tags"><span class="service-tag">Custom Admin Panels</span><span class="service-tag">Headless CMS</span><span class="service-tag">WordPress</span><span class="service-tag">Shopify</span></div></div>
+      <div class="service-subcategory"><h4>E-Commerce Back-End</h4><div class="service-tags"><span class="service-tag">Inventory</span><span class="service-tag">Order Mgmt</span><span class="service-tag">Payments</span><span class="service-tag">Subscriptions</span></div></div>
+      <div class="service-subcategory"><h4>Cloud & Hosting</h4><div class="service-tags"><span class="service-tag">VPS</span><span class="service-tag">Cloud Deploy</span><span class="service-tag">Docker</span><span class="service-tag">CI/CD</span><span class="service-tag">CDN</span></div></div>
+      <div class="service-subcategory"><h4>Automation</h4><div class="service-tags"><span class="service-tag">Email</span><span class="service-tag">SMS</span><span class="service-tag">Scheduled Tasks</span><span class="service-tag">AI Automation</span></div></div>
+      <div class="service-subcategory"><h4>Real-Time</h4><div class="service-tags"><span class="service-tag">Live Chat</span><span class="service-tag">Notifications</span><span class="service-tag">Dashboards</span><span class="service-tag">WebSockets</span></div></div>
+      <div class="service-subcategory"><h4>Performance</h4><div class="service-tags"><span class="service-tag">DB Optimization</span><span class="service-tag">API Optimization</span><span class="service-tag">Caching</span><span class="service-tag">Scalability</span></div></div>
+    </div>
+    <div class="service-content" id="fullstack" style="display:none;">
+      <div class="service-subcategory"><h4>Full Web Applications</h4><div class="service-tags"><span class="service-tag">SaaS Platforms</span><span class="service-tag">CRM</span><span class="service-tag">ERP</span><span class="service-tag">Booking Systems</span><span class="service-tag">LMS</span><span class="service-tag">Social Platforms</span><span class="service-tag">AI Platforms</span><span class="service-tag">Marketplaces</span></div></div>
+      <div class="service-subcategory"><h4>Custom Systems</h4><div class="service-tags"><span class="service-tag">School Mgmt</span><span class="service-tag">Hospital Systems</span><span class="service-tag">HR Mgmt</span><span class="service-tag">POS</span><span class="service-tag">Inventory</span><span class="service-tag">Attendance</span></div></div>
+      <div class="service-subcategory"><h4>Startup MVP</h4><div class="service-tags"><span class="service-tag">MVP Design</span><span class="service-tag">Rapid Prototyping</span><span class="service-tag">Scalable Architecture</span><span class="service-tag">Investor-Ready</span></div></div>
+    </div>
+    <div class="service-content" id="additional" style="display:none;">
+      <div class="service-subcategory"><h4>SEO</h4><div class="service-tags"><span class="service-tag">Technical SEO</span><span class="service-tag">On-Page</span><span class="service-tag">Speed Optimization</span></div></div>
+      <div class="service-subcategory"><h4>Maintenance</h4><div class="service-tags"><span class="service-tag">Website Maintenance</span><span class="service-tag">Bug Fixing</span><span class="service-tag">Security Updates</span><span class="service-tag">Backups</span></div></div>
+      <div class="service-subcategory"><h4>Cybersecurity</h4><div class="service-tags"><span class="service-tag">Pen Testing</span><span class="service-tag">Security Audits</span><span class="service-tag">Vulnerability Scan</span><span class="service-tag">Malware Removal</span><span class="service-tag">Hardening</span></div></div>
+      <div class="service-subcategory"><h4>AI & Modern Tech</h4><div class="service-tags"><span class="service-tag">AI Chatbots</span><span class="service-tag">OpenAI API</span><span class="service-tag">Automation Tools</span></div></div>
+      <div class="service-subcategory"><h4>DevOps</h4><div class="service-tags"><span class="service-tag">GitHub Mgmt</span><span class="service-tag">Deployment</span><span class="service-tag">Linux Server</span><span class="service-tag">Monitoring</span></div></div>
+      <div class="service-subcategory"><h4>Analytics</h4><div class="service-tags"><span class="service-tag">Google Analytics</span><span class="service-tag">Heatmaps</span><span class="service-tag">User Tracking</span></div></div>
+      <div class="service-subcategory"><h4>Consultation</h4><div class="service-tags"><span class="service-tag">Tech Consultation</span><span class="service-tag">Architecture</span><span class="service-tag">Audits</span><span class="service-tag">Scaling Advice</span></div></div>
     </div>
   </div></section>
 
-  <section id="pricing"><div class="container"><h2>💰 Service Rates</h2>
-    <p style="text-align:center;color:var(--text-muted);margin-bottom:2rem;">Click "Avail" to include the package in your inquiry</p>
-    <div class="pricing-grid">
-      <div class="pricing-card"><div class="pricing-icon">🌐</div><h3>Simple Store</h3><p class="pricing-desc">Landing page, info, gallery, contact.</p><div class="price-range">₱3k-₱8k</div><a href="#contact" class="btn-outline mt-20 avail-btn" data-package="🌐 Simple Store (₱3k-₱8k)">Avail</a></div>
-      <div class="pricing-card featured"><div class="pricing-icon">🚀</div><h3>Modern Business</h3><p class="pricing-desc">Admin panel, animations, UI/UX.</p><div class="price-range">₱8k-₱20k+</div><a href="#contact" class="btn-primary mt-20 avail-btn" data-package="🚀 Modern Business (₱8k-₱20k+)">Avail</a></div>
-      <div class="pricing-card"><div class="pricing-icon">☕</div><h3>Coffee Shop</h3><p class="pricing-desc">Online ordering, dashboard.</p><div class="price-range">₱15k-₱40k+</div><a href="#contact" class="btn-outline mt-20 avail-btn" data-package="☕ Coffee Shop (₱15k-₱40k+)">Avail</a></div>
-      <div class="pricing-card"><div class="pricing-icon">🎓</div><h3>Capstone Simple</h3><p class="pricing-desc">Login, CRUD, database.</p><div class="price-range">₱5k-₱15k</div><a href="#contact" class="btn-outline mt-20 avail-btn" data-package="🎓 Capstone Simple (₱5k-₱15k)">Avail</a></div>
-      <div class="pricing-card featured"><div class="pricing-icon">🤖</div><h3>Capstone AI</h3><p class="pricing-desc">AI, analytics, APIs.</p><div class="price-range">₱20k-₱80k+</div><a href="#contact" class="btn-primary mt-20 avail-btn" data-package="🤖 Capstone AI (₱20k-₱80k+)">Avail</a></div>
+  <!-- PRICING / RATES SECTION -->
+  <section id="pricing"><div class="container"><h2>💰 Web Development Service Rates</h2>
+    <p style="text-align:center;color:var(--text-muted);margin-bottom:40px;">Transparent pricing — click "Avail" on any row to include it in your inquiry</p>
+    
+    <div class="tabs-nav" id="rateTabs">
+      <button class="tab-btn active" data-rate="frontend-rates">🎨 Front-End</button>
+      <button class="tab-btn" data-rate="backend-rates">⚙️ Back-End</button>
+      <button class="tab-btn" data-rate="fullstack-rates">🚀 Full-Stack</button>
+      <button class="tab-btn" data-rate="security-rates">🔐 Security</button>
+      <button class="tab-btn" data-rate="maintenance-rates">🔧 Maintenance</button>
+      <button class="tab-btn" data-rate="hourly-rates">⏱️ Hourly</button>
+      <button class="tab-btn" data-rate="addon-rates">⭐ Add-Ons</button>
     </div>
-    <div class="downpayment-note"><strong>📌 50% Downpayment | Balance Upon Completion</strong></div>
+
+    <!-- Front-End Rates -->
+    <div class="rate-content" id="frontend-rates">
+      <table class="rate-table">
+        <thead><tr><th>Service</th><th>Estimated Rate</th></tr></thead>
+        <tbody>
+          <tr><td>Landing Page</td><td>₱3,000 – ₱15,000</td></tr>
+          <tr><td>Business Website</td><td>₱8,000 – ₱40,000</td></tr>
+          <tr><td>Portfolio Website</td><td>₱5,000 – ₱20,000</td></tr>
+          <tr><td>Responsive Design Optimization</td><td>₱2,000 – ₱8,000</td></tr>
+          <tr><td>Figma to HTML/React</td><td>₱3,000 – ₱25,000</td></tr>
+          <tr><td>React / Next.js Front-End</td><td>₱10,000 – ₱80,000+</td></tr>
+          <tr><td>UI Animation & Effects</td><td>₱2,000 – ₱15,000</td></tr>
+          <tr><td>Dashboard UI</td><td>₱8,000 – ₱50,000</td></tr>
+          <tr><td>E-Commerce Front-End</td><td>₱15,000 – ₱70,000</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Back-End Rates -->
+    <div class="rate-content" id="backend-rates" style="display:none;">
+      <table class="rate-table">
+        <thead><tr><th>Service</th><th>Estimated Rate</th></tr></thead>
+        <tbody>
+          <tr><td>REST API Development</td><td>₱5,000 – ₱50,000</td></tr>
+          <tr><td>Authentication System</td><td>₱3,000 – ₱20,000</td></tr>
+          <tr><td>Admin Dashboard System</td><td>₱10,000 – ₱60,000</td></tr>
+          <tr><td>Database Design</td><td>₱5,000 – ₱25,000</td></tr>
+          <tr><td>Payment Gateway Integration</td><td>₱5,000 – ₱30,000</td></tr>
+          <tr><td>Real-Time Chat System</td><td>₱10,000 – ₱50,000</td></tr>
+          <tr><td>Booking System</td><td>₱15,000 – ₱80,000</td></tr>
+          <tr><td>Inventory Management System</td><td>₱20,000 – ₱120,000</td></tr>
+          <tr><td>Full Custom Backend</td><td>₱30,000 – ₱250,000+</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Full-Stack Rates -->
+    <div class="rate-content" id="fullstack-rates" style="display:none;">
+      <table class="rate-table">
+        <thead><tr><th>Service</th><th>Estimated Rate</th></tr></thead>
+        <tbody>
+          <tr><td>Full Business Website</td><td>₱15,000 – ₱80,000</td></tr>
+          <tr><td>E-Commerce Website</td><td>₱25,000 – ₱150,000</td></tr>
+          <tr><td>SaaS MVP Development</td><td>₱50,000 – ₱500,000+</td></tr>
+          <tr><td>CRM System</td><td>₱40,000 – ₱300,000</td></tr>
+          <tr><td>School Management System</td><td>₱50,000 – ₱250,000</td></tr>
+          <tr><td>Custom Web Application</td><td>₱30,000 – ₱500,000+</td></tr>
+          <tr><td>AI-Powered Website</td><td>₱40,000 – ₱300,000+</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Security Rates -->
+    <div class="rate-content" id="security-rates" style="display:none;">
+      <table class="rate-table">
+        <thead><tr><th>Service</th><th>Estimated Rate</th></tr></thead>
+        <tbody>
+          <tr><td>Website Security Audit</td><td>₱5,000 – ₱50,000</td></tr>
+          <tr><td>Penetration Testing</td><td>₱10,000 – ₱150,000</td></tr>
+          <tr><td>Website Hardening</td><td>₱5,000 – ₱30,000</td></tr>
+          <tr><td>Malware Removal</td><td>₱3,000 – ₱20,000</td></tr>
+          <tr><td>Cloud Security Setup</td><td>₱10,000 – ₱80,000</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Maintenance Rates -->
+    <div class="rate-content" id="maintenance-rates" style="display:none;">
+      <table class="rate-table">
+        <thead><tr><th>Service</th><th>Estimated Rate</th></tr></thead>
+        <tbody>
+          <tr><td>Monthly Website Maintenance</td><td>₱2,000 – ₱20,000/mo</td></tr>
+          <tr><td>Bug Fixes</td><td>₱500 – ₱10,000</td></tr>
+          <tr><td>Speed Optimization</td><td>₱2,000 – ₱15,000</td></tr>
+          <tr><td>SEO Optimization</td><td>₱3,000 – ₱30,000</td></tr>
+          <tr><td>Hosting & Deployment Setup</td><td>₱2,000 – ₱15,000</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Hourly Rates -->
+    <div class="rate-content" id="hourly-rates" style="display:none;">
+      <table class="rate-table">
+        <thead><tr><th>Skill Level</th><th>Hourly Rate</th></tr></thead>
+        <tbody>
+          <tr><td>Beginner Developer</td><td>₱200 – ₱500/hr</td></tr>
+          <tr><td>Intermediate Developer</td><td>₱500 – ₱1,500/hr</td></tr>
+          <tr><td>Advanced Developer</td><td>₱1,500 – ₱5,000+/hr</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Add-Ons Rates -->
+    <div class="rate-content" id="addon-rates" style="display:none;">
+      <table class="rate-table">
+        <thead><tr><th>Add-On</th><th>Estimated Rate</th></tr></thead>
+        <tbody>
+          <tr><td>AI Chatbot Integration</td><td>₱5,000 – ₱50,000</td></tr>
+          <tr><td>Custom Animations</td><td>₱3,000 – ₱20,000</td></tr>
+          <tr><td>Multi-Language Support</td><td>₱5,000 – ₱25,000</td></tr>
+          <tr><td>API Integrations</td><td>₱3,000 – ₱30,000</td></tr>
+          <tr><td>Advanced Admin Panel</td><td>₱10,000 – ₱80,000</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="downpayment-note"><strong>📌 50% Downpayment Required | Remaining Balance Upon Completion</strong><br><span style="color:var(--text-muted);">Contact me for a custom quote based on your specific requirements</span></div>
   </div></section>
 
   <section id="portfolio"><div class="container"><h2>Featured Project</h2>
@@ -264,8 +414,8 @@
   <footer><div class="container">
     <div class="footer-grid">
       <div><h3>RHYZILTECH</h3><p style="color:var(--text-muted);">Elite SaaS & cybersecurity.</p></div>
-      <div><h4>Services</h4><p style="color:var(--text-muted);">Web Dev<br>SaaS<br>Security<br>AI</p></div>
-      <div><h4>Company</h4><p style="color:var(--text-muted);">About<br>Pricing<br>Contact</p></div>
+      <div><h4>Services</h4><p style="color:var(--text-muted);">Front-End<br>Back-End<br>Full-Stack<br>Security</p></div>
+      <div><h4>Company</h4><p style="color:var(--text-muted);">About<br>Rates<br>Contact</p></div>
       <div><h4>Social</h4><div class="flex gap-12"><a href="https://www.facebook.com/profile.php?id=61584139169630" target="_blank" rel="noopener" class="social-icon"><i class="fab fa-facebook-f"></i></a><a href="https://www.tiktok.com/@rhyzil_" target="_blank" rel="noopener" class="social-icon"><i class="fab fa-tiktok"></i></a></div></div>
     </div>
     <div style="text-align:center;margin-top:40px;color:var(--text-muted);">© 2026 Rhyziltech. Secure by design.</div>
@@ -284,6 +434,29 @@
       document.getElementById('menuToggle').addEventListener('click', () => document.getElementById('navLinks').classList.toggle('show'));
       document.querySelectorAll('.nav-links a').forEach(a => a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('show')));
 
+      // Tab switching function
+      function setupTabs(tabSelector, contentSelector, dataAttr) {
+        const tabs = document.querySelectorAll(tabSelector);
+        const contents = document.querySelectorAll(contentSelector);
+        tabs.forEach(tab => {
+          tab.addEventListener('click', function() {
+            tabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            const target = this.getAttribute(dataAttr);
+            contents.forEach(c => c.style.display = 'none');
+            if (target) {
+              const el = document.getElementById(target);
+              if (el) el.style.display = 'block';
+            }
+          });
+        });
+      }
+
+      // Services tabs
+      setupTabs('#servicesTabs .tab-btn', '.service-content', 'data-tab');
+      // Rate tabs
+      setupTabs('#rateTabs .tab-btn', '.rate-content', 'data-rate');
+
       // Package selection
       const selectedPackageInput = document.getElementById('selectedPackage');
       const selectedPackageDisplay = document.getElementById('selectedPackageDisplay');
@@ -300,28 +473,10 @@
       });
       document.getElementById('removePackage').addEventListener('click', () => { selectedPackageInput.value = ''; selectedPackageDisplay.classList.remove('show'); });
 
-      // ============================================================
-      // UPDATED AUTO-REPLY MESSAGE
-      // ============================================================
-      const AUTO_REPLY_MESSAGE = `Hello! Thank you for reaching out to Rhyzil Tech.
+      // Auto-reply
+      const AUTO_REPLY = `Hello! Thank you for reaching out to Rhyzil Tech.\n\nBefore I provide the final quotation, I'd like to ask a few quick questions so I can better understand your website or system requirements.\n\n• What type of business or project do you have?\n• What features would you like to include?\n• Do you already have a logo, design, or content prepared?\n• Will you need an admin dashboard or online ordering system?\n• Approximately how many pages do you want?\n• Do you have a target deadline for the project?\n\nOnce I have these details, I can provide a more accurate quotation. 🙂`;
 
-Before I provide the final quotation, I'd like to ask a few quick questions so I can better understand your website or system requirements.
-
-• What type of business or project do you have?
-• What features would you like to include?
-• Do you already have a logo, design, or content prepared?
-• Will you need an admin dashboard or online ordering system?
-• Approximately how many pages do you want?
-• Do you have a target deadline for the project?
-
-Once I have these details, I can provide a more accurate quotation. 🙂`;
-
-      // ============================================================
-      // EMAILJS CONFIGURATION
-      // ============================================================
       emailjs.init("UV2MXRtD7FcyZXQ3F");
-      console.log('✅ EmailJS initialized');
-
       const form = document.getElementById('contactForm');
       const status = document.getElementById('formStatus');
       const sendBtn = document.getElementById('sendBtn');
@@ -329,87 +484,33 @@ Once I have these details, I can provide a more accurate quotation. 🙂`;
 
       form.addEventListener('submit', function(e) {
         e.preventDefault();
-        
-        if (Date.now() - lastSubmit < 10000) {
-          status.className = 'status-msg error';
-          status.textContent = '⚠️ Please wait 10 seconds before sending again.';
-          return;
-        }
-
+        if (Date.now() - lastSubmit < 10000) { status.className = 'status-msg error'; status.textContent = '⚠️ Please wait before sending again.'; return; }
         const name = document.getElementById('senderName').value.trim();
         const email = document.getElementById('senderEmail').value.trim();
         const msg = document.getElementById('senderMessage').value.trim();
-        const selectedPackage = selectedPackageInput.value;
-
-        if (!name || !email || !msg) {
-          status.className = 'status-msg error';
-          status.textContent = '⚠️ All fields are required.';
-          return;
-        }
-
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-          status.className = 'status-msg error';
-          status.textContent = '⚠️ Valid email required.';
-          return;
-        }
-
+        const pkg = selectedPackageInput.value;
+        if (!name || !email || !msg) { status.className = 'status-msg error'; status.textContent = '⚠️ All fields required.'; return; }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { status.className = 'status-msg error'; status.textContent = '⚠️ Valid email required.'; return; }
         lastSubmit = Date.now();
         sendBtn.disabled = true;
         sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
         status.className = 'status-msg sending';
-        status.textContent = '📤 Sending your message...';
-
-        // Build message with package
-        let fullMessage = msg;
-        if (selectedPackage) {
-          fullMessage = '📦 PACKAGE AVAILED: ' + selectedPackage + '\n\n📝 CLIENT MESSAGE:\n' + msg;
-        }
-
-        // 1. Notification to businessrhyziltech@gmail.com
-        const notificationPromise = emailjs.send("service_ad1l4qy", "template_mphmqzv", {
-          from_name: name,
-          from_email: email,
-          message: fullMessage,
-          reply_to: email
+        status.textContent = '📤 Sending...';
+        let fullMsg = pkg ? '📦 PACKAGE: ' + pkg + '\n\n📝 MESSAGE:\n' + msg : msg;
+        const p1 = emailjs.send("service_ad1l4qy", "template_mphmqzv", { from_name: name, from_email: email, message: fullMsg, reply_to: email });
+        const p2 = emailjs.send("service_ad1l4qy", "template_mphmqzv", { from_name: "Rhyzil Tech", from_email: "businessrhyziltech@gmail.com", message: AUTO_REPLY, reply_to: "businessrhyziltech@gmail.com", to_email: email }).catch(() => Promise.resolve());
+        Promise.all([p1, p2]).then(() => {
+          status.className = 'status-msg success';
+          status.textContent = '✅ Sent! Check your inbox for our auto-reply. Response within 12h.';
+          form.reset(); selectedPackageInput.value = ''; selectedPackageDisplay.classList.remove('show');
+          sendBtn.disabled = false; sendBtn.innerHTML = '💬 Send message';
+          setTimeout(() => { status.className = 'status-msg'; status.textContent = ''; }, 8000);
+        }).catch(() => {
+          status.className = 'status-msg error';
+          status.innerHTML = '⚠️ Email us: <a href="mailto:businessrhyziltech@gmail.com" style="color:var(--secondary);">businessrhyziltech@gmail.com</a>';
+          sendBtn.disabled = false; sendBtn.innerHTML = '💬 Send message';
         });
-
-        // 2. Auto-reply to client
-        const autoReplyPromise = emailjs.send("service_ad1l4qy", "template_mphmqzv", {
-          from_name: "Rhyzil Tech",
-          from_email: "businessrhyziltech@gmail.com",
-          message: AUTO_REPLY_MESSAGE,
-          reply_to: "businessrhyziltech@gmail.com",
-          to_email: email
-        }).catch(function(err) {
-          console.warn('⚠️ Auto-reply note (non-critical):', err);
-          return Promise.resolve();
-        });
-
-        Promise.all([notificationPromise, autoReplyPromise])
-          .then(function() {
-            status.className = 'status-msg success';
-            status.textContent = '✅ Message sent! Check your inbox for our auto-reply with next steps. We\'ll respond within 12 hours.';
-            form.reset();
-            selectedPackageInput.value = '';
-            selectedPackageDisplay.classList.remove('show');
-            sendBtn.disabled = false;
-            sendBtn.innerHTML = '💬 Send message';
-            setTimeout(() => { status.className = 'status-msg'; status.textContent = ''; }, 8000);
-          })
-          .catch(function(error) {
-            console.error('❌ Error:', error);
-            const subject = encodeURIComponent('Portfolio Contact from ' + name);
-            const body = encodeURIComponent((selectedPackage ? 'PACKAGE: ' + selectedPackage + '\n\n' : '') + 'Name: ' + name + '\nEmail: ' + email + '\n\nMessage:\n' + msg);
-            const mailto = 'mailto:businessrhyziltech@gmail.com?subject=' + subject + '&body=' + body;
-            status.className = 'status-msg error';
-            status.innerHTML = '⚠️ Please email directly: <a href="mailto:businessrhyziltech@gmail.com" style="color:var(--secondary);">businessrhyziltech@gmail.com</a>';
-            sendBtn.disabled = false;
-            sendBtn.innerHTML = '💬 Send message';
-            window.open(mailto, '_blank');
-          });
       });
-
-      console.log('✅ Rhyziltech ready — auto-reply active');
     })();
   </script>
 </body>

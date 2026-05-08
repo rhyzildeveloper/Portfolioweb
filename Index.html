@@ -79,7 +79,7 @@
     header { position: fixed; top: 0; left: 0; width: 100%; padding: 18px 0; background: rgba(1,2,5,0.75); backdrop-filter: blur(30px); border-bottom: 1px solid var(--glass-border); z-index: 1000; }
     .header-flex { display: flex; justify-content: space-between; align-items: center; }
     .logo { font-family: var(--font-display); font-size: 1.8rem; font-weight: 800; background: linear-gradient(135deg,var(--primary),#fff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-decoration: none; }
-    .nav-links { display: flex; gap: 2rem; align-items: center; position: relative; }
+    .nav-links { display: flex; gap: 2rem; align-items: center; }
     .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: 0.2s; cursor: pointer; position: relative; }
     .nav-links a:hover { color: var(--text); }
     .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--primary); transition: width 0.3s; }
@@ -144,17 +144,12 @@
     .status-msg.error { display: block; background: rgba(255,80,80,0.15); border: 1px solid #ff5050; color: #ff5050; }
     .status-msg.sending { display: block; background: rgba(22,88,250,0.15); border: 1px solid var(--primary); color: var(--primary); }
 
-    /* Chatbot notice */
-    .chatbot-notice {
-      position: fixed; bottom: 100px; right: 25px;
-      background: var(--primary); color: #fff; padding: 12px 20px;
-      border-radius: 40px; font-size: 0.85rem; font-weight: 500;
-      box-shadow: 0 10px 30px rgba(22,88,250,0.4); z-index: 998;
-      animation: fadeInUp 0.5s ease, fadeOut 0.5s ease 4.5s forwards;
-      cursor: pointer; max-width: 250px; text-align: center;
+    .chatbot-status {
+      background: rgba(109,255,184,0.1); border: 1px solid var(--accent-glow);
+      border-radius: var(--radius-md); padding: 16px 20px; margin-top: 20px;
+      text-align: center; font-size: 0.9rem;
     }
-    @keyframes fadeInUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
-    @keyframes fadeOut { from { opacity:1; } to { opacity:0; } }
+    .chatbot-status i { color: var(--accent-glow); margin-right: 8px; }
 
     footer { background: var(--glass); border-top: 1px solid var(--glass-border); padding: 60px 0 30px; margin-top: 80px; }
     .footer-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap: 40px; }
@@ -170,6 +165,10 @@
 </head>
 <body oncontextmenu="return false;">
   <div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div><div class="bg-grid"></div>
+
+  <!-- Elfsight AI Chatbot Widget - Loaded FIRST for priority -->
+  <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
+  <div class="elfsight-app-36f7c1ef-b55f-4c33-890e-cdc1ab291e04" data-elfsight-app-lazy></div>
 
   <header>
     <div class="container header-flex">
@@ -280,7 +279,7 @@
   </div></section>
 
   <section id="contact"><div class="container"><h2>Get in touch</h2>
-    <p style="text-align:center;color:var(--text-muted);margin-bottom:20px;">Or chat with our AI assistant 24/7 for instant answers! 💬</p>
+    <p style="text-align:center;color:var(--text-muted);margin-bottom:20px;">💬 Chat with our AI assistant (bottom-right) or fill out the form below!</p>
     <div class="contact-grid">
       <form id="contactForm" novalidate>
         <div class="selected-package" id="selectedPackageDisplay"><i class="fas fa-box"></i><span id="selectedPackageName"></span><span class="remove-package" id="removePackage"><i class="fas fa-times-circle"></i></span></div>
@@ -300,6 +299,9 @@
           <a href="https://www.tiktok.com/@rhyzil_" target="_blank" rel="noopener noreferrer" class="social-icon"><i class="fab fa-tiktok"></i></a>
           <a href="mailto:businessrhyziltech@gmail.com" class="social-icon"><i class="fas fa-envelope"></i></a>
         </div>
+        <div class="chatbot-status">
+          <i class="fas fa-robot"></i> <strong>AI Chatbot Active!</strong><br>Look for the chat bubble <span style="font-size:1.2rem;">💬</span> at the bottom-right corner for instant answers 24/7!
+        </div>
       </div>
     </div>
   </div></section>
@@ -313,10 +315,6 @@
     <div style="text-align:center;margin-top:20px;color:var(--text-muted);"><i class="fas fa-shield-alt"></i> Protected by Rhyziltech Security <i class="fas fa-lock"></i></div>
     <div style="text-align:center;margin-top:10px;color:var(--text-muted);">© 2026 Rhyziltech. Secure by design.</div>
   </div></footer>
-
-  <!-- Elfsight AI Chatbot Widget -->
-  <script src="https://static.elfsight.com/platform/platform.js" async></script>
-  <div class="elfsight-app-REPLACE_WITH_YOUR_APP_ID" data-elfsight-app-lazy></div>
 
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script>
@@ -335,6 +333,18 @@
       document.addEventListener('selectstart', function(e) {
         if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') { e.preventDefault(); return false; }
       });
+
+      // ============================================================
+      // CHATBOT HELPER - Force show if not visible after 5 seconds
+      // ============================================================
+      setTimeout(function() {
+        const chatbotWidget = document.querySelector('.elfsight-app-36f7c1ef-b55f-4c33-890e-cdc1ab291e04');
+        if (chatbotWidget) {
+          console.log('✅ Elfsight chatbot widget found in DOM');
+        } else {
+          console.warn('⚠️ Chatbot widget not found — check your Elfsight App ID');
+        }
+      }, 5000);
 
       // ============================================================
       // THEME
@@ -407,7 +417,7 @@
       document.getElementById('removePackage').addEventListener('click', () => { selectedServices = []; updatePackageDisplay(); });
 
       // ============================================================
-      // EMAILJS
+      // EMAILJS - CONTACT FORM
       // ============================================================
       emailjs.init("UV2MXRtD7FcyZXQ3F");
       const form = document.getElementById('contactForm');
@@ -446,8 +456,9 @@
         });
       });
 
-      console.log('✅ Rhyziltech ready — contact form + AI chatbot active');
+      console.log('✅ Rhyziltech ready — AI Chatbot: 36f7c1ef-b55f-4c33-890e-cdc1ab291e04');
+      console.log('💬 Chatbot should appear at bottom-right corner');
     })();
   </script>
 </body>
-</html>
+  </html>

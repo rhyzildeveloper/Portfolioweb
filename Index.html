@@ -18,6 +18,7 @@
       --radius-2xl: 28px; --radius-xl: 22px; --radius-lg: 18px; --radius-md: 14px;
       --font-display: 'Space Grotesk', system-ui, sans-serif;
       --font-body: 'Inter', system-ui, sans-serif;
+      --danger: #ff4757; --warning: #ffa502; --success: #2ed573;
     }
 
     [data-theme="light"] {
@@ -39,7 +40,7 @@
       -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;
     }
 
-    input, textarea {
+    input, textarea, select {
       -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text;
     }
 
@@ -75,6 +76,7 @@
     .btn-outline { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 16px 38px; background: transparent; color: var(--text); font-weight: 600; font-family: var(--font-display); font-size: 1.05rem; border-radius: 60px; text-decoration: none; border: 1.5px solid var(--glass-border); cursor: pointer; transition: 0.3s; }
     .btn-outline:hover { border-color: var(--primary); background: rgba(22,88,250,0.06); box-shadow: 0 8px 30px rgba(22,88,250,0.15); }
     .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+    .btn-sm { padding: 10px 24px; font-size: 0.9rem; }
 
     header { position: fixed; top: 0; left: 0; width: 100%; padding: 18px 0; background: rgba(1,2,5,0.75); backdrop-filter: blur(30px); border-bottom: 1px solid var(--glass-border); z-index: 1000; }
     .header-flex { display: flex; justify-content: space-between; align-items: center; }
@@ -137,10 +139,11 @@
 
     .form-control { width: 100%; padding: 16px 22px; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 50px; color: var(--text); font-size: 1rem; margin-bottom: 16px; transition: 0.3s; }
     textarea.form-control { border-radius: 28px; resize: vertical; min-height: 120px; }
+    select.form-control { appearance: none; cursor: pointer; }
     .form-control:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 25px rgba(22,88,250,0.2); }
 
     .status-msg { display: none; padding: 14px 22px; border-radius: 40px; margin-top: 16px; font-weight: 500; text-align: center; }
-    .status-msg.success { display: block; background: rgba(76,142,251,0.15); border: 1px solid var(--secondary); color: var(--secondary); }
+    .status-msg.success { display: block; background: rgba(46,213,115,0.15); border: 1px solid var(--success); color: var(--success); }
     .status-msg.error { display: block; background: rgba(255,80,80,0.15); border: 1px solid #ff5050; color: #ff5050; }
     .status-msg.sending { display: block; background: rgba(22,88,250,0.15); border: 1px solid var(--primary); color: var(--primary); }
 
@@ -152,8 +155,50 @@
     .fes-feature-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); gap: 16px; margin-top: 20px; }
     .fes-feature-item { background: rgba(22,88,250,0.06); border: 1px solid var(--glass-border); border-radius: var(--radius-md); padding: 16px; border-left: 3px solid var(--primary); }
 
+    /* Interactive Tools Styles */
+    .tool-card { background: var(--glass); border: 1px solid var(--glass-border); border-radius: var(--radius-xl); padding: 30px; margin-bottom: 30px; }
+    .tool-card h3 { margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+    
+    .range-slider { width: 100%; margin: 15px 0; }
+    input[type="range"] { -webkit-appearance: none; width: 100%; height: 8px; background: var(--glass-border); border-radius: 4px; outline: none; }
+    input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 24px; height: 24px; background: var(--primary); border-radius: 50%; cursor: pointer; box-shadow: 0 0 15px rgba(22,88,250,0.5); }
+    
+    .toggle-switch { position: relative; display: inline-block; width: 52px; height: 28px; }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 28px; transition: 0.3s; }
+    .toggle-slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px; background: var(--text-muted); border-radius: 50%; transition: 0.3s; }
+    input:checked + .toggle-slider { background: var(--primary); border-color: var(--primary); }
+    input:checked + .toggle-slider:before { transform: translateX(24px); background: #fff; }
+
+    .vulnerability-item { background: rgba(22,88,250,0.06); border: 1px solid var(--glass-border); border-radius: var(--radius-md); padding: 15px; margin: 10px 0; display: flex; align-items: center; gap: 12px; }
+    .severity-badge { padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+    .severity-high { background: rgba(255,71,87,0.2); color: var(--danger); }
+    .severity-medium { background: rgba(255,165,2,0.2); color: var(--warning); }
+    .severity-low { background: rgba(46,213,115,0.2); color: var(--success); }
+
+    .estimate-result { background: linear-gradient(135deg, rgba(22,88,250,0.2), rgba(76,142,251,0.2)); border: 1px solid var(--primary); border-radius: var(--radius-lg); padding: 25px; text-align: center; margin-top: 20px; }
+    .estimate-amount { font-family: var(--font-display); font-size: 2.5rem; font-weight: 800; color: var(--primary); }
+
+    .tool-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 30px; }
+    @media (max-width:768px) { .tool-grid { grid-template-columns: 1fr; } }
+
+    .checklist { list-style: none; padding: 0; }
+    .checklist li { padding: 10px 0; border-bottom: 1px solid var(--glass-border); display: flex; align-items: center; gap: 10px; }
+    .checklist li:last-child { border-bottom: none; }
+    .checklist i.fa-check-circle { color: var(--success); }
+    .checklist i.fa-times-circle { color: var(--danger); }
+
+    .lead-magnet { background: linear-gradient(135deg, rgba(22,88,250,0.15), rgba(76,142,251,0.1)); border: 2px solid var(--primary); border-radius: var(--radius-xl); padding: 35px; text-align: center; }
+    .lead-magnet h3 { font-size: 1.5rem; margin-bottom: 10px; }
+    
+    .scanner-animation { position: relative; overflow: hidden; }
+    .scan-line { position: absolute; width: 100%; height: 2px; background: var(--primary); opacity: 0.5; animation: scanDown 2s ease-in-out infinite; }
+    @keyframes scanDown { 0% { top: 0; } 50% { top: 100%; } 100% { top: 0; } }
+    
     .text-center { text-align: center; } .mt-20 { margin-top: 20px; } .mb-20 { margin-bottom: 20px; }
+    .mt-40 { margin-top: 40px; }
     .gap-12 { gap: 12px; } .flex { display: flex; } .flex-wrap { flex-wrap: wrap; }
+    .items-center { align-items: center; }
   </style>
 </head>
 <body oncontextmenu="return false;">
@@ -164,7 +209,7 @@
       <a href="#" class="logo">RHYZILTECH</a>
       <div class="flex items-center gap-12">
         <div class="nav-links" id="navLinks">
-          <a href="#home">Home</a><a href="#about">About</a><a href="#services">Services</a><a href="#pricing">Rates</a><a href="#portfolio">Portfolio</a><a href="#contact">Contact</a>
+          <a href="#home">Home</a><a href="#about">About</a><a href="#services">Services</a><a href="#tools">Tools</a><a href="#pricing">Rates</a><a href="#portfolio">Portfolio</a><a href="#contact">Contact</a>
         </div>
         <button class="theme-toggle" id="themeToggle"><i class="fas fa-sun"></i></button>
         <button class="mobile-btn" id="menuToggle"><i class="fas fa-bars"></i></button>
@@ -178,7 +223,7 @@
         <div class="hero-badge"><i class="fas fa-shield-alt"></i> Elite SaaS & Cybersecurity Agency</div>
         <h1>Building the future, one secure system at a time.</h1>
         <p class="hero-subtitle">Enterprise-grade SaaS, AI solutions, and cybersecurity infrastructure.</p>
-        <div class="hero-buttons"><a href="#contact" class="btn-primary">Start a project <i class="fas fa-arrow-right"></i></a><a href="#pricing" class="btn-outline">View rates</a></div>
+        <div class="hero-buttons"><a href="#tools" class="btn-primary">Try our tools <i class="fas fa-arrow-right"></i></a><a href="#pricing" class="btn-outline">View rates</a></div>
         <div class="stats-row">
           <div class="stat-card"><span class="stat-number">150+</span><p>Projects</p></div>
           <div class="stat-card"><span class="stat-number">98%</span><p>Retention</p></div>
@@ -221,6 +266,134 @@
     <div class="service-content" id="additional" style="display:none;">
       <div class="service-tags"><span class="service-tag clickable-service" data-service="Pen Testing">Pen Testing</span><span class="service-tag clickable-service" data-service="Security Audit">Audit</span></div>
     </div>
+  </div></section>
+
+  <!-- ============================================================ -->
+  <!-- INTERACTIVE TOOLS SECTION -->
+  <!-- ============================================================ -->
+  <section id="tools"><div class="container"><h2>🔧 Interactive Live Demos & Tools</h2>
+    <p style="text-align:center;color:var(--text-muted);margin-bottom:40px;">Experience my expertise firsthand with these interactive tools</p>
+    
+    <div class="tool-grid">
+      
+      <!-- Security Scanner Simulator -->
+      <div class="tool-card scanner-animation">
+        <div class="scan-line"></div>
+        <h3><i class="fas fa-shield-virus" style="color:var(--danger);"></i> Security Scanner Simulator</h3>
+        <p style="color:var(--text-muted);margin-bottom:15px;">Enter a URL to see a simulated vulnerability report</p>
+        <div class="flex gap-12">
+          <input type="text" id="scanUrl" class="form-control" placeholder="https://example.com" style="margin-bottom:0;">
+          <button class="btn-primary btn-sm" onclick="runScan()" id="scanBtn"><i class="fas fa-search"></i> Scan</button>
+        </div>
+        <div id="scanResults" style="margin-top:20px;display:none;">
+          <div id="scanLoading" style="text-align:center;padding:20px;display:none;">
+            <i class="fas fa-spinner fa-spin" style="font-size:2rem;color:var(--primary);"></i>
+            <p style="margin-top:10px;">Scanning for vulnerabilities...</p>
+          </div>
+          <div id="scanOutput"></div>
+        </div>
+      </div>
+
+      <!-- Project Cost Calculator -->
+      <div class="tool-card">
+        <h3><i class="fas fa-calculator" style="color:var(--secondary);"></i> Project Cost Calculator</h3>
+        <p style="color:var(--text-muted);margin-bottom:15px;">Get an instant estimate for your project</p>
+        
+        <label style="display:block;margin-bottom:8px;font-weight:600;">Number of Pages: <span id="pageCountDisplay">5</span></label>
+        <input type="range" id="pageCount" class="range-slider" min="1" max="20" value="5" oninput="updateEstimate()">
+        
+        <div class="flex items-center" style="justify-content:space-between;margin:15px 0;">
+          <span style="font-weight:600;">User Login System?</span>
+          <label class="toggle-switch"><input type="checkbox" id="needLogin" onchange="updateEstimate()"><span class="toggle-slider"></span></label>
+        </div>
+        
+        <div class="flex items-center" style="justify-content:space-between;margin:15px 0;">
+          <span style="font-weight:600;">Database Required?</span>
+          <label class="toggle-switch"><input type="checkbox" id="needDb" checked onchange="updateEstimate()"><span class="toggle-slider"></span></label>
+        </div>
+        
+        <div class="flex items-center" style="justify-content:space-between;margin:15px 0;">
+          <span style="font-weight:600;">E-commerce Features?</span>
+          <label class="toggle-switch"><input type="checkbox" id="needEcom" onchange="updateEstimate()"><span class="toggle-slider"></span></label>
+        </div>
+        
+        <div class="flex items-center" style="justify-content:space-between;margin:15px 0;">
+          <span style="font-weight:600;">Security Audit Included?</span>
+          <label class="toggle-switch"><input type="checkbox" id="needSecurity" onchange="updateEstimate()"><span class="toggle-slider"></span></label>
+        </div>
+
+        <div class="estimate-result" id="estimateResult">
+          <p style="color:var(--text-muted);">Estimated Range</p>
+          <div class="estimate-amount" id="estimateAmount">₱15,000 – ₱45,000</div>
+          <p style="color:var(--text-muted);font-size:0.85rem;">*Rough estimate based on standard requirements</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Service Inquiry Builder -->
+    <div class="tool-card mt-20" id="inquiryBuilder">
+      <h3><i class="fas fa-clipboard-list" style="color:var(--primary);"></i> Smart Service Inquiry Builder</h3>
+      <p style="color:var(--text-muted);margin-bottom:20px;">Build your inquiry with selected services, budget, and timeline</p>
+      
+      <div class="flex flex-wrap gap-12 mb-20" id="inquiryTags">
+        <span style="color:var(--text-muted);">Click service tags above to add them here</span>
+      </div>
+      
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;" class="mb-20">
+        <div>
+          <label style="font-weight:600;display:block;margin-bottom:5px;">Budget Range (₱)</label>
+          <select id="inquiryBudget" class="form-control" style="margin-bottom:0;">
+            <option value="">Select budget range</option>
+            <option value="₱3k – ₱15k">₱3,000 – ₱15,000</option>
+            <option value="₱15k – ₱50k">₱15,000 – ₱50,000</option>
+            <option value="₱50k – ₱150k">₱50,000 – ₱150,000</option>
+            <option value="₱150k – ₱500k">₱150,000 – ₱500,000</option>
+            <option value="₱500k+">₱500,000+</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-weight:600;display:block;margin-bottom:5px;">Timeline</label>
+          <select id="inquiryTimeline" class="form-control" style="margin-bottom:0;">
+            <option value="">Select timeline</option>
+            <option value="1-2 weeks">1-2 weeks</option>
+            <option value="2-4 weeks">2-4 weeks</option>
+            <option value="1-3 months">1-3 months</option>
+            <option value="3-6 months">3-6 months</option>
+            <option value="6+ months">6+ months</option>
+          </select>
+        </div>
+      </div>
+      
+      <button class="btn-primary" onclick="submitInquiry()" id="inquiryBtn">
+        <i class="fas fa-paper-plane"></i> Submit Inquiry
+      </button>
+      <div id="inquiryStatus" class="status-msg"></div>
+    </div>
+
+    <!-- Free Security Quick Scan Lead Magnet -->
+    <div class="lead-magnet mt-20" id="freeScan">
+      <h3><i class="fas fa-gift" style="color:var(--warning);"></i> FREE Security Quick Scan</h3>
+      <p style="color:var(--text-muted);margin-bottom:15px;">Get a manual 5-point security check of your current website — delivered to your email within 24 hours!</p>
+      
+      <ul class="checklist mb-20" style="display:inline-block;text-align:left;">
+        <li><i class="fas fa-check-circle"></i> SSL/TLS Certificate Check</li>
+        <li><i class="fas fa-check-circle"></i> HTTP Security Headers Audit</li>
+        <li><i class="fas fa-check-circle"></i> Basic XSS Vulnerability Scan</li>
+        <li><i class="fas fa-check-circle"></i> SQL Injection Surface Check</li>
+        <li><i class="fas fa-check-circle"></i> Authentication System Review</li>
+      </ul>
+      
+      <div class="flex gap-12" style="max-width:600px;margin:0 auto;">
+        <input type="url" id="freeScanUrl" class="form-control" placeholder="https://your-website.com" style="margin-bottom:0;">
+        <input type="email" id="freeScanEmail" class="form-control" placeholder="Your email" style="margin-bottom:0;">
+      </div>
+      <button class="btn-primary mt-20" onclick="requestFreeScan()" id="freeScanBtn">
+        <i class="fas fa-shield-haltered"></i> Get Free Security Scan
+      </button>
+      <div id="freeScanStatus" class="status-msg"></div>
+      <p style="color:var(--text-muted);font-size:0.8rem;margin-top:10px;">*Limited to 5 free scans per month. I'll personally review your site.</p>
+    </div>
+
   </div></section>
 
   <section id="pricing"><div class="container"><h2>💰 Web Development Service Rates</h2>
@@ -299,7 +472,7 @@
   <footer><div class="container">
     <div class="footer-grid">
       <div><h3>RHYZILTECH</h3><p style="color:var(--text-muted);">Elite SaaS & cybersecurity.</p></div>
-      <div><h4>Links</h4><p style="color:var(--text-muted);"><a href="#services" style="color:var(--text-muted);text-decoration:none;">Services</a><br><a href="#pricing" style="color:var(--text-muted);text-decoration:none;">Rates</a><br><a href="#contact" style="color:var(--text-muted);text-decoration:none;">Contact</a></p></div>
+      <div><h4>Links</h4><p style="color:var(--text-muted);"><a href="#services" style="color:var(--text-muted);text-decoration:none;">Services</a><br><a href="#tools" style="color:var(--text-muted);text-decoration:none;">Tools</a><br><a href="#pricing" style="color:var(--text-muted);text-decoration:none;">Rates</a><br><a href="#contact" style="color:var(--text-muted);text-decoration:none;">Contact</a></p></div>
       <div><h4>Social</h4><div class="flex gap-12"><a href="https://www.facebook.com/profile.php?id=61584139169630" target="_blank" rel="noopener noreferrer" class="social-icon"><i class="fab fa-facebook-f"></i></a><a href="https://www.tiktok.com/@rhyzil_" target="_blank" rel="noopener noreferrer" class="social-icon"><i class="fab fa-tiktok"></i></a></div></div>
     </div>
     <div style="text-align:center;margin-top:20px;color:var(--text-muted);"><i class="fas fa-shield-alt"></i> Protected by Rhyziltech Security <i class="fas fa-lock"></i></div>
@@ -317,257 +490,44 @@
       // SCREENSHOT & SCREEN RECORDING PROTECTION (ALL DEVICES)
       // ============================================================
       
-      // Detect if page is being captured (screenshot/screen recording)
-      function detectScreenCapture() {
-        // iOS & Android screenshot detection via visibility change + blur
-        document.addEventListener('visibilitychange', function() {
-          if (document.visibilityState === 'hidden') {
-            // Page was hidden (possible screenshot on mobile)
-            console.log('⚠️ Potential screen capture detected');
-          }
-        });
-
-        // iOS specific screenshot detection
-        window.addEventListener('pagehide', function(e) {
-          if (e.persisted === false) {
-            console.log('⚠️ Potential screen capture detected');
-          }
-        });
-
-        // Prevent screen recording on Android via MediaProjection API awareness
-        if (navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia) {
-          // Monitor for screen capture attempts
-          const originalGetDisplayMedia = navigator.mediaDevices.getDisplayMedia;
-          navigator.mediaDevices.getDisplayMedia = function() {
-            console.log('⚠️ Screen capture attempt blocked');
-            alert('⚠️ Screenshots and screen recording are not permitted on this site.');
-            return Promise.reject(new Error('Screen capture is disabled'));
-          };
-        }
-      }
-
-      // CSS-based screenshot protection using pseudo-element overlay
       const screenshotProtectionStyle = document.createElement('style');
       screenshotProtectionStyle.textContent = `
-        /* Make entire page flash protection for screenshots */
-        @media screen {
-          /* Watermark for screenshots */
-          body::after {
-            content: '© 2026 Rhyziltech — Protected Content';
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-30deg);
-            font-size: 4rem;
-            font-weight: 900;
-            color: rgba(255, 0, 0, 0.08);
-            pointer-events: none;
-            z-index: 9999;
-            white-space: nowrap;
-            font-family: 'Space Grotesk', sans-serif;
-            letter-spacing: 5px;
-          }
+        body::after {
+          content: '© 2026 Rhyziltech — Protected Content';
+          position: fixed; top: 50%; left: 50%;
+          transform: translate(-50%, -50%) rotate(-30deg);
+          font-size: 4rem; font-weight: 900;
+          color: rgba(255, 0, 0, 0.08); pointer-events: none; z-index: 9999;
+          white-space: nowrap; font-family: 'Space Grotesk', sans-serif; letter-spacing: 5px;
         }
-
-        /* iOS screenshot flash overlay */
-        @supports (-webkit-touch-callout: none) {
-          body.screenshot-active {
-            animation: screenshotFlash 0.1s ease-out;
-          }
-        }
-
-        @keyframes screenshotFlash {
-          0% { opacity: 0.3; background: white; }
-          100% { opacity: 1; background: transparent; }
-        }
-
-        /* Prevent screen recording indicators */
-        @media (display-mode: fullscreen) {
-          body::before {
-            content: '';
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.01);
-            z-index: 9998;
-            pointer-events: none;
-          }
-        }
+        @keyframes screenshotFlash { 0% { opacity: 0.3; background: white; } 100% { opacity: 1; background: transparent; } }
       `;
       document.head.appendChild(screenshotProtectionStyle);
 
-      // Android screenshot detection via resize event
-      let lastWidth = window.innerWidth;
-      let lastHeight = window.innerHeight;
-      
-      window.addEventListener('resize', function() {
-        const widthDiff = Math.abs(window.innerWidth - lastWidth);
-        const heightDiff = Math.abs(window.innerHeight - lastHeight);
-        
-        // Screenshot often triggers specific resize patterns
-        if ((widthDiff === 0 && heightDiff > 100) || (heightDiff === 0 && widthDiff > 100)) {
-          console.log('⚠️ Potential screen capture detected via resize');
-          document.body.classList.add('screenshot-active');
-          setTimeout(() => document.body.classList.remove('screenshot-active'), 100);
-        }
-        
-        lastWidth = window.innerWidth;
-        lastHeight = window.innerHeight;
-      });
-
-      // iOS screenshot detection via touch events pattern
-      let touchStartTime = 0;
-      let touchCount = 0;
-      
-      document.addEventListener('touchstart', function(e) {
-        touchStartTime = Date.now();
-        touchCount = e.touches.length;
-      }, { passive: true });
-
-      document.addEventListener('touchend', function(e) {
-        const touchDuration = Date.now() - touchStartTime;
-        // Detect volume+power button combination (quick multi-touch)
-        if (touchCount >= 2 && touchDuration < 200) {
-          console.log('⚠️ Potential iOS screenshot detected');
-          document.body.classList.add('screenshot-active');
-          setTimeout(() => document.body.classList.remove('screenshot-active'), 100);
-        }
-        touchCount = 0;
-      });
-
-      // Prevent Print Screen key
-      document.addEventListener('keyup', function(e) {
-        if (e.key === 'PrintScreen' || e.keyCode === 44 || e.key === 'SysReq') {
-          e.preventDefault();
-          navigator.clipboard.writeText('');
-          document.body.style.opacity = '0.1';
-          setTimeout(() => { document.body.style.opacity = '1'; }, 150);
-          alert('⚠️ Screenshots are not permitted on this page.');
-          return false;
-        }
-      });
-
-      // Prevent Alt+PrintScreen and Win+PrintScreen
       document.addEventListener('keydown', function(e) {
-        if (e.key === 'PrintScreen' || e.keyCode === 44 || e.key === 'SysReq') {
-          e.preventDefault();
-          alert('⚠️ Screenshots are not permitted on this page.');
-          return false;
-        }
-        
-        // Windows + Shift + S (Snipping Tool)
-        if (e.metaKey && e.shiftKey && (e.key === 's' || e.key === 'S')) {
-          e.preventDefault();
-          alert('⚠️ Screen capture tools are blocked on this page.');
-          return false;
-        }
-        
-        // Windows + PrintScreen
-        if (e.metaKey && (e.key === 'PrintScreen' || e.keyCode === 44)) {
-          e.preventDefault();
-          return false;
-        }
-      });
-
-      // Clipboard monitoring (detect if screenshot is copied to clipboard)
-      let clipboardCheckInterval = setInterval(function() {
-        if (document.visibilityState === 'hidden') {
-          // Try to clear clipboard when page is hidden (possible screenshot)
-          if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText('').catch(() => {});
-          }
-        }
-      }, 500);
-
-      // Android screenshot detection via MediaProjection
-      if (window.Android && window.Android.onScreenshot) {
-        window.Android.onScreenshot = function() {
-          alert('⚠️ Screenshots are not permitted.');
-        };
-      }
-
-      // DRM-like protection using CSS backdrop
-      const drmOverlay = document.createElement('div');
-      drmOverlay.id = 'drm-overlay';
-      drmOverlay.style.cssText = `
-        position: fixed;
-        top: 0; left: 0; right: 0; bottom: 0;
-        pointer-events: none;
-        z-index: 9997;
-        opacity: 0;
-        transition: opacity 0.1s ease;
-        background: repeating-linear-gradient(
-          45deg,
-          transparent,
-          transparent 2px,
-          rgba(0,0,0,0.005) 2px,
-          rgba(0,0,0,0.005) 4px
-        );
-      `;
-      document.body.appendChild(drmOverlay);
-
-      // Show subtle pattern when screenshot might be taken
-      document.addEventListener('visibilitychange', function() {
-        if (document.visibilityState === 'hidden') {
-          drmOverlay.style.opacity = '0.05';
-          setTimeout(() => { drmOverlay.style.opacity = '0'; }, 200);
-        }
-      });
-
-      // Initialize detection
-      detectScreenCapture();
-
-      console.log('🛡️ Screenshot & screen recording protection active on all devices');
-
-      // ============================================================
-      // COPY PROTECTION (ENHANCED)
-      // ============================================================
-      document.addEventListener('keydown', function(e) {
-        // Block all common copy/save shortcuts
         if ((e.ctrlKey || e.metaKey) && (e.key === 'c' || e.key === 'u' || e.key === 's' || e.key === 'p' || e.key === 'C' || e.key === 'U' || e.key === 'S' || e.key === 'P' || e.key === 'a' || e.key === 'A' || (e.shiftKey && (e.key === 'I' || e.key === 'i')))) {
           e.preventDefault(); e.stopPropagation(); return false;
         }
-        if (e.key === 'F12' || e.keyCode === 123) { e.preventDefault(); e.stopPropagation(); return false; }
-        
-        // Block Windows + Shift + S (Snipping Tool shortcut)
-        if (e.metaKey && e.shiftKey && e.key === 's') {
-          e.preventDefault(); e.stopPropagation(); return false;
-        }
+        if (e.key === 'F12' || e.keyCode === 123 || e.key === 'PrintScreen' || e.keyCode === 44) { e.preventDefault(); e.stopPropagation(); return false; }
+        if (e.metaKey && e.shiftKey && (e.key === 's' || e.key === 'S')) { e.preventDefault(); e.stopPropagation(); return false; }
       }, true);
       
       document.addEventListener('contextmenu', function(e) { e.preventDefault(); return false; }, true);
       document.addEventListener('dragstart', function(e) { e.preventDefault(); return false; }, true);
       document.addEventListener('drop', function(e) { e.preventDefault(); return false; }, true);
-      
       document.addEventListener('selectstart', function(e) {
-        if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') { 
-          e.preventDefault(); return false; 
-        }
+        if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') { e.preventDefault(); return false; }
       });
+      window.addEventListener('beforeprint', function(e) { e.preventDefault(); document.body.style.display = 'none'; setTimeout(() => { document.body.style.display = ''; }, 100); });
 
-      // Prevent mobile long-press copy
-      document.addEventListener('touchstart', function(e) {
-        if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
-          if (e.touches.length === 1) {
-            // Store for long press detection
-            e.target._touchStartTime = Date.now();
-          }
-        }
-      }, { passive: true });
+      if (navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia) {
+        navigator.mediaDevices.getDisplayMedia = function() {
+          alert('⚠️ Screen recording is not permitted on this site.');
+          return Promise.reject(new Error('Screen capture is disabled'));
+        };
+      }
 
-      document.addEventListener('touchend', function(e) {
-        if (e.target._touchStartTime && (Date.now() - e.target._touchStartTime > 500)) {
-          if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
-            e.preventDefault();
-          }
-        }
-      });
-
-      // Prevent print
-      window.addEventListener('beforeprint', function(e) {
-        e.preventDefault();
-        document.body.style.display = 'none';
-        setTimeout(() => { document.body.style.display = ''; }, 100);
-      });
+      console.log('🛡️ Screenshot & screen recording protection active on all devices');
 
       // ============================================================
       // THEME
@@ -621,6 +581,7 @@
           selectedPackageName.textContent = 'Selected: ' + display;
           selectedPackageDisplay.classList.add('show');
         }
+        updateInquiryTags();
       }
 
       function addService(serviceName) {
@@ -638,6 +599,229 @@
         row.addEventListener('click', function() { addService(this.getAttribute('data-service')); });
       });
       document.getElementById('removePackage').addEventListener('click', () => { selectedServices = []; updatePackageDisplay(); });
+
+      // ============================================================
+      // INQUIRY TAGS UPDATE
+      // ============================================================
+      function updateInquiryTags() {
+        const container = document.getElementById('inquiryTags');
+        if (selectedServices.length === 0) {
+          container.innerHTML = '<span style="color:var(--text-muted);">Click service tags above to add them here</span>';
+        } else {
+          container.innerHTML = selectedServices.map(s => 
+            `<span class="service-tag" style="background:rgba(22,88,250,0.2);border-color:var(--primary);color:var(--text);">${s}</span>`
+          ).join('');
+        }
+      }
+
+      // ============================================================
+      // SECURITY SCANNER SIMULATOR
+      // ============================================================
+      window.runScan = function() {
+        const url = document.getElementById('scanUrl').value.trim();
+        if (!url) {
+          alert('Please enter a URL to scan');
+          return;
+        }
+        
+        const resultsDiv = document.getElementById('scanResults');
+        const loadingDiv = document.getElementById('scanLoading');
+        const outputDiv = document.getElementById('scanOutput');
+        const scanBtn = document.getElementById('scanBtn');
+        
+        resultsDiv.style.display = 'block';
+        loadingDiv.style.display = 'block';
+        outputDiv.innerHTML = '';
+        scanBtn.disabled = true;
+        scanBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Scanning...';
+        
+        setTimeout(() => {
+          loadingDiv.style.display = 'none';
+          
+          const vulnerabilities = [
+            { name: 'SQL Injection Vulnerability', severity: 'high', description: 'Unsanitized user input detected in query parameters. Attackers could manipulate database queries.', fix: 'Implement parameterized queries and input validation.' },
+            { name: 'Cross-Site Scripting (XSS)', severity: 'high', description: 'Reflected XSS vulnerability found in search parameter. Malicious scripts could be injected.', fix: 'Implement output encoding and Content Security Policy (CSP) headers.' },
+            { name: 'Missing Security Headers', severity: 'medium', description: 'HSTS, X-Frame-Options, and X-Content-Type-Options headers are not set.', fix: 'Configure web server to include all recommended security headers.' },
+            { name: 'Outdated SSL/TLS Protocol', severity: 'medium', description: 'Server supports TLS 1.0 and 1.1 which are deprecated and vulnerable.', fix: 'Disable TLS 1.0/1.1, enable only TLS 1.2 and 1.3.' },
+            { name: 'Exposed Admin Panel', severity: 'low', description: 'Admin login page is accessible from the public internet without rate limiting.', fix: 'Implement IP whitelisting and rate limiting on admin endpoints.' }
+          ];
+          
+          let html = `<p style="color:var(--text-muted);margin-bottom:15px;">Scan completed for <strong>${escapeHtml(url)}</strong> — Found <strong>${vulnerabilities.length} vulnerabilities</strong></p>`;
+          
+          vulnerabilities.forEach((vuln, index) => {
+            html += `
+              <div class="vulnerability-item">
+                <div style="flex:1;">
+                  <div style="display:flex;align-items:center;gap:10px;margin-bottom:5px;">
+                    <span class="severity-badge severity-${vuln.severity}">${vuln.severity.toUpperCase()}</span>
+                    <strong>${vuln.name}</strong>
+                  </div>
+                  <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:8px;">${vuln.description}</p>
+                  <p style="color:var(--success);font-size:0.85rem;"><i class="fas fa-wrench"></i> <strong>Fix:</strong> ${vuln.fix}</p>
+                </div>
+              </div>
+            `;
+          });
+          
+          html += `
+            <div style="background:rgba(22,88,250,0.1);border:1px solid var(--primary);border-radius:var(--radius-md);padding:15px;margin-top:15px;text-align:center;">
+              <p><i class="fas fa-shield-alt" style="color:var(--primary);"></i> <strong>Want me to fix these vulnerabilities?</strong></p>
+              <p style="color:var(--text-muted);font-size:0.9rem;">I can secure your application with enterprise-grade protection. <a href="#contact" style="color:var(--secondary);">Get in touch</a></p>
+            </div>
+          `;
+          
+          outputDiv.innerHTML = html;
+          scanBtn.disabled = false;
+          scanBtn.innerHTML = '<i class="fas fa-search"></i> Scan';
+        }, 2000);
+      };
+
+      function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+      }
+
+      // ============================================================
+      // PROJECT COST CALCULATOR
+      // ============================================================
+      window.updateEstimate = function() {
+        const pages = parseInt(document.getElementById('pageCount').value);
+        const login = document.getElementById('needLogin').checked;
+        const db = document.getElementById('needDb').checked;
+        const ecom = document.getElementById('needEcom').checked;
+        const security = document.getElementById('needSecurity').checked;
+        
+        document.getElementById('pageCountDisplay').textContent = pages;
+        
+        let baseMin = 3000;
+        let baseMax = 5000;
+        
+        // Pages factor
+        baseMin += pages * 2000;
+        baseMax += pages * 4000;
+        
+        // Features
+        if (login) { baseMin += 5000; baseMax += 15000; }
+        if (db) { baseMin += 8000; baseMax += 25000; }
+        if (ecom) { baseMin += 15000; baseMax += 50000; }
+        if (security) { baseMin += 5000; baseMax += 15000; }
+        
+        const minFormatted = '₱' + baseMin.toLocaleString();
+        const maxFormatted = '₱' + baseMax.toLocaleString();
+        
+        document.getElementById('estimateAmount').textContent = minFormatted + ' – ' + maxFormatted;
+      };
+
+      // ============================================================
+      // SERVICE INQUIRY BUILDER
+      // ============================================================
+      window.submitInquiry = function() {
+        const services = selectedServices.join(', ');
+        const budget = document.getElementById('inquiryBudget').value;
+        const timeline = document.getElementById('inquiryTimeline').value;
+        const statusEl = document.getElementById('inquiryStatus');
+        const btn = document.getElementById('inquiryBtn');
+        
+        if (!services) {
+          statusEl.className = 'status-msg error';
+          statusEl.textContent = '⚠️ Please select at least one service by clicking the tags above.';
+          return;
+        }
+        if (!budget || !timeline) {
+          statusEl.className = 'status-msg error';
+          statusEl.textContent = '⚠️ Please select both budget range and timeline.';
+          return;
+        }
+        
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+        statusEl.className = 'status-msg sending';
+        statusEl.textContent = '📤 Building your inquiry...';
+        
+        const inquiryData = {
+          from_name: 'Inquiry Builder',
+          from_email: 'inquiry@rhyziltech.com',
+          message: `📋 SERVICE INQUIRY\n\n🔧 Services: ${services}\n💰 Budget: ${budget}\n⏱️ Timeline: ${timeline}\n\n---\nSubmitted via Smart Inquiry Builder`,
+          reply_to: 'businessrhyziltech@gmail.com'
+        };
+        
+        emailjs.send("service_ad1l4qy", "template_mphmqzv", inquiryData)
+          .then(function() {
+            statusEl.className = 'status-msg success';
+            statusEl.textContent = '✅ Inquiry submitted! I\'ll review and reply within 12 hours.';
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Inquiry';
+            document.getElementById('inquiryBudget').value = '';
+            document.getElementById('inquiryTimeline').value = '';
+            setTimeout(() => { statusEl.className = 'status-msg'; statusEl.textContent = ''; }, 6000);
+          })
+          .catch(function() {
+            const mailtoBody = `Services: ${services}%0D%0ABudget: ${budget}%0D%0ATimeline: ${timeline}`;
+            window.location.href = `mailto:businessrhyziltech@gmail.com?subject=Service Inquiry&body=${mailtoBody}`;
+            statusEl.className = 'status-msg error';
+            statusEl.innerHTML = 'Opening email client... <a href="mailto:businessrhyziltech@gmail.com" style="color:var(--secondary);">Click here</a>';
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Inquiry';
+          });
+      };
+
+      // ============================================================
+      // FREE SECURITY QUICK SCAN
+      // ============================================================
+      window.requestFreeScan = function() {
+        const url = document.getElementById('freeScanUrl').value.trim();
+        const email = document.getElementById('freeScanEmail').value.trim();
+        const statusEl = document.getElementById('freeScanStatus');
+        const btn = document.getElementById('freeScanBtn');
+        
+        if (!url) {
+          statusEl.className = 'status-msg error';
+          statusEl.textContent = '⚠️ Please enter your website URL.';
+          return;
+        }
+        if (!email) {
+          statusEl.className = 'status-msg error';
+          statusEl.textContent = '⚠️ Please enter your email address.';
+          return;
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          statusEl.className = 'status-msg error';
+          statusEl.textContent = '⚠️ Please enter a valid email address.';
+          return;
+        }
+        
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+        statusEl.className = 'status-msg sending';
+        statusEl.textContent = '📤 Submitting your free scan request...';
+        
+        const scanData = {
+          from_name: 'Free Scan Request',
+          from_email: email,
+          message: `🔍 FREE SECURITY QUICK SCAN REQUEST\n\n🌐 Website: ${url}\n📧 Contact Email: ${email}\n\n📋 Checklist:\n1. SSL/TLS Certificate Check\n2. HTTP Security Headers Audit\n3. Basic XSS Vulnerability Scan\n4. SQL Injection Surface Check\n5. Authentication System Review\n\n✅ I will manually review and send results within 24 hours.`,
+          reply_to: email
+        };
+        
+        emailjs.send("service_ad1l4qy", "template_mphmqzv", scanData)
+          .then(function() {
+            statusEl.className = 'status-msg success';
+            statusEl.textContent = '✅ Free scan requested! I\'ll personally review ' + url + ' and email results to ' + email + ' within 24 hours.';
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-shield-haltered"></i> Get Free Security Scan';
+            document.getElementById('freeScanUrl').value = '';
+            document.getElementById('freeScanEmail').value = '';
+            setTimeout(() => { statusEl.className = 'status-msg'; statusEl.textContent = ''; }, 8000);
+          })
+          .catch(function() {
+            const mailtoBody = `Website: ${url}%0D%0AEmail: ${email}%0D%0A%0D%0APlease perform the 5-point security check.`;
+            window.location.href = `mailto:businessrhyziltech@gmail.com?subject=Free Security Scan Request&body=${mailtoBody}`;
+            statusEl.className = 'status-msg error';
+            statusEl.innerHTML = 'Opening email client... <a href="mailto:businessrhyziltech@gmail.com" style="color:var(--secondary);">Click here</a>';
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-shield-haltered"></i> Get Free Security Scan';
+          });
+      };
 
       // ============================================================
       // EMAILJS - CONTACT FORM
@@ -679,8 +863,12 @@
         });
       });
 
-      console.log('✅ Rhyziltech ready — AI Chatbot: 36f7c1ef-b55f-4c33-890e-cdc1ab291e04');
-      console.log('🛡️ Screenshot protection: ACTIVE on all devices');
+      // Initialize cost calculator on load
+      updateEstimate();
+      updateInquiryTags();
+
+      console.log('✅ Rhyziltech ready — All interactive tools active');
+      console.log('🔧 Tools: Security Scanner, Cost Calculator, Inquiry Builder, Free Security Scan');
     })();
   </script>
 </body>

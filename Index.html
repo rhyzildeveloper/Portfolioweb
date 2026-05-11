@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
-  <title>Rhyzil Tech · Code. Create. Elevate.</title>
+  <title>Rhyzil Tech · We Build Powerful Web Experiences That Drive Results</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -87,6 +88,68 @@
       .container { padding: 0 16px; }
     }
 
+    /* Animations */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInLeft {
+      from { opacity: 0; transform: translateX(-40px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes fadeInRight {
+      from { opacity: 0; transform: translateX(40px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.4); }
+      50% { box-shadow: 0 0 0 20px rgba(79, 70, 229, 0); }
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+
+    @keyframes countUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate {
+      opacity: 0;
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .animate.visible {
+      opacity: 1;
+    }
+
+    .fade-in-up { transform: translateY(40px); }
+    .fade-in-up.visible { transform: translateY(0); }
+
+    .fade-in-left { transform: translateX(-40px); }
+    .fade-in-left.visible { transform: translateX(0); }
+
+    .fade-in-right { transform: translateX(40px); }
+    .fade-in-right.visible { transform: translateX(0); }
+
+    .scale-in { transform: scale(0.9); }
+    .scale-in.visible { transform: scale(1); }
+
     /* Header */
     header {
       position: fixed;
@@ -94,14 +157,15 @@
       left: 0;
       width: 100%;
       padding: 16px 0;
-      background: rgba(15, 23, 42, 0.9);
+      background: rgba(15, 23, 42, 0.85);
       backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--glass-border);
       z-index: 1000;
+      animation: fadeInUp 0.8s ease-out;
     }
 
     [data-theme="light"] header {
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.85);
     }
 
     .header-flex {
@@ -112,9 +176,12 @@
 
     .logo {
       font-family: var(--font-display);
-      font-size: 1.6rem;
+      font-size: 1.8rem;
       font-weight: 800;
-      color: var(--primary);
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
       text-decoration: none;
       letter-spacing: -0.5px;
     }
@@ -130,12 +197,28 @@
       text-decoration: none;
       font-weight: 500;
       font-size: 0.95rem;
-      transition: 0.2s;
+      transition: 0.3s;
       cursor: pointer;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      transition: width 0.3s ease;
     }
 
     .nav-links a:hover {
-      color: var(--primary);
+      color: var(--text);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
     }
 
     .theme-toggle {
@@ -155,6 +238,7 @@
 
     .theme-toggle:hover {
       border-color: var(--primary);
+      transform: rotate(30deg);
     }
 
     .mobile-btn {
@@ -181,7 +265,7 @@
         border-bottom: 2px solid var(--primary);
         z-index: 999;
       }
-      .nav-links.show { display: flex; }
+      .nav-links.show { display: flex; animation: fadeInUp 0.3s ease-out; }
       .mobile-btn { display: block; }
     }
 
@@ -191,36 +275,80 @@
       display: flex;
       align-items: center;
       padding: 120px 0 80px;
-      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(79, 70, 229, 0.1), transparent 70%);
+      border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: -10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.08), transparent 70%);
+      border-radius: 50%;
+      animation: float 8s ease-in-out infinite reverse;
+      pointer-events: none;
     }
 
     .hero-content {
       max-width: 900px;
       margin: 0 auto;
+      text-align: center;
+      position: relative;
+      z-index: 1;
     }
 
-    .hero-tagline {
-      font-family: var(--font-display);
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 20px;
+      background: rgba(79, 70, 229, 0.1);
+      border: 1px solid var(--glass-border);
+      border-radius: 40px;
       font-size: 0.9rem;
-      font-weight: 600;
+      margin-bottom: 24px;
       color: var(--secondary);
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      margin-bottom: 20px;
+      font-weight: 500;
+      animation: scaleIn 0.8s ease-out 0.2s both;
     }
 
     h1 {
       font-family: var(--font-display);
-      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-size: clamp(2.8rem, 6vw, 5rem);
       font-weight: 800;
-      line-height: 1.1;
+      line-height: 1.08;
       color: var(--text);
       margin-bottom: 24px;
       letter-spacing: -0.03em;
     }
 
+    .gradient-text {
+      background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent-glow));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      background-size: 200% auto;
+      animation: shimmer 3s linear infinite;
+    }
+
     .hero-description {
-      font-size: 1.15rem;
+      font-size: 1.2rem;
       color: var(--text-muted);
       max-width: 700px;
       margin: 0 auto 40px;
@@ -238,70 +366,133 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 14px 32px;
-      background: var(--primary);
+      padding: 16px 36px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
       color: #fff;
       font-weight: 600;
       font-family: var(--font-body);
       font-size: 1rem;
-      border-radius: 8px;
+      border-radius: 12px;
       text-decoration: none;
       border: none;
       cursor: pointer;
-      transition: 0.3s;
+      transition: all 0.3s;
       white-space: nowrap;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn-primary:hover::before {
+      left: 100%;
     }
 
     .btn-primary:hover {
-      background: var(--secondary);
-      transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(79, 70, 229, 0.3);
+      transform: translateY(-3px);
+      box-shadow: 0 20px 40px rgba(79, 70, 229, 0.4);
+      animation: pulse 2s infinite;
     }
 
     .btn-outline {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 14px 32px;
+      padding: 16px 36px;
       background: transparent;
       color: var(--text);
       font-weight: 600;
       font-family: var(--font-body);
       font-size: 1rem;
-      border-radius: 8px;
+      border-radius: 12px;
       text-decoration: none;
       border: 2px solid var(--glass-border);
       cursor: pointer;
-      transition: 0.3s;
+      transition: all 0.3s;
       white-space: nowrap;
     }
 
     .btn-outline:hover {
       border-color: var(--primary);
       color: var(--primary);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(79, 70, 229, 0.2);
     }
 
     .btn-primary:disabled {
       opacity: 0.6;
       cursor: not-allowed;
+      animation: none;
+    }
+
+    .btn-primary:disabled:hover {
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* Trust Badge */
+    .trust-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 24px;
+      padding: 10px 20px;
+      background: var(--surface);
+      border-radius: 40px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      animation: fadeInUp 0.8s ease-out 0.6s both;
+    }
+
+    .trust-badge i {
+      color: var(--success);
     }
 
     /* Stats */
     .stats-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
       margin-top: 80px;
+    }
+
+    @media (max-width: 768px) {
+      .hero { padding: 100px 0 60px; }
+      .stats-row { grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 60px; }
+    }
+
+    @media (max-width: 480px) {
+      .stats-row { grid-template-columns: 1fr 1fr; gap: 12px; }
     }
 
     .stat-card {
       text-align: center;
-      padding: 24px;
+      padding: 30px 20px;
+      background: var(--surface);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-xl);
+      transition: all 0.3s;
+      cursor: default;
+    }
+
+    .stat-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(79, 70, 229, 0.15);
     }
 
     .stat-number {
       font-family: var(--font-display);
-      font-size: 2.5rem;
+      font-size: 2.8rem;
       font-weight: 800;
       color: var(--primary);
       display: block;
@@ -315,64 +506,94 @@
       font-weight: 500;
     }
 
-    @media (max-width: 768px) {
-      .hero { padding: 100px 0 60px; }
-      .stats-row { grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 60px; }
-      .stat-number { font-size: 2rem; }
-    }
-
     /* Sections */
     section {
-      padding: 80px 0;
+      padding: 100px 0;
     }
 
     @media (max-width: 768px) {
-      section { padding: 60px 0; }
+      section { padding: 70px 0; }
     }
 
     h2 {
       font-family: var(--font-display);
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-size: clamp(2rem, 4vw, 3rem);
       font-weight: 700;
       text-align: center;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
       color: var(--text);
     }
 
     .section-subtitle {
       text-align: center;
       color: var(--text-muted);
-      margin-bottom: 50px;
-      font-size: 1.05rem;
+      margin-bottom: 60px;
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
-    /* Services Cards */
+    .section-tag {
+      text-align: center;
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+
+    /* Services Grid */
     .services-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 24px;
-      margin-top: 40px;
+      margin-top: 20px;
     }
 
     .service-card {
       background: var(--surface);
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-xl);
-      padding: 32px;
-      transition: all 0.3s;
+      padding: 36px 28px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(79, 70, 229, 0.05), transparent);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .service-card:hover::before {
+      opacity: 1;
     }
 
     .service-card:hover {
       border-color: var(--primary);
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(79, 70, 229, 0.1);
+      transform: translateY(-8px);
+      box-shadow: 0 25px 50px rgba(79, 70, 229, 0.15);
     }
 
     .service-icon {
-      font-size: 2.5rem;
-      color: var(--primary);
+      font-size: 3rem;
       margin-bottom: 20px;
+      display: block;
+      transition: transform 0.4s;
+    }
+
+    .service-card:hover .service-icon {
+      transform: scale(1.1) rotate(-5deg);
     }
 
     .service-card h3 {
@@ -380,13 +601,13 @@
       font-size: 1.3rem;
       font-weight: 600;
       margin-bottom: 12px;
+      color: var(--text);
     }
 
     .service-card p {
       color: var(--text-muted);
       font-size: 0.95rem;
       line-height: 1.6;
-      margin-bottom: 20px;
     }
 
     .service-link {
@@ -396,12 +617,110 @@
       text-decoration: none;
       display: inline-flex;
       align-items: center;
-      gap: 4px;
-      transition: 0.2s;
+      gap: 6px;
+      margin-top: 16px;
+      transition: gap 0.3s;
     }
 
-    .service-link:hover {
-      gap: 8px;
+    .service-card:hover .service-link {
+      gap: 12px;
+    }
+
+    /* Portfolio Section */
+    .portfolio-wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .portfolio-card {
+      background: var(--surface);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-xl);
+      padding: 40px;
+      transition: all 0.4s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .portfolio-card::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(79, 70, 229, 0.1), transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .portfolio-card:hover {
+      border-color: var(--primary);
+      box-shadow: 0 20px 60px rgba(79, 70, 229, 0.15);
+      transform: translateY(-5px);
+    }
+
+    .portfolio-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 28px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .portfolio-icon {
+      font-size: 3.5rem;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .portfolio-header h3 {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+
+    .portfolio-subtitle {
+      color: var(--secondary);
+      font-weight: 500;
+      margin-top: 4px;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (max-width: 480px) {
+      .feature-grid { grid-template-columns: 1fr; }
+    }
+
+    .feature-item {
+      background: rgba(79, 70, 229, 0.06);
+      border: 1px solid var(--glass-border);
+      border-radius: 10px;
+      padding: 18px;
+      border-left: 3px solid var(--primary);
+      transition: all 0.3s;
+    }
+
+    .feature-item:hover {
+      background: rgba(79, 70, 229, 0.12);
+      transform: translateX(5px);
+    }
+
+    .feature-item strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--text);
+    }
+
+    .feature-item span {
+      color: var(--text-muted);
+      font-size: 0.9rem;
     }
 
     /* Tabs */
@@ -414,8 +733,8 @@
     }
 
     .tab-btn {
-      padding: 10px 24px;
-      border-radius: 8px;
+      padding: 12px 28px;
+      border-radius: 12px;
       cursor: pointer;
       font-weight: 600;
       font-family: var(--font-body);
@@ -430,16 +749,18 @@
     .tab-btn:hover {
       border-color: var(--primary);
       color: var(--text);
+      transform: translateY(-2px);
     }
 
     .tab-btn.active {
-      background: var(--primary);
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
       border-color: var(--primary);
       color: #fff;
+      box-shadow: 0 8px 25px rgba(79, 70, 229, 0.3);
     }
 
     @media (max-width: 480px) {
-      .tab-btn { padding: 8px 16px; font-size: 0.8rem; }
+      .tab-btn { padding: 10px 18px; font-size: 0.8rem; }
     }
 
     .service-tags {
@@ -453,8 +774,8 @@
     .service-tag {
       background: var(--surface);
       border: 1px solid var(--glass-border);
-      border-radius: 8px;
-      padding: 10px 20px;
+      border-radius: 10px;
+      padding: 12px 22px;
       font-size: 0.9rem;
       color: var(--text-muted);
       transition: all 0.3s;
@@ -466,38 +787,41 @@
       border-color: var(--primary);
       color: var(--text);
       background: rgba(79, 70, 229, 0.1);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(79, 70, 229, 0.15);
     }
 
     /* Rate Table */
     .rate-table {
       width: 100%;
       border-collapse: separate;
-      border-spacing: 0 8px;
+      border-spacing: 0 10px;
       margin-bottom: 30px;
     }
 
     .rate-table th {
       text-align: left;
-      padding: 12px 20px;
+      padding: 12px 24px;
       color: var(--secondary);
       font-weight: 600;
       font-size: 0.85rem;
       text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
     .rate-table td {
-      padding: 14px 20px;
+      padding: 16px 24px;
       background: var(--surface);
       color: var(--text);
       font-size: 0.95rem;
     }
 
     .rate-table td:first-child {
-      border-radius: 8px 0 0 8px;
+      border-radius: 10px 0 0 10px;
     }
 
     .rate-table td:last-child {
-      border-radius: 0 8px 8px 0;
+      border-radius: 0 10px 10px 0;
       text-align: right;
       font-weight: 600;
       color: var(--primary);
@@ -510,43 +834,56 @@
     }
 
     .rate-table tr:hover td {
-      background: rgba(79, 70, 229, 0.1);
+      background: rgba(79, 70, 229, 0.12);
+      transform: scale(1.01);
     }
 
     @media (max-width: 600px) {
-      .rate-table td, .rate-table th { padding: 10px 12px; font-size: 0.82rem; }
+      .rate-table td, .rate-table th { padding: 12px 14px; font-size: 0.82rem; }
     }
 
     .downpayment-note {
       background: rgba(79, 70, 229, 0.1);
       border: 1px solid var(--primary);
-      border-radius: 8px;
-      padding: 16px 20px;
+      border-radius: 12px;
+      padding: 20px 24px;
       margin-top: 40px;
       text-align: center;
+      animation: scaleIn 0.8s ease-out;
     }
 
-    /* Portfolio */
-    .portfolio-card {
+    /* About Section */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; }
+    }
+
+    .about-card {
       background: var(--surface);
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-xl);
       padding: 40px;
+      text-align: center;
+      transition: all 0.4s;
     }
 
-    .fes-feature-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 16px;
-      margin-top: 24px;
+    .about-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-5px);
+      box-shadow: 0 20px 50px rgba(79, 70, 229, 0.15);
     }
 
-    .fes-feature-item {
-      background: rgba(79, 70, 229, 0.06);
-      border: 1px solid var(--glass-border);
-      border-radius: 8px;
-      padding: 16px;
-      border-left: 3px solid var(--primary);
+    .about-icon {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      animation: float 4s ease-in-out infinite;
     }
 
     /* Contact */
@@ -566,12 +903,13 @@
       display: none;
       background: rgba(79, 70, 229, 0.15);
       border: 1px solid var(--primary);
-      border-radius: 8px;
-      padding: 12px 18px;
+      border-radius: 10px;
+      padding: 14px 20px;
       margin-bottom: 20px;
       align-items: center;
       gap: 10px;
       flex-wrap: wrap;
+      animation: scaleIn 0.3s ease-out;
     }
 
     .selected-package.show {
@@ -582,46 +920,50 @@
       margin-left: auto;
       cursor: pointer;
       color: var(--text-muted);
-      transition: 0.2s;
+      transition: 0.3s;
+      font-size: 1.1rem;
     }
 
     .remove-package:hover {
       color: #EF4444;
+      transform: rotate(90deg);
     }
 
     .form-control {
       width: 100%;
-      padding: 14px 20px;
+      padding: 16px 22px;
       background: var(--surface);
       border: 1px solid var(--glass-border);
-      border-radius: 8px;
+      border-radius: 12px;
       color: var(--text);
       font-size: 1rem;
-      margin-bottom: 14px;
-      transition: 0.3s;
+      margin-bottom: 16px;
+      transition: all 0.3s;
       font-family: var(--font-body);
     }
 
     textarea.form-control {
-      border-radius: 8px;
+      border-radius: 12px;
       resize: vertical;
-      min-height: 120px;
+      min-height: 130px;
     }
 
     .form-control:focus {
       border-color: var(--primary);
       outline: none;
-      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+      box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+      transform: translateY(-2px);
     }
 
     .status-msg {
       display: none;
-      padding: 12px 20px;
-      border-radius: 8px;
+      padding: 14px 22px;
+      border-radius: 10px;
       margin-top: 14px;
       font-weight: 500;
       text-align: center;
       font-size: 0.9rem;
+      animation: scaleIn 0.3s ease-out;
     }
 
     .status-msg.success {
@@ -645,6 +987,35 @@
       color: var(--primary);
     }
 
+    .contact-info-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding: 14px 18px;
+      background: var(--surface);
+      border-radius: 10px;
+      border: 1px solid var(--glass-border);
+      transition: all 0.3s;
+    }
+
+    .contact-info-item:hover {
+      border-color: var(--primary);
+      transform: translateX(5px);
+    }
+
+    .contact-info-icon {
+      font-size: 1.3rem;
+      color: var(--primary);
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(79, 70, 229, 0.1);
+      border-radius: 50%;
+    }
+
     /* Footer */
     footer {
       background: var(--surface);
@@ -663,14 +1034,14 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 40px;
-      height: 40px;
-      border-radius: 8px;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
       background: rgba(79, 70, 229, 0.1);
       border: 1px solid var(--glass-border);
       color: var(--text);
       text-decoration: none;
-      transition: 0.3s;
+      transition: all 0.3s;
       cursor: pointer;
     }
 
@@ -678,15 +1049,19 @@
       border-color: var(--primary);
       color: var(--primary);
       background: rgba(79, 70, 229, 0.2);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(79, 70, 229, 0.2);
     }
 
     .text-center { text-align: center; }
     .mt-20 { margin-top: 20px; }
     .mb-20 { margin-bottom: 20px; }
+    .mt-40 { margin-top: 40px; }
     .gap-12 { gap: 12px; }
     .flex { display: flex; }
     .flex-wrap { flex-wrap: wrap; }
     .items-center { align-items: center; }
+    .justify-center { justify-content: center; }
   </style>
 </head>
 <body oncontextmenu="return false;">
@@ -698,7 +1073,7 @@
         <div class="nav-links" id="navLinks">
           <a href="#home">Home</a>
           <a href="#services">Services</a>
-          <a href="#portfolio">Portfolio</a>
+          <a href="#portfolio">Our Work</a>
           <a href="#pricing">Pricing</a>
           <a href="#about">About</a>
           <a href="#contact">Contact</a>
@@ -717,31 +1092,42 @@
   <section class="hero" id="home">
     <div class="container">
       <div class="hero-content">
-        <p class="hero-tagline">Rhyzil Tech · Code. Create. Elevate.</p>
-        <h1>We Build Websites That Build Your Business</h1>
+        <div class="hero-badge">
+          <i class="fas fa-star"></i> Trusted by 50+ businesses worldwide
+        </div>
+        <h1>
+          We Build <span class="gradient-text">Powerful Web Experiences</span> That Drive Results
+        </h1>
         <p class="hero-description">
-          At Rhyzil Tech, we create fast, responsive and scalable websites that help brands grow, engage and convert.
+          We craft modern, responsive and performance-focused websites and web applications that help your business grow, engage and scale.
         </p>
         <div class="hero-buttons">
-          <a href="#services" class="btn-primary">Our Services →</a>
-          <a href="#portfolio" class="btn-outline">View Portfolio</a>
+          <a href="#services" class="btn-primary">
+            Our Services <i class="fas fa-arrow-right"></i>
+          </a>
+          <a href="#portfolio" class="btn-outline">
+            View Portfolio <i class="fas fa-external-link-alt"></i>
+          </a>
+        </div>
+        <div class="trust-badge">
+          <i class="fas fa-check-circle"></i> Trusted by 50+ businesses worldwide
         </div>
         <div class="stats-row">
-          <div class="stat-card">
+          <div class="stat-card animate fade-in-up">
             <span class="stat-number">50+</span>
-            <span class="stat-label">Projects Delivered</span>
-          </div>
-          <div class="stat-card">
-            <span class="stat-number">30+</span>
             <span class="stat-label">Happy Clients</span>
           </div>
-          <div class="stat-card">
+          <div class="stat-card animate fade-in-up">
+            <span class="stat-number">120+</span>
+            <span class="stat-label">Projects Completed</span>
+          </div>
+          <div class="stat-card animate fade-in-up">
+            <span class="stat-number">98%</span>
+            <span class="stat-label">Client Satisfaction</span>
+          </div>
+          <div class="stat-card animate fade-in-up">
             <span class="stat-number">5+</span>
             <span class="stat-label">Years of Experience</span>
-          </div>
-          <div class="stat-card">
-            <span class="stat-number">100%</span>
-            <span class="stat-label">Client Satisfaction</span>
           </div>
         </div>
       </div>
@@ -751,36 +1137,103 @@
   <!-- Services Section -->
   <section id="services">
     <div class="container">
-      <h2>What We Do</h2>
-      <p class="section-subtitle">Web Solutions That Drive Results</p>
+      <p class="section-tag">WHAT WE DO</p>
+      <h2>Web Solutions That Make an Impact</h2>
+      <p class="section-subtitle">We deliver tailored solutions that drive growth, engagement, and conversions.</p>
       
       <div class="services-grid">
-        <div class="service-card" onclick="document.getElementById('servicesTabs').querySelector('[data-tab=\'frontend\']').click(); setTimeout(() => document.getElementById('services').scrollIntoView({behavior:'smooth'}), 100);">
-          <div class="service-icon">🖥️</div>
-          <h3>Custom Website Development</h3>
-          <p>Tailored websites built with modern technologies to match your business goals.</p>
-          <span class="service-link">Learn more →</span>
+        <div class="service-card animate fade-in-left" onclick="document.getElementById('servicesTabs').querySelector('[data-tab=\'frontend\']').click(); setTimeout(() => document.getElementById('detailed-services').scrollIntoView({behavior:'smooth'}), 100);">
+          <span class="service-icon">🖥️</span>
+          <h3>Custom Web Development</h3>
+          <p>High-performance websites and web apps tailored to your unique business needs.</p>
+          <span class="service-link">Explore tech stack <i class="fas fa-arrow-right"></i></span>
         </div>
 
-        <div class="service-card" onclick="document.getElementById('rateTabs').querySelector('[data-rate=\'fullstack-rates\']').click(); setTimeout(() => document.getElementById('pricing').scrollIntoView({behavior:'smooth'}), 100);">
-          <div class="service-icon">🛒</div>
+        <div class="service-card animate fade-in-up" onclick="document.getElementById('rateTabs').querySelector('[data-rate=\'fullstack-rates\']').click(); setTimeout(() => document.getElementById('pricing').scrollIntoView({behavior:'smooth'}), 100);">
+          <span class="service-icon">🛒</span>
           <h3>E-Commerce Solutions</h3>
-          <p>Secure, scalable and high-performance e-commerce stores that sell more.</p>
-          <span class="service-link">View pricing →</span>
+          <p>Secure, scalable and conversion-focused e-commerce websites that sell more.</p>
+          <span class="service-link">View pricing <i class="fas fa-arrow-right"></i></span>
         </div>
 
-        <div class="service-card" onclick="addService('Responsive Design');">
-          <div class="service-icon">📱</div>
+        <div class="service-card animate fade-in-up" onclick="addService('Responsive Design');">
+          <span class="service-icon">📱</span>
           <h3>Responsive Design</h3>
-          <p>Pixel-perfect, mobile-first designs that deliver seamless experiences everywhere.</p>
-          <span class="service-link">Get started →</span>
+          <p>Pixel-perfect, mobile-first and fully responsive designs that look stunning everywhere.</p>
+          <span class="service-link">Get started <i class="fas fa-arrow-right"></i></span>
         </div>
 
-        <div class="service-card" onclick="addService('Website Optimization');">
-          <div class="service-icon">🚀</div>
-          <h3>Website Optimization</h3>
-          <p>Speed optimization, SEO friendly structure and best practices for growth.</p>
-          <span class="service-link">Inquire now →</span>
+        <div class="service-card animate fade-in-right" onclick="addService('Website Optimization');">
+          <span class="service-icon">🚀</span>
+          <h3>Performance & SEO</h3>
+          <p>Lightning-fast websites optimized for SEO to rank higher and perform better.</p>
+          <span class="service-link">Inquire now <i class="fas fa-arrow-right"></i></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio Section -->
+  <section id="portfolio">
+    <div class="container">
+      <p class="section-tag">OUR WORK</p>
+      <h2>Projects We're Proud Of</h2>
+      <p class="section-subtitle">Delivering real results with modern technology and security-first approach.</p>
+      
+      <div class="portfolio-wrapper">
+        <div class="portfolio-card animate scale-in">
+          <div class="portfolio-header">
+            <span class="portfolio-icon">🎓</span>
+            <div>
+              <h3>Automated Faculty Evaluation System</h3>
+              <p class="portfolio-subtitle">PIT Tabango | CHED CMO 19 s.2025</p>
+            </div>
+          </div>
+          <div class="feature-grid">
+            <div class="feature-item">
+              <strong>Role-Based Access Control</strong>
+              <span>Admin, dean, faculty, student portals</span>
+            </div>
+            <div class="feature-item">
+              <strong>Smart Scheduling</strong>
+              <span>Automated evaluation periods</span>
+            </div>
+            <div class="feature-item">
+              <strong>Weighted Mean Computation</strong>
+              <span>Automatic statistical analysis</span>
+            </div>
+            <div class="feature-item">
+              <strong>PDF Report Generation</strong>
+              <span>Individual & department reports</span>
+            </div>
+            <div class="feature-item">
+              <strong>Real-Time Analytics</strong>
+              <span>Live dashboard with insights</span>
+            </div>
+            <div class="feature-item">
+              <strong>Supervisor Evaluation</strong>
+              <span>SEF module integration</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-row" style="margin-top: 60px;">
+        <div class="stat-card animate fade-in-up">
+          <span class="stat-number">50+</span>
+          <span class="stat-label">Happy Clients</span>
+        </div>
+        <div class="stat-card animate fade-in-up">
+          <span class="stat-number">120+</span>
+          <span class="stat-label">Projects Completed</span>
+        </div>
+        <div class="stat-card animate fade-in-up">
+          <span class="stat-number">98%</span>
+          <span class="stat-label">Client Satisfaction</span>
+        </div>
+        <div class="stat-card animate fade-in-up">
+          <span class="stat-number">5+</span>
+          <span class="stat-label">Years of Experience</span>
         </div>
       </div>
     </div>
@@ -789,7 +1242,8 @@
   <!-- Detailed Services (Tabs) -->
   <section id="detailed-services">
     <div class="container">
-      <h2>🛠️ Explore Our Tech Stack</h2>
+      <p class="section-tag">TECH STACK</p>
+      <h2>🛠️ Explore Our Capabilities</h2>
       <p class="section-subtitle">Click any service tag to add it to your inquiry</p>
       
       <div class="tabs-nav" id="servicesTabs">
@@ -838,8 +1292,9 @@
   <!-- Pricing Section -->
   <section id="pricing">
     <div class="container">
-      <h2>💰 Transparent Pricing</h2>
-      <p class="section-subtitle">Web Development Service Rates</p>
+      <p class="section-tag">PRICING</p>
+      <h2>💰 Transparent Rates</h2>
+      <p class="section-subtitle">Web Development Service Rates — no hidden fees</p>
       
       <div class="tabs-nav" id="rateTabs">
         <button class="tab-btn active" data-rate="frontend-rates">🎨 Front-End</button>
@@ -907,46 +1362,9 @@
         </table>
       </div>
 
-      <div class="downpayment-note">
-        <strong>📌 50% Downpayment | Balance Upon Completion</strong>
-      </div>
-    </div>
-  </section>
-
-  <!-- Portfolio Section -->
-  <section id="portfolio">
-    <div class="container">
-      <h2>Featured Project</h2>
-      <p class="section-subtitle">Delivering real results with modern technology</p>
-      
-      <div class="portfolio-card">
-        <div style="display:flex;align-items:center;gap:15px;margin-bottom:20px;">
-          <i class="fas fa-chalkboard-teacher" style="font-size:3rem;color:var(--primary);"></i>
-          <div>
-            <h3>Faculty Evaluation System</h3>
-            <p style="color:var(--secondary);">PIT Tabango | CHED CMO 19 s.2025</p>
-          </div>
-        </div>
-        <div class="fes-feature-grid">
-          <div class="fes-feature-item">
-            <strong>Role-Based Access</strong><br>Admin, dean, faculty, student
-          </div>
-          <div class="fes-feature-item">
-            <strong>Smart Scheduling</strong><br>Automated evaluation periods
-          </div>
-          <div class="fes-feature-item">
-            <strong>Weighted Mean</strong><br>Automatic computation
-          </div>
-          <div class="fes-feature-item">
-            <strong>PDF Reports</strong><br>Individual & department
-          </div>
-          <div class="fes-feature-item">
-            <strong>Real-Time Analytics</strong><br>Live dashboard
-          </div>
-          <div class="fes-feature-item">
-            <strong>Supervisor Evaluation</strong><br>SEF module
-          </div>
-        </div>
+      <div class="downpayment-note animate scale-in">
+        <strong>📌 50% Downpayment | Balance Upon Completion</strong><br>
+        <small style="color: var(--text-muted);">100% satisfaction guarantee on every project</small>
       </div>
     </div>
   </section>
@@ -954,40 +1372,27 @@
   <!-- About Section -->
   <section id="about">
     <div class="container">
-      <h2>About Rhyzil Tech</h2>
-      <p class="section-subtitle">Code. Create. Elevate.</p>
+      <p class="section-tag">ABOUT US</p>
+      <h2>Code. Create. Elevate.</h2>
+      <p class="section-subtitle">A security-first agency building powerful web experiences since 2019.</p>
       
-      <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: 900px; margin: 0 auto;">
-        <div class="portfolio-card" style="text-align: center;">
-          <i class="fas fa-user-tie" style="font-size:3rem; color: var(--primary); margin-bottom: 15px;"></i>
+      <div class="about-grid">
+        <div class="about-card animate fade-in-left">
+          <div class="about-icon">👨‍💻</div>
           <h3>Rhyzil Angelo Pabadora Jimenez</h3>
-          <p style="color: var(--secondary); font-weight: 600;">Founder & CEO</p>
-          <p style="color: var(--text-muted); margin-top: 10px;">Lead Security Architect & Full-Stack Developer</p>
-          <div style="display: flex; gap: 20px; justify-content: center; margin-top: 20px;">
-            <div><strong style="font-size: 2rem; color: var(--primary);">7+</strong><br>Years Exp.</div>
-            <div><strong style="font-size: 2rem; color: var(--primary);">50+</strong><br>Systems Built</div>
+          <p style="color: var(--secondary); font-weight: 600; margin-bottom: 8px;">Founder & CEO</p>
+          <p style="color: var(--text-muted);">Lead Security Architect & Full-Stack Developer</p>
+          <div style="display: flex; gap: 24px; justify-content: center; margin-top: 20px;">
+            <div><strong style="font-size: 2rem; color: var(--primary);">7+</strong><br><small style="color: var(--text-muted);">Years Exp.</small></div>
+            <div><strong style="font-size: 2rem; color: var(--primary);">50+</strong><br><small style="color: var(--text-muted);">Systems Built</small></div>
           </div>
         </div>
         
-        <div class="portfolio-card" style="text-align: center;">
-          <i class="fas fa-shield-haltered" style="font-size:3rem; color: var(--primary); margin-bottom: 15px;"></i>
-          <h3>Security-First Approach</h3>
-          <p style="color: var(--text-muted); margin-top: 10px;">RBAC, encryption, anti-injection, and best practices baked into every project.</p>
-        </div>
-      </div>
-
-      <div class="stats-row" style="margin-top: 40px;">
-        <div class="stat-card">
-          <span class="stat-number">98%</span>
-          <span class="stat-label">Client Retention</span>
-        </div>
-        <div class="stat-card">
-          <span class="stat-number">24/7</span>
-          <span class="stat-label">Security Monitoring</span>
-        </div>
-        <div class="stat-card">
-          <span class="stat-number">12</span>
-          <span class="stat-label">Technology Partners</span>
+        <div class="about-card animate fade-in-right">
+          <div class="about-icon">🛡️</div>
+          <h3>Security-First Promise</h3>
+          <p style="color: var(--text-muted); margin-top: 12px;">RBAC, encryption, anti-injection, and industry best practices baked into every project we deliver.</p>
+          <p style="color: var(--text-muted); margin-top: 12px;">24/7 security monitoring and proactive threat protection for all our solutions.</p>
         </div>
       </div>
     </div>
@@ -996,11 +1401,12 @@
   <!-- Contact Section -->
   <section id="contact">
     <div class="container">
+      <p class="section-tag">CONTACT</p>
       <h2>Get In Touch</h2>
-      <p class="section-subtitle">Start your project today. Response within 12 hours.</p>
+      <p class="section-subtitle">Start your project today. Response within 12 hours guaranteed.</p>
       
       <div class="contact-grid">
-        <form id="contactForm" novalidate>
+        <form id="contactForm" novalidate class="animate fade-in-left">
           <div class="selected-package" id="selectedPackageDisplay">
             <i class="fas fa-box"></i>
             <span id="selectedPackageName"></span>
@@ -1014,20 +1420,29 @@
           <div class="status-msg" id="formStatus"></div>
         </form>
         
-        <div>
-          <div style="margin-bottom: 20px;">
-            <i class="fas fa-phone" style="color: var(--primary); margin-right: 8px;"></i>
-            <a href="tel:+639936796302" style="color: var(--text); text-decoration: none;">+63 993 679 6302</a>
+        <div class="animate fade-in-right">
+          <div class="contact-info-item">
+            <div class="contact-info-icon"><i class="fas fa-phone"></i></div>
+            <div>
+              <small style="color: var(--text-muted);">Phone</small><br>
+              <a href="tel:+639936796302" style="color: var(--text); text-decoration: none; font-weight: 500;">+63 993 679 6302</a>
+            </div>
           </div>
-          <div style="margin-bottom: 20px;">
-            <i class="fas fa-envelope" style="color: var(--primary); margin-right: 8px;"></i>
-            <a href="mailto:businessrhyziltech@gmail.com" style="color: var(--text); text-decoration: none;">businessrhyziltech@gmail.com</a>
+          <div class="contact-info-item">
+            <div class="contact-info-icon"><i class="fas fa-envelope"></i></div>
+            <div>
+              <small style="color: var(--text-muted);">Email</small><br>
+              <a href="mailto:businessrhyziltech@gmail.com" style="color: var(--text); text-decoration: none; font-weight: 500;">businessrhyziltech@gmail.com</a>
+            </div>
           </div>
-          <div style="margin-bottom: 20px;">
-            <i class="fas fa-map-pin" style="color: var(--primary); margin-right: 8px;"></i>
-            Crossing Otabon, Tabango, Leyte
+          <div class="contact-info-item">
+            <div class="contact-info-icon"><i class="fas fa-map-pin"></i></div>
+            <div>
+              <small style="color: var(--text-muted);">Location</small><br>
+              <span style="color: var(--text); font-weight: 500;">Crossing Otabon, Tabango, Leyte</span>
+            </div>
           </div>
-          <div class="flex gap-12 mt-20">
+          <div class="flex gap-12 mt-20 justify-center">
             <a href="https://www.facebook.com/profile.php?id=61584139169630" target="_blank" rel="noopener noreferrer" class="social-icon">
               <i class="fab fa-facebook-f"></i>
             </a>
@@ -1048,35 +1463,39 @@
     <div class="container">
       <div class="footer-grid">
         <div>
-          <h3 style="font-family: var(--font-display);">Rhyzil Tech</h3>
+          <h3 style="font-family: var(--font-display); font-size: 1.5rem; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Rhyzil Tech</h3>
           <p style="color: var(--text-muted); margin-top: 8px;">Code. Create. Elevate.</p>
-          <p style="color: var(--text-muted);">Elite SaaS & cybersecurity.</p>
+          <p style="color: var(--text-muted);">We build powerful web experiences that drive results.</p>
         </div>
         <div>
-          <h4>Quick Links</h4>
-          <p style="color: var(--text-muted); margin-top: 8px;">
-            <a href="#services" style="color: var(--text-muted); text-decoration: none; display: block; margin-bottom: 4px;">Services</a>
-            <a href="#pricing" style="color: var(--text-muted); text-decoration: none; display: block; margin-bottom: 4px;">Pricing</a>
-            <a href="#contact" style="color: var(--text-muted); text-decoration: none; display: block;">Contact</a>
+          <h4 style="margin-bottom: 12px;">Quick Links</h4>
+          <p style="color: var(--text-muted);">
+            <a href="#services" style="color: var(--text-muted); text-decoration: none; display: block; margin-bottom: 8px; transition: 0.2s;" onmouseenter="this.style.color='var(--primary)'" onmouseleave="this.style.color='var(--text-muted)'">Services</a>
+            <a href="#portfolio" style="color: var(--text-muted); text-decoration: none; display: block; margin-bottom: 8px; transition: 0.2s;" onmouseenter="this.style.color='var(--primary)'" onmouseleave="this.style.color='var(--text-muted)'">Our Work</a>
+            <a href="#pricing" style="color: var(--text-muted); text-decoration: none; display: block; margin-bottom: 8px; transition: 0.2s;" onmouseenter="this.style.color='var(--primary)'" onmouseleave="this.style.color='var(--text-muted)'">Pricing</a>
+            <a href="#contact" style="color: var(--text-muted); text-decoration: none; display: block; transition: 0.2s;" onmouseenter="this.style.color='var(--primary)'" onmouseleave="this.style.color='var(--text-muted)'">Contact</a>
           </p>
         </div>
         <div>
-          <h4>Connect</h4>
-          <div class="flex gap-12" style="margin-top: 8px;">
+          <h4 style="margin-bottom: 12px;">Connect</h4>
+          <div class="flex gap-12">
             <a href="https://www.facebook.com/profile.php?id=61584139169630" target="_blank" rel="noopener noreferrer" class="social-icon">
               <i class="fab fa-facebook-f"></i>
             </a>
             <a href="https://www.tiktok.com/@rhyzil_" target="_blank" rel="noopener noreferrer" class="social-icon">
               <i class="fab fa-tiktok"></i>
             </a>
+            <a href="mailto:businessrhyziltech@gmail.com" class="social-icon">
+              <i class="fas fa-envelope"></i>
+            </a>
           </div>
         </div>
       </div>
-      <div style="text-align: center; margin-top: 30px; color: var(--text-muted); font-size: 0.9rem;">
+      <div style="text-align: center; margin-top: 40px; color: var(--text-muted); font-size: 0.9rem;">
         <i class="fas fa-shield-alt"></i> Protected by Rhyzil Tech Security <i class="fas fa-lock"></i>
       </div>
       <div style="text-align: center; margin-top: 10px; color: var(--text-muted); font-size: 0.85rem;">
-        © 2026 Rhyzil Tech. Code. Create. Elevate.
+        © 2026 Rhyzil Tech. Code. Create. Elevate. All rights reserved.
       </div>
     </div>
   </footer>
@@ -1089,9 +1508,29 @@
   <script>
     (function() {
       // ============================================================
-      // SCREENSHOT & SCREEN RECORDING PROTECTION (ALL DEVICES)
+      // SCROLL ANIMATIONS
       // ============================================================
-      
+      const observerOptions = {
+        threshold: 0.15,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll('.animate').forEach(el => {
+        observer.observe(el);
+      });
+
+      // ============================================================
+      // SCREENSHOT & SCREEN RECORDING PROTECTION
+      // ============================================================
       const screenshotProtectionStyle = document.createElement('style');
       screenshotProtectionStyle.textContent = `
         body::after {
@@ -1099,7 +1538,7 @@
           position: fixed; top: 50%; left: 50%;
           transform: translate(-50%, -50%) rotate(-30deg);
           font-size: 4rem; font-weight: 900;
-          color: rgba(255, 0, 0, 0.08); pointer-events: none; z-index: 9999;
+          color: rgba(255, 0, 0, 0.06); pointer-events: none; z-index: 9999;
           white-space: nowrap; font-family: 'Space Grotesk', sans-serif; letter-spacing: 5px;
         }
       `;
@@ -1127,8 +1566,6 @@
           return Promise.reject(new Error('Screen capture is disabled'));
         };
       }
-
-      console.log('🛡️ Screenshot & screen recording protection active on all devices');
 
       // ============================================================
       // THEME
@@ -1192,7 +1629,6 @@
         }
       }
 
-      // Make addService globally accessible
       window.addService = addService;
 
       document.querySelectorAll('.clickable-service').forEach(tag => {
@@ -1225,12 +1661,12 @@
         sendBtn.disabled = true;
         sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
         status.className = 'status-msg sending';
-        status.textContent = '📤 Sending...';
+        status.textContent = '📤 Sending your message...';
         let fullMsg = pkg ? '📦 SELECTED: ' + pkg + '\n\n📝 FROM: ' + name + ' (' + email + ')\n\n💬 MESSAGE:\n' + msg : '📝 FROM: ' + name + ' (' + email + ')\n\n💬 MESSAGE:\n' + msg;
         emailjs.send("service_ad1l4qy", "template_mphmqzv", { from_name: name, from_email: email, message: fullMsg, reply_to: email })
         .then(function(response) {
           status.className = 'status-msg success';
-          status.textContent = '✅ Sent! I\'ll reply within 12 hours.';
+          status.textContent = '✅ Sent successfully! I\'ll reply within 12 hours.';
           form.reset(); selectedServices = []; updatePackageDisplay();
           sendBtn.disabled = false; sendBtn.innerHTML = '💬 Send Message';
           setTimeout(() => { status.className = 'status-msg'; status.textContent = ''; }, 6000);
@@ -1243,7 +1679,7 @@
         });
       });
 
-      console.log('✅ Rhyzil Tech ready — AI Chatbot: e47bed50-103b-462a-bfc0-663cffd82169');
+      console.log('✅ Rhyzil Tech ready — AI Chatbot active | Scroll animations enabled');
     })();
   </script>
 </body>

@@ -8,7 +8,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -122,11 +121,6 @@
     @keyframes shimmer {
       0% { background-position: -200% center; }
       100% { background-position: 200% center; }
-    }
-
-    @keyframes countUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
     }
 
     .animate {
@@ -506,6 +500,26 @@
       font-weight: 500;
     }
 
+    /* Section Icon Styles */
+    .section-icon {
+      display: inline-block;
+      width: 64px;
+      height: 64px;
+      margin-bottom: 20px;
+      transition: transform 0.4s;
+    }
+
+    .section-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: brightness(0) saturate(100%) invert(25%) sepia(98%) saturate(3456%) hue-rotate(235deg) brightness(94%) contrast(94%);
+    }
+
+    [data-theme="light"] .section-icon img {
+      filter: brightness(0) saturate(100%) invert(20%) sepia(98%) saturate(3456%) hue-rotate(235deg) brightness(90%) contrast(94%);
+    }
+
     /* Sections */
     section {
       padding: 100px 0;
@@ -585,15 +599,26 @@
       box-shadow: 0 25px 50px rgba(79, 70, 229, 0.15);
     }
 
-    .service-icon {
-      font-size: 3rem;
+    .service-icon-wrapper {
+      width: 56px;
+      height: 56px;
+      background: rgba(79, 70, 229, 0.1);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       margin-bottom: 20px;
-      display: block;
-      transition: transform 0.4s;
+      transition: all 0.4s;
     }
 
-    .service-card:hover .service-icon {
+    .service-card:hover .service-icon-wrapper {
+      background: rgba(79, 70, 229, 0.2);
       transform: scale(1.1) rotate(-5deg);
+    }
+
+    .service-icon-wrapper i {
+      font-size: 1.8rem;
+      color: var(--primary);
     }
 
     .service-card h3 {
@@ -669,9 +694,20 @@
       z-index: 1;
     }
 
-    .portfolio-icon {
-      font-size: 3.5rem;
+    .portfolio-icon-wrapper {
+      width: 72px;
+      height: 72px;
+      background: rgba(79, 70, 229, 0.1);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       animation: float 4s ease-in-out infinite;
+    }
+
+    .portfolio-icon-wrapper i {
+      font-size: 2.5rem;
+      color: var(--primary);
     }
 
     .portfolio-header h3 {
@@ -696,6 +732,7 @@
 
     @media (max-width: 480px) {
       .feature-grid { grid-template-columns: 1fr; }
+      .portfolio-header { flex-direction: column; text-align: center; }
     }
 
     .feature-item {
@@ -840,6 +877,7 @@
 
     @media (max-width: 600px) {
       .rate-table td, .rate-table th { padding: 12px 14px; font-size: 0.82rem; }
+      .rate-table td:last-child { white-space: normal; }
     }
 
     .downpayment-note {
@@ -880,10 +918,21 @@
       box-shadow: 0 20px 50px rgba(79, 70, 229, 0.15);
     }
 
-    .about-icon {
-      font-size: 3.5rem;
-      margin-bottom: 20px;
+    .about-icon-wrapper {
+      width: 72px;
+      height: 72px;
+      background: rgba(79, 70, 229, 0.1);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
       animation: float 4s ease-in-out infinite;
+    }
+
+    .about-icon-wrapper i {
+      font-size: 2.5rem;
+      color: var(--primary);
     }
 
     /* Contact */
@@ -1106,11 +1155,11 @@
             Our Services <i class="fas fa-arrow-right"></i>
           </a>
           <a href="#portfolio" class="btn-outline">
-            View Portfolio <i class="fas fa-external-link-alt"></i>
+            View Portfolio <i class="fas fa-arrow-up-right-from-square"></i>
           </a>
         </div>
         <div class="trust-badge">
-          <i class="fas fa-check-circle"></i> Trusted by 50+ businesses worldwide
+          <i class="fas fa-circle-check"></i> Trusted by 50+ businesses worldwide
         </div>
         <div class="stats-row">
           <div class="stat-card animate fade-in-up">
@@ -1142,29 +1191,41 @@
       <p class="section-subtitle">We deliver tailored solutions that drive growth, engagement, and conversions.</p>
       
       <div class="services-grid">
+        <!-- Custom Web Development -->
         <div class="service-card animate fade-in-left" onclick="document.getElementById('servicesTabs').querySelector('[data-tab=\'frontend\']').click(); setTimeout(() => document.getElementById('detailed-services').scrollIntoView({behavior:'smooth'}), 100);">
-          <span class="service-icon">🖥️</span>
+          <div class="service-icon-wrapper">
+            <i class="fas fa-code"></i>
+          </div>
           <h3>Custom Web Development</h3>
           <p>High-performance websites and web apps tailored to your unique business needs.</p>
           <span class="service-link">Explore tech stack <i class="fas fa-arrow-right"></i></span>
         </div>
 
+        <!-- E-Commerce Solutions -->
         <div class="service-card animate fade-in-up" onclick="document.getElementById('rateTabs').querySelector('[data-rate=\'fullstack-rates\']').click(); setTimeout(() => document.getElementById('pricing').scrollIntoView({behavior:'smooth'}), 100);">
-          <span class="service-icon">🛒</span>
+          <div class="service-icon-wrapper">
+            <i class="fas fa-cart-shopping"></i>
+          </div>
           <h3>E-Commerce Solutions</h3>
           <p>Secure, scalable and conversion-focused e-commerce websites that sell more.</p>
           <span class="service-link">View pricing <i class="fas fa-arrow-right"></i></span>
         </div>
 
+        <!-- Responsive Design -->
         <div class="service-card animate fade-in-up" onclick="addService('Responsive Design');">
-          <span class="service-icon">📱</span>
+          <div class="service-icon-wrapper">
+            <i class="fas fa-mobile-screen-button"></i>
+          </div>
           <h3>Responsive Design</h3>
           <p>Pixel-perfect, mobile-first and fully responsive designs that look stunning everywhere.</p>
           <span class="service-link">Get started <i class="fas fa-arrow-right"></i></span>
         </div>
 
+        <!-- Performance & SEO -->
         <div class="service-card animate fade-in-right" onclick="addService('Website Optimization');">
-          <span class="service-icon">🚀</span>
+          <div class="service-icon-wrapper">
+            <i class="fas fa-gauge-high"></i>
+          </div>
           <h3>Performance & SEO</h3>
           <p>Lightning-fast websites optimized for SEO to rank higher and perform better.</p>
           <span class="service-link">Inquire now <i class="fas fa-arrow-right"></i></span>
@@ -1183,7 +1244,9 @@
       <div class="portfolio-wrapper">
         <div class="portfolio-card animate scale-in">
           <div class="portfolio-header">
-            <span class="portfolio-icon">🎓</span>
+            <div class="portfolio-icon-wrapper">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
             <div>
               <h3>Automated Faculty Evaluation System</h3>
               <p class="portfolio-subtitle">PIT Tabango | CHED CMO 19 s.2025</p>
@@ -1243,14 +1306,14 @@
   <section id="detailed-services">
     <div class="container">
       <p class="section-tag">TECH STACK</p>
-      <h2>🛠️ Explore Our Capabilities</h2>
+      <h2>Explore Our Capabilities</h2>
       <p class="section-subtitle">Click any service tag to add it to your inquiry</p>
       
       <div class="tabs-nav" id="servicesTabs">
-        <button class="tab-btn active" data-tab="frontend">🎨 Front-End</button>
-        <button class="tab-btn" data-tab="backend">⚙️ Back-End</button>
-        <button class="tab-btn" data-tab="fullstack">🚀 Full-Stack</button>
-        <button class="tab-btn" data-tab="additional">🔧 Additional</button>
+        <button class="tab-btn active" data-tab="frontend"><i class="fas fa-paint-brush"></i> Front-End</button>
+        <button class="tab-btn" data-tab="backend"><i class="fas fa-server"></i> Back-End</button>
+        <button class="tab-btn" data-tab="fullstack"><i class="fas fa-rocket"></i> Full-Stack</button>
+        <button class="tab-btn" data-tab="additional"><i class="fas fa-screwdriver-wrench"></i> Additional</button>
       </div>
 
       <div class="service-content" id="frontend">
@@ -1293,19 +1356,19 @@
   <section id="pricing">
     <div class="container">
       <p class="section-tag">PRICING</p>
-      <h2>💰 Transparent Rates</h2>
+      <h2>Transparent Rates</h2>
       <p class="section-subtitle">Web Development Service Rates — no hidden fees</p>
       
       <div class="tabs-nav" id="rateTabs">
-        <button class="tab-btn active" data-rate="frontend-rates">🎨 Front-End</button>
-        <button class="tab-btn" data-rate="backend-rates">⚙️ Back-End</button>
-        <button class="tab-btn" data-rate="fullstack-rates">🚀 Full-Stack</button>
-        <button class="tab-btn" data-rate="security-rates">🔐 Security</button>
+        <button class="tab-btn active" data-rate="frontend-rates"><i class="fas fa-paint-brush"></i> Front-End</button>
+        <button class="tab-btn" data-rate="backend-rates"><i class="fas fa-server"></i> Back-End</button>
+        <button class="tab-btn" data-rate="fullstack-rates"><i class="fas fa-rocket"></i> Full-Stack</button>
+        <button class="tab-btn" data-rate="security-rates"><i class="fas fa-shield-haltered"></i> Security</button>
       </div>
 
       <div class="rate-content" id="frontend-rates">
         <table class="rate-table">
-          <thead><tr><th>Service</th><th>Starting Rate</th></tr></thead>
+          <thead><tr><th><i class="fas fa-layer-group"></i> Service</th><th><i class="fas fa-peso-sign"></i> Starting Rate</th></tr></thead>
           <tbody>
             <tr class="clickable-rate" data-service="Landing Page (₱3k-₱15k)">
               <td>Landing Page</td><td>₱3,000 – ₱15,000</td>
@@ -1322,7 +1385,7 @@
 
       <div class="rate-content" id="backend-rates" style="display:none;">
         <table class="rate-table">
-          <thead><tr><th>Service</th><th>Starting Rate</th></tr></thead>
+          <thead><tr><th><i class="fas fa-layer-group"></i> Service</th><th><i class="fas fa-peso-sign"></i> Starting Rate</th></tr></thead>
           <tbody>
             <tr class="clickable-rate" data-service="REST API (₱5k-₱50k)">
               <td>REST API</td><td>₱5,000 – ₱50,000</td>
@@ -1336,7 +1399,7 @@
 
       <div class="rate-content" id="fullstack-rates" style="display:none;">
         <table class="rate-table">
-          <thead><tr><th>Service</th><th>Starting Rate</th></tr></thead>
+          <thead><tr><th><i class="fas fa-layer-group"></i> Service</th><th><i class="fas fa-peso-sign"></i> Starting Rate</th></tr></thead>
           <tbody>
             <tr class="clickable-rate" data-service="Full Business Solution (₱15k-₱80k)">
               <td>Full Business Solution</td><td>₱15,000 – ₱80,000</td>
@@ -1350,7 +1413,7 @@
 
       <div class="rate-content" id="security-rates" style="display:none;">
         <table class="rate-table">
-          <thead><tr><th>Service</th><th>Starting Rate</th></tr></thead>
+          <thead><tr><th><i class="fas fa-layer-group"></i> Service</th><th><i class="fas fa-peso-sign"></i> Starting Rate</th></tr></thead>
           <tbody>
             <tr class="clickable-rate" data-service="Security Audit (₱5k-₱50k)">
               <td>Security Audit</td><td>₱5,000 – ₱50,000</td>
@@ -1363,7 +1426,7 @@
       </div>
 
       <div class="downpayment-note animate scale-in">
-        <strong>📌 50% Downpayment | Balance Upon Completion</strong><br>
+        <strong><i class="fas fa-file-invoice"></i> 50% Downpayment | Balance Upon Completion</strong><br>
         <small style="color: var(--text-muted);">100% satisfaction guarantee on every project</small>
       </div>
     </div>
@@ -1378,7 +1441,9 @@
       
       <div class="about-grid">
         <div class="about-card animate fade-in-left">
-          <div class="about-icon">👨‍💻</div>
+          <div class="about-icon-wrapper">
+            <i class="fas fa-user-tie"></i>
+          </div>
           <h3>Rhyzil Angelo Pabadora Jimenez</h3>
           <p style="color: var(--secondary); font-weight: 600; margin-bottom: 8px;">Founder & CEO</p>
           <p style="color: var(--text-muted);">Lead Security Architect & Full-Stack Developer</p>
@@ -1389,7 +1454,9 @@
         </div>
         
         <div class="about-card animate fade-in-right">
-          <div class="about-icon">🛡️</div>
+          <div class="about-icon-wrapper">
+            <i class="fas fa-shield-haltered"></i>
+          </div>
           <h3>Security-First Promise</h3>
           <p style="color: var(--text-muted); margin-top: 12px;">RBAC, encryption, anti-injection, and industry best practices baked into every project we deliver.</p>
           <p style="color: var(--text-muted); margin-top: 12px;">24/7 security monitoring and proactive threat protection for all our solutions.</p>
@@ -1410,13 +1477,13 @@
           <div class="selected-package" id="selectedPackageDisplay">
             <i class="fas fa-box"></i>
             <span id="selectedPackageName"></span>
-            <span class="remove-package" id="removePackage"><i class="fas fa-times-circle"></i></span>
+            <span class="remove-package" id="removePackage"><i class="fas fa-circle-xmark"></i></span>
           </div>
           <input type="hidden" id="selectedPackage" value="">
           <input type="text" class="form-control" id="senderName" placeholder="Full name" required autocomplete="name">
           <input type="email" class="form-control" id="senderEmail" placeholder="Email address" required autocomplete="email">
           <textarea class="form-control" id="senderMessage" rows="5" placeholder="Tell me about your project..." required></textarea>
-          <button type="submit" class="btn-primary" id="sendBtn" style="width:100%;">💬 Send Message</button>
+          <button type="submit" class="btn-primary" id="sendBtn" style="width:100%;"><i class="fas fa-paper-plane"></i> Send Message</button>
           <div class="status-msg" id="formStatus"></div>
         </form>
         
@@ -1436,7 +1503,7 @@
             </div>
           </div>
           <div class="contact-info-item">
-            <div class="contact-info-icon"><i class="fas fa-map-pin"></i></div>
+            <div class="contact-info-icon"><i class="fas fa-location-dot"></i></div>
             <div>
               <small style="color: var(--text-muted);">Location</small><br>
               <span style="color: var(--text); font-weight: 500;">Crossing Otabon, Tabango, Leyte</span>
@@ -1468,16 +1535,16 @@
           <p style="color: var(--text-muted);">We build powerful web experiences that drive results.</p>
         </div>
         <div>
-          <h4 style="margin-bottom: 12px;">Quick Links</h4>
+          <h4 style="margin-bottom: 12px;"><i class="fas fa-link"></i> Quick Links</h4>
           <p style="color: var(--text-muted);">
-            <a href="#services" style="color: var(--text-muted); text-decoration: none; display: block; margin-bottom: 8px; transition: 0.2s;" onmouseenter="this.style.color='var(--primary)'" onmouseleave="this.style.color='var(--text-muted)'">Services</a>
-            <a href="#portfolio" style="color: var(--text-muted); text-decoration: none; display: block; margin-bottom: 8px; transition: 0.2s;" onmouseenter="this.style.color='var(--primary)'" onmouseleave="this.style.color='var(--text-muted)'">Our Work</a>
-            <a href="#pricing" style="color: var(--text-muted); text-decoration: none; display: block; margin-bottom: 8px; transition: 0.2s;" onmouseenter="this.style.color='var(--primary)'" onmouseleave="this.style.color='var(--text-muted)'">Pricing</a>
-            <a href="#contact" style="color: var(--text-muted); text-decoration: none; display: block; transition: 0.2s;" onmouseenter="this.style.color='var(--primary)'" onmouseleave="this.style.color='var(--text-muted)'">Contact</a>
+            <a href="#services" style="color: var(--text-muted); text-decoration: none; display: block; margin-bottom: 8px; transition: 0.2s;" onmouseenter="this.style.color='var(--primary)'" onmouseleave="this.style.color='var(--text-muted)'"><i class="fas fa-chevron-right" style="font-size:0.7rem;"></i> Services</a>
+            <a href="#portfolio" style="color: var(--text-muted); text-decoration: none; display: block; margin-bottom: 8px; transition: 0.2s;" onmouseenter="this.style.color='var(--primary)'" onmouseleave="this.style.color='var(--text-muted)'"><i class="fas fa-chevron-right" style="font-size:0.7rem;"></i> Our Work</a>
+            <a href="#pricing" style="color: var(--text-muted); text-decoration: none; display: block; margin-bottom: 8px; transition: 0.2s;" onmouseenter="this.style.color='var(--primary)'" onmouseleave="this.style.color='var(--text-muted)'"><i class="fas fa-chevron-right" style="font-size:0.7rem;"></i> Pricing</a>
+            <a href="#contact" style="color: var(--text-muted); text-decoration: none; display: block; transition: 0.2s;" onmouseenter="this.style.color='var(--primary)'" onmouseleave="this.style.color='var(--text-muted)'"><i class="fas fa-chevron-right" style="font-size:0.7rem;"></i> Contact</a>
           </p>
         </div>
         <div>
-          <h4 style="margin-bottom: 12px;">Connect</h4>
+          <h4 style="margin-bottom: 12px;"><i class="fas fa-share-nodes"></i> Connect</h4>
           <div class="flex gap-12">
             <a href="https://www.facebook.com/profile.php?id=61584139169630" target="_blank" rel="noopener noreferrer" class="social-icon">
               <i class="fab fa-facebook-f"></i>
@@ -1492,7 +1559,7 @@
         </div>
       </div>
       <div style="text-align: center; margin-top: 40px; color: var(--text-muted); font-size: 0.9rem;">
-        <i class="fas fa-shield-alt"></i> Protected by Rhyzil Tech Security <i class="fas fa-lock"></i>
+        <i class="fas fa-shield-haltered"></i> Protected by Rhyzil Tech Security <i class="fas fa-lock"></i>
       </div>
       <div style="text-align: center; margin-top: 10px; color: var(--text-muted); font-size: 0.85rem;">
         © 2026 Rhyzil Tech. Code. Create. Elevate. All rights reserved.
@@ -1668,18 +1735,18 @@
           status.className = 'status-msg success';
           status.textContent = '✅ Sent successfully! I\'ll reply within 12 hours.';
           form.reset(); selectedServices = []; updatePackageDisplay();
-          sendBtn.disabled = false; sendBtn.innerHTML = '💬 Send Message';
+          sendBtn.disabled = false; sendBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
           setTimeout(() => { status.className = 'status-msg'; status.textContent = ''; }, 6000);
         })
         .catch(function() {
           window.location.href = 'mailto:businessrhyziltech@gmail.com?subject=Project Inquiry&body=' + encodeURIComponent(fullMsg);
           status.className = 'status-msg error';
           status.innerHTML = 'Opening email client... <a href="mailto:businessrhyziltech@gmail.com" style="color:var(--secondary);">Click here</a>';
-          sendBtn.disabled = false; sendBtn.innerHTML = '💬 Send Message';
+          sendBtn.disabled = false; sendBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
         });
       });
 
-      console.log('✅ Rhyzil Tech ready — AI Chatbot active | Scroll animations enabled');
+      console.log('✅ Rhyzil Tech ready — AI Chatbot active | Font Awesome icons loaded');
     })();
   </script>
 </body>

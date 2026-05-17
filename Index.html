@@ -3,12 +3,568 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
-  <title>Rhyzil Tech · Secure Modern Websites & Systems for Businesses and Schools</title>
+  <title>Rhyzil Tech · Secure Web Systems for Schools & Businesses</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="styles.css">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #00E5A0;
+      --primary-dim: rgba(0,229,160,0.12);
+      --primary-glow: rgba(0,229,160,0.35);
+      --secondary: #0EA5E9;
+      --accent: #A78BFA;
+      --bg: #060912;
+      --bg2: #0C1120;
+      --surface: #111827;
+      --surface2: #1a2236;
+      --text: #F0F6FF;
+      --text-muted: #7A8BA8;
+      --text-dim: #3D4F6B;
+      --border: rgba(0,229,160,0.12);
+      --border-hover: rgba(0,229,160,0.4);
+      --glass: rgba(255,255,255,0.03);
+      --glass-border: rgba(255,255,255,0.08);
+      --r-xl: 20px;
+      --r-2xl: 28px;
+      --r-pill: 100px;
+      --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+      --success: #10B981;
+      --danger: #EF4444;
+    }
+
+    [data-theme="light"] {
+      --bg: #F5F7FF;
+      --bg2: #ECEFFE;
+      --surface: #FFFFFF;
+      --surface2: #F0F2FD;
+      --text: #0C1120;
+      --text-muted: #5A6A85;
+      --text-dim: #A0AECA;
+      --border: rgba(0,180,120,0.15);
+      --border-hover: rgba(0,180,120,0.45);
+      --glass: rgba(0,0,0,0.02);
+      --glass-border: rgba(0,0,0,0.07);
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; background: var(--bg); -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; -webkit-tap-highlight-color: transparent; }
+    body { font-family: var(--font-body); background: var(--bg); color: var(--text); line-height: 1.65; min-height: 100vh; overflow-x: hidden; transition: background 0.4s, color 0.4s; -webkit-font-smoothing: antialiased; }
+    input, textarea { -webkit-user-select: text; user-select: text; }
+    .container { width: 100%; max-width: 1300px; margin: 0 auto; padding: 0 clamp(16px, 5vw, 28px); }
+
+    #preloader {
+      position: fixed; inset: 0; background: var(--bg); z-index: 9999;
+      display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 20px;
+      transition: opacity 0.6s ease, visibility 0.6s;
+    }
+    #preloader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+    .preloader-logo {
+      font-family: var(--font-display); font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 800;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      animation: prelogoPulse 1s ease-in-out infinite alternate;
+    }
+    @keyframes prelogoPulse { from { opacity: 0.5; transform: scale(0.97); } to { opacity: 1; transform: scale(1); } }
+    .preloader-bar { width: clamp(120px, 30vw, 160px); height: 2px; background: var(--surface2); border-radius: 2px; overflow: hidden; }
+    .preloader-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--secondary)); border-radius: 2px; animation: prebarFill 1.4s ease-in-out forwards; }
+    @keyframes prebarFill { from { width: 0; } to { width: 100%; } }
+
+    #cursor { position: fixed; width: 10px; height: 10px; background: var(--primary); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: width 0.2s, height 0.2s, background 0.2s; mix-blend-mode: screen; }
+    #cursor-ring { position: fixed; width: 36px; height: 36px; border: 1.5px solid var(--primary); border-radius: 50%; pointer-events: none; z-index: 9997; transform: translate(-50%,-50%); transition: all 0.12s ease; opacity: 0.5; }
+    body.cursor-hover #cursor { width: 16px; height: 16px; background: var(--secondary); }
+    body.cursor-hover #cursor-ring { width: 48px; height: 48px; opacity: 0.8; border-color: var(--secondary); }
+    @media (hover: none) and (pointer: coarse) { #cursor, #cursor-ring { display: none; } }
+
+    #particle-canvas { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+
+    header {
+      position: fixed; top: clamp(8px, 2vw, 16px); left: 50%; transform: translateX(-50%);
+      width: calc(100% - clamp(20px, 5vw, 40px)); max-width: 1100px;
+      padding: clamp(10px, 2vw, 14px) clamp(14px, 3vw, 28px);
+      background: rgba(6,9,18,0.75);
+      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--border);
+      border-radius: var(--r-pill);
+      z-index: 1000;
+      transition: all 0.4s ease;
+      animation: navDrop 0.8s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+    [data-theme="light"] header { background: rgba(245,247,255,0.82); }
+    header.scrolled { top: clamp(4px, 1.5vw, 10px); background: rgba(6,9,18,0.92); box-shadow: 0 8px 40px rgba(0,0,0,0.4); }
+    [data-theme="light"] header.scrolled { background: rgba(245,247,255,0.95); }
+    @keyframes navDrop { from { opacity: 0; transform: translate(-50%, -30px); } to { opacity: 1; transform: translate(-50%, 0); } }
+    .header-flex { display: flex; justify-content: space-between; align-items: center; gap: clamp(8px, 2vw, 16px); }
+    .logo { font-family: var(--font-display); font-size: clamp(1.2rem, 2.5vw, 1.6rem); font-weight: 800; background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; letter-spacing: -0.5px; white-space: nowrap; }
+    .nav-links { display: flex; gap: 2px; align-items: center; flex-wrap: wrap; }
+    .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: clamp(0.75rem, 1.4vw, 0.9rem); transition: 0.25s; cursor: pointer; padding: 6px clamp(8px, 1.5vw, 14px); border-radius: 100px; position: relative; white-space: nowrap; }
+    .nav-links a:hover { color: var(--text); background: var(--glass); }
+    .nav-links a.active-link { color: var(--primary); }
+    .nav-actions { display: flex; align-items: center; gap: clamp(6px, 1.5vw, 10px); }
+    .theme-toggle { background: var(--surface); border: 1px solid var(--border); color: var(--text); width: clamp(32px, 6vw, 38px); height: clamp(32px, 6vw, 38px); border-radius: 50%; cursor: pointer; font-size: clamp(0.85rem, 1.5vw, 1rem); display: flex; align-items: center; justify-content: center; transition: 0.3s; flex-shrink: 0; }
+    .theme-toggle:hover { border-color: var(--primary); transform: rotate(20deg); color: var(--primary); }
+    .mobile-btn { display: none; background: none; border: none; color: var(--text); font-size: clamp(1.3rem, 2.5vw, 1.6rem); cursor: pointer; width: clamp(32px, 6vw, 38px); height: clamp(32px, 6vw, 38px); align-items: center; justify-content: center; border-radius: 10px; transition: 0.2s; }
+    .mobile-btn:hover { background: var(--surface); }
+
+    @media (max-width: 860px) {
+      header { border-radius: clamp(16px, 3vw, 18px); }
+      .nav-links { display: none; position: fixed; top: 0; right: 0; height: 100vh; height: 100dvh; width: min(280px, 80vw); background: var(--bg2); flex-direction: column; padding: clamp(60px, 15vh, 80px) clamp(18px, 5vw, 28px) clamp(30px, 8vh, 40px); gap: 6px; z-index: 999; border-left: 1px solid var(--border); box-shadow: -20px 0 60px rgba(0,0,0,0.5); align-items: flex-start; overflow-y: auto; }
+      .nav-links.show { display: flex; animation: slideDrawer 0.35s cubic-bezier(0.34,1.1,0.64,1) both; }
+      @keyframes slideDrawer { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+      .nav-links a { width: 100%; padding: 10px 16px; border-radius: 12px; font-size: 1rem; }
+      .mobile-btn { display: flex; }
+      .nav-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 998; backdrop-filter: blur(4px); }
+      .nav-overlay.show { display: block; }
+    }
+
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-18px)} }
+    @keyframes floatX { 0%,100%{transform:translateX(0)} 50%{transform:translateX(14px)} }
+    @keyframes shimmer { 0%{background-position:-200% center} 100%{background-position:200% center} }
+    @keyframes scaleIn { from{opacity:0;transform:scale(0.88)} to{opacity:1;transform:scale(1)} }
+    @keyframes pulseGlow { 0%,100%{box-shadow:0 0 0 0 var(--primary-glow)} 50%{box-shadow:0 0 0 16px rgba(0,229,160,0)} }
+
+    .animate { opacity: 0; transition: opacity 0.75s cubic-bezier(0.4,0,0.2,1), transform 0.75s cubic-bezier(0.4,0,0.2,1); }
+    .animate.visible { opacity: 1; transform: none !important; }
+    .fade-up { transform: translateY(44px); }
+    .fade-left { transform: translateX(-44px); }
+    .fade-right { transform: translateX(44px); }
+    .scale-in { transform: scale(0.9); }
+
+    .hero {
+      min-height: 100vh; min-height: 100dvh; display: flex; align-items: center;
+      padding: clamp(100px, 18vh, 140px) 0 clamp(60px, 12vh, 90px); position: relative; overflow: hidden;
+    }
+    .hero-bg { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+    .orb { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; }
+    .orb1 { width: clamp(250px, 50vw, 500px); height: clamp(250px, 50vw, 500px); background: radial-gradient(circle, rgba(0,229,160,0.13), transparent 70%); top: -100px; right: -80px; animation: float 10s ease-in-out infinite; }
+    .orb2 { width: clamp(200px, 40vw, 400px); height: clamp(200px, 40vw, 400px); background: radial-gradient(circle, rgba(14,165,233,0.1), transparent 70%); bottom: -80px; left: -60px; animation: float 14s ease-in-out infinite reverse; }
+    .orb3 { width: clamp(150px, 30vw, 300px); height: clamp(150px, 30vw, 300px); background: radial-gradient(circle, rgba(167,139,250,0.08), transparent 70%); top: 40%; left: 40%; animation: floatX 12s ease-in-out infinite; }
+    .grid-lines {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(0,229,160,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(0,229,160,0.035) 1px, transparent 1px);
+      background-size: clamp(40px, 8vw, 60px) clamp(40px, 8vw, 60px);
+      mask-image: radial-gradient(ellipse at center, black 20%, transparent 80%);
+    }
+    .hero-content { max-width: 950px; margin: 0 auto; text-align: center; position: relative; z-index: 2; padding: 0 clamp(10px, 3vw, 20px); }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: clamp(4px, 1vw, 8px);
+      padding: clamp(7px, 1.5vw, 9px) clamp(14px, 3vw, 22px); background: var(--primary-dim); border: 1px solid var(--border-hover);
+      border-radius: var(--r-pill); font-size: clamp(0.7rem, 1.3vw, 0.85rem); margin-bottom: clamp(18px, 3vw, 28px);
+      color: var(--primary); font-weight: 600; letter-spacing: 0.02em;
+      animation: scaleIn 0.7s ease-out 0.3s both;
+    }
+    .hero-badge .dot { width: clamp(5px, 0.8vw, 7px); height: clamp(5px, 0.8vw, 7px); background: var(--primary); border-radius: 50%; animation: pulseGlow 2s ease-in-out infinite; }
+    h1 {
+      font-family: var(--font-display); font-size: clamp(2rem, 6.5vw, 5.4rem);
+      font-weight: 800; line-height: 1.05; color: var(--text); margin-bottom: clamp(16px, 3vw, 26px);
+      letter-spacing: -0.04em;
+      animation: scaleIn 0.9s cubic-bezier(0.34,1.1,0.64,1) 0.1s both;
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      background-size: 200% auto; animation: shimmer 4s linear infinite;
+    }
+    .hero-description {
+      font-size: clamp(0.9rem, 2vw, 1.2rem); color: var(--text-muted);
+      max-width: 680px; margin: 0 auto clamp(28px, 5vw, 44px); line-height: 1.75;
+      animation: scaleIn 0.9s ease-out 0.25s both;
+    }
+    .hero-buttons { display: flex; gap: clamp(8px, 2vw, 14px); justify-content: center; flex-wrap: wrap; animation: scaleIn 0.9s ease-out 0.4s both; }
+
+    .rotating-wrap { display: inline-block; position: relative; }
+    .rotating-words { display: inline-block; overflow: hidden; vertical-align: bottom; height: 1.1em; }
+    .rotating-words span { display: block; animation: rotWords 6s ease-in-out infinite; }
+    @keyframes rotWords {
+      0%,28%{transform:translateY(0);opacity:1}
+      33%{transform:translateY(-100%);opacity:0}
+      34%{transform:translateY(100%);opacity:0}
+      38%,62%{transform:translateY(0);opacity:1}
+      67%{transform:translateY(-100%);opacity:0}
+      68%{transform:translateY(100%);opacity:0}
+      72%,96%{transform:translateY(0);opacity:1}
+      100%{transform:translateY(-100%);opacity:0}
+    }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: clamp(6px, 1vw, 9px);
+      padding: clamp(11px, 2vw, 15px) clamp(20px, 4vw, 34px); background: var(--primary);
+      color: #060912; font-weight: 700; font-family: var(--font-body); font-size: clamp(0.82rem, 1.4vw, 0.95rem);
+      border-radius: var(--r-pill); text-decoration: none; border: none; cursor: pointer;
+      transition: all 0.3s; position: relative; overflow: hidden; white-space: nowrap;
+    }
+    .btn-primary::before { content:''; position:absolute; top:0; left:-100%; width:100%; height:100%; background:linear-gradient(90deg,transparent,rgba(255,255,255,0.25),transparent); transition:left 0.5s; }
+    .btn-primary:hover::before { left:100%; }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 16px 44px var(--primary-glow); }
+    .btn-primary:disabled { opacity:0.55; cursor:not-allowed; }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: clamp(6px, 1vw, 9px);
+      padding: clamp(11px, 2vw, 15px) clamp(20px, 4vw, 34px); background: transparent;
+      color: var(--text); font-weight: 600; font-family: var(--font-body); font-size: clamp(0.82rem, 1.4vw, 0.95rem);
+      border-radius: var(--r-pill); text-decoration: none; border: 1.5px solid var(--glass-border);
+      cursor: pointer; transition: all 0.3s; white-space: nowrap;
+    }
+    .btn-outline:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-3px); box-shadow: 0 10px 30px var(--primary-dim); }
+
+    .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(10px, 2vw, 20px); margin-top: clamp(40px, 8vw, 72px); }
+    @media (max-width: 768px) { .stats-row { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 400px) { .stats-row { grid-template-columns: 1fr 1fr; gap: 8px; } }
+    .stat-card {
+      text-align: center; padding: clamp(18px, 3vw, 28px) clamp(10px, 2vw, 16px);
+      background: var(--glass); border: 1px solid var(--border);
+      border-radius: var(--r-xl); transition: all 0.35s; cursor: default; position: relative; overflow: hidden;
+    }
+    .stat-card::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg, var(--primary-dim), transparent); opacity:0; transition:0.35s; }
+    .stat-card:hover::before { opacity:1; }
+    .stat-card:hover { border-color: var(--border-hover); transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,229,160,0.1); }
+    .stat-number { font-family: var(--font-display); font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 800; color: var(--primary); display: block; line-height: 1.1; }
+    .stat-label { font-size: clamp(0.7rem, 1.1vw, 0.85rem); color: var(--text-muted); margin-top: 6px; font-weight: 500; }
+
+    section { padding: clamp(60px, 10vw, 110px) 0; position: relative; }
+    .section-tag { text-align:center; color:var(--primary); font-weight:700; font-size:clamp(0.65rem, 1vw, 0.78rem); text-transform:uppercase; letter-spacing:3px; margin-bottom:clamp(8px, 1.5vw, 12px); }
+    h2 { font-family:var(--font-display); font-size:clamp(1.6rem, 4vw, 3.2rem); font-weight:800; text-align:center; margin-bottom:clamp(8px, 1.5vw, 14px); color:var(--text); letter-spacing:-0.03em; }
+    .section-subtitle { text-align:center; color:var(--text-muted); margin-bottom:clamp(36px, 7vw, 64px); font-size:clamp(0.85rem, 1.6vw, 1.05rem); max-width:580px; margin-left:auto; margin-right:auto; line-height:1.7; padding: 0 clamp(10px, 3vw, 20px); }
+
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: auto auto;
+      gap: clamp(10px, 2vw, 18px);
+    }
+    @media (max-width: 900px) { .bento-grid { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 520px) { .bento-grid { grid-template-columns: 1fr; } }
+    .bento-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-2xl);
+      padding: clamp(22px, 4vw, 36px) clamp(18px, 3.5vw, 30px);
+      transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+      cursor: pointer; position: relative; overflow: hidden;
+      transform-style: preserve-3d;
+    }
+    .bento-card:nth-child(1) { grid-column: span 2; }
+    .bento-card:nth-child(4) { grid-column: span 2; }
+    @media (max-width: 900px) { .bento-card:nth-child(1), .bento-card:nth-child(4) { grid-column: span 2; } }
+    @media (max-width: 520px) { .bento-card:nth-child(1), .bento-card:nth-child(4) { grid-column: span 1; } }
+    .bento-card::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg, var(--primary-dim) 0%, transparent 60%); opacity:0; transition:0.4s; border-radius:inherit; }
+    .bento-card:hover::before { opacity:1; }
+    .bento-card:hover { border-color: var(--border-hover); transform: translateY(-8px) perspective(800px) rotateX(1deg); box-shadow: 0 30px 60px rgba(0,229,160,0.12); }
+    .bento-icon { width:clamp(40px, 7vw, 54px); height:clamp(40px, 7vw, 54px); background:var(--primary-dim); border-radius:14px; display:flex; align-items:center; justify-content:center; margin-bottom:clamp(14px, 2.5vw, 20px); transition:all 0.4s; border:1px solid var(--border); }
+    .bento-card:hover .bento-icon { background:rgba(0,229,160,0.2); transform:scale(1.1) rotate(-5deg); border-color:var(--primary); }
+    .bento-icon i { font-size:clamp(1.2rem, 2vw, 1.6rem); color:var(--primary); }
+    .bento-card h3 { font-family:var(--font-display); font-size:clamp(1rem, 1.8vw, 1.25rem); font-weight:700; margin-bottom:clamp(6px, 1.5vw, 10px); color:var(--text); }
+    .bento-card p { color:var(--text-muted); font-size:clamp(0.78rem, 1.3vw, 0.92rem); line-height:1.6; }
+    .bento-link { color:var(--primary); font-weight:600; font-size:clamp(0.75rem, 1.2vw, 0.88rem); text-decoration:none; display:inline-flex; align-items:center; gap:6px; margin-top:clamp(12px, 2vw, 18px); transition:gap 0.3s; }
+    .bento-card:hover .bento-link { gap:12px; }
+
+    .why-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(12px, 2.5vw, 20px); max-width:1000px; margin:0 auto; }
+    @media (max-width: 768px) { .why-grid{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width: 420px) { .why-grid{grid-template-columns:1fr} }
+    .why-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--r-xl); padding:clamp(18px, 3.5vw, 28px) clamp(14px, 3vw, 22px); text-align:center; transition:all 0.35s; }
+    .why-card:hover { border-color:var(--border-hover); transform:translateY(-4px); box-shadow:0 16px 40px rgba(0,229,160,0.08); }
+    .why-icon { font-size:clamp(1.3rem, 2.5vw, 1.8rem); color:var(--primary); margin-bottom:clamp(8px, 1.5vw, 14px); }
+
+    .process-steps { display:grid; grid-template-columns:repeat(6,1fr); gap:clamp(10px, 2vw, 16px); max-width:1100px; margin:0 auto; }
+    @media (max-width: 900px) { .process-steps{grid-template-columns:repeat(3,1fr)} }
+    @media (max-width: 520px) { .process-steps{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width: 340px) { .process-steps{grid-template-columns:1fr} }
+    .process-step { text-align:center; position:relative; }
+    .process-num { width:clamp(44px, 8vw, 56px); height:clamp(44px, 8vw, 56px); background:var(--primary); color:#060912; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto clamp(8px, 1.5vw, 12px); font-family:var(--font-display); font-weight:800; font-size:clamp(1.1rem, 2vw, 1.4rem); }
+    .process-step h4 { font-family:var(--font-display); font-weight:700; font-size:clamp(0.8rem, 1.3vw, 0.95rem); color:var(--text); margin-bottom:4px; }
+    .process-step p { font-size:clamp(0.7rem, 1.1vw, 0.82rem); color:var(--text-muted); line-height:1.4; }
+
+    .portfolio-wrapper { max-width:1060px; margin:0 auto; display:flex; flex-direction:column; gap:clamp(24px, 4vw, 40px); }
+    .portfolio-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--r-2xl); padding: clamp(20px, 4vw, 52px); transition: all 0.4s; position: relative; overflow: hidden;
+    }
+    .portfolio-card::after { content:''; position:absolute; top:-40%; right:-20%; width:400px; height:400px; background:radial-gradient(circle, rgba(0,229,160,0.06), transparent 70%); border-radius:50%; pointer-events:none; }
+    .portfolio-card:hover { border-color:var(--border-hover); box-shadow:0 30px 80px rgba(0,229,160,0.1); transform:translateY(-5px); }
+    .portfolio-header { display:flex; align-items:center; gap:clamp(12px, 3vw, 24px); margin-bottom:clamp(18px, 4vw, 32px); position:relative; z-index:1; flex-wrap:wrap; }
+    .portfolio-icon-wrapper { width:clamp(50px, 10vw, 76px); height:clamp(50px, 10vw, 76px); background:var(--primary-dim); border-radius:20px; display:flex; align-items:center; justify-content:center; animation:float 5s ease-in-out infinite; flex-shrink:0; border:1px solid var(--border); }
+    .portfolio-icon-wrapper i { font-size:clamp(1.5rem, 3vw, 2.4rem); color:var(--primary); }
+    .portfolio-header h3 { font-family:var(--font-display); font-size:clamp(1.2rem, 2.5vw, 1.9rem); font-weight:800; line-height:1.2; letter-spacing:-0.03em; }
+    .portfolio-subtitle { color:var(--secondary); font-weight:500; margin-top:5px; font-size:clamp(0.78rem, 1.3vw, 0.95rem); }
+    .portfolio-description { color:var(--text-muted); font-size:clamp(0.85rem, 1.4vw, 1rem); line-height:1.75; margin-bottom:clamp(20px, 4vw, 32px); position:relative; z-index:1; }
+    .feature-categories { display:grid; grid-template-columns:repeat(auto-fit, minmax(min(290px, 100%),1fr)); gap:clamp(12px, 2.5vw, 18px); position:relative; z-index:1; }
+    .feature-category { background:var(--glass); border:1px solid var(--border); border-radius:16px; padding:clamp(14px, 2.5vw, 22px); transition:all 0.3s; }
+    .feature-category:hover { background:var(--primary-dim); border-color:var(--border-hover); }
+    .feature-category h4 { font-family:var(--font-display); font-size:clamp(0.8rem, 1.3vw, 0.95rem); font-weight:700; margin-bottom:clamp(8px, 1.5vw, 14px); color:var(--primary); display:flex; align-items:center; gap:8px; }
+    .feature-list { list-style:none; display:flex; flex-direction:column; gap:clamp(4px, 1vw, 8px); }
+    .feature-list li { font-size:clamp(0.72rem, 1.1vw, 0.87rem); color:var(--text-muted); display:flex; align-items:flex-start; gap:8px; line-height:1.5; }
+    .feature-list li i { color:var(--success); font-size:0.72rem; margin-top:4px; flex-shrink:0; }
+    .tech-stack { display:flex; flex-wrap:wrap; gap:clamp(6px, 1.2vw, 10px); margin-top:clamp(20px, 4vw, 32px); position:relative; z-index:1; }
+    .tech-badge { padding:clamp(5px, 1vw, 8px) clamp(10px, 2vw, 16px); background:var(--glass); border:1px solid var(--border); border-radius:10px; font-size:clamp(0.68rem, 1vw, 0.8rem); color:var(--text-muted); font-weight:500; display:flex; align-items:center; gap:6px; transition:0.25s; }
+    .tech-badge:hover { border-color:var(--primary); color:var(--primary); background:var(--primary-dim); }
+    .tech-badge i { color:var(--primary); font-size:0.82rem; }
+
+    .case-study-grid { display:flex; flex-direction:column; gap:clamp(18px, 3vw, 28px); max-width:900px; margin:0 auto; }
+    .case-study-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--r-2xl); padding:clamp(22px, 4vw, 38px); transition:all 0.35s; }
+    .case-study-card:hover { border-color:var(--border-hover); box-shadow:0 20px 50px rgba(0,229,160,0.08); }
+    .case-label { display:inline-block; padding:4px 12px; border-radius:100px; font-size:clamp(0.65rem, 1vw, 0.75rem); font-weight:700; margin-right:6px; margin-bottom:6px; }
+    .case-label.problem { background:rgba(239,68,68,0.12); color:#EF4444; border:1px solid rgba(239,68,68,0.2); }
+    .case-label.solution { background:rgba(14,165,233,0.12); color:#0EA5E9; border:1px solid rgba(14,165,233,0.2); }
+    .case-label.result { background:rgba(16,185,129,0.12); color:#10B981; border:1px solid rgba(16,185,129,0.2); }
+    .case-study-card h3 { font-family:var(--font-display); font-size:clamp(1rem, 1.8vw, 1.3rem); font-weight:700; color:var(--text); margin-bottom:clamp(10px, 2vw, 16px); }
+
+    .testimonial-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(12px, 2.5vw, 20px); max-width:1000px; margin:0 auto; }
+    @media (max-width: 768px) { .testimonial-grid{grid-template-columns:1fr; max-width:500px} }
+    .testimonial-card {
+      background:var(--surface); border:1px solid var(--border); border-radius:var(--r-xl);
+      padding:clamp(20px, 3.5vw, 32px) clamp(16px, 3vw, 24px); transition:all 0.35s;
+    }
+    .testimonial-card:hover { border-color:var(--border-hover); transform:translateY(-4px); }
+    .stars { color:#F59E0B; font-size:clamp(0.75rem, 1.2vw, 0.9rem); margin-bottom:10px; letter-spacing:2px; }
+    .testimonial-text { color:var(--text-muted); font-size:clamp(0.8rem, 1.2vw, 0.92rem); line-height:1.6; margin-bottom:14px; font-style:italic; }
+    .testimonial-author { font-weight:700; color:var(--text); font-size:clamp(0.8rem, 1.1vw, 0.9rem); }
+    .testimonial-role { font-size:clamp(0.7rem, 1vw, 0.8rem); color:var(--text-muted); }
+
+    .tabs-nav { display:flex; justify-content:center; gap:clamp(4px, 1vw, 8px); flex-wrap:wrap; margin-bottom:clamp(24px, 4vw, 40px); }
+    .tab-btn { padding:clamp(8px, 1.5vw, 11px) clamp(14px, 3vw, 26px); border-radius:var(--r-pill); cursor:pointer; font-weight:600; font-family:var(--font-body); font-size:clamp(0.75rem, 1.2vw, 0.88rem); border:1.5px solid var(--border); background:transparent; color:var(--text-muted); transition:all 0.3s; white-space:nowrap; }
+    .tab-btn:hover { border-color:var(--border-hover); color:var(--text); transform:translateY(-2px); }
+    .tab-btn.active { background:var(--primary); border-color:var(--primary); color:#060912; box-shadow:0 8px 28px var(--primary-glow); font-weight:700; }
+    .service-tags { display:flex; flex-wrap:wrap; gap:clamp(6px, 1.2vw, 10px); margin-bottom:20px; justify-content:center; }
+    .service-tag { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:clamp(8px, 1.5vw, 12px) clamp(14px, 2.5vw, 22px); font-size:clamp(0.75rem, 1.2vw, 0.9rem); color:var(--text-muted); transition:all 0.3s; cursor:pointer; font-weight:500; }
+    .service-tag:hover { border-color:var(--primary); color:var(--primary); background:var(--primary-dim); transform:translateY(-3px); box-shadow:0 8px 22px rgba(0,229,160,0.12); }
+
+    .pricing-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(14px, 2.5vw, 22px); max-width:1100px; margin:0 auto; }
+    @media (max-width: 900px) { .pricing-grid{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width: 600px) { .pricing-grid{grid-template-columns:1fr; max-width:420px} }
+    .pricing-card {
+      background:var(--surface); border:1px solid var(--border); border-radius:var(--r-2xl);
+      padding:clamp(24px, 4vw, 38px) clamp(18px, 3vw, 28px); text-align:center; transition:all 0.35s; position:relative; overflow:hidden;
+    }
+    .pricing-card::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg, var(--primary-dim), transparent); opacity:0; transition:0.35s; }
+    .pricing-card:hover { border-color:var(--border-hover); transform:translateY(-8px); box-shadow:0 28px 60px rgba(0,229,160,0.12); }
+    .pricing-card:hover::before { opacity:1; }
+    .pricing-card.featured { border-color:var(--primary); }
+    .pricing-badge { display:inline-block; padding:clamp(4px, 1vw, 6px) clamp(12px, 2vw, 16px); background:var(--primary-dim); color:var(--primary); border-radius:100px; font-size:clamp(0.68rem, 1vw, 0.78rem); font-weight:700; margin-bottom:clamp(12px, 2vw, 18px); border:1px solid var(--border-hover); position:relative; z-index:1; }
+    .pricing-price { font-family:var(--font-display); font-size:clamp(2rem, 4vw, 2.6rem); font-weight:800; color:var(--text); position:relative; z-index:1; }
+    .pricing-price small { font-size:clamp(0.75rem, 1.2vw, 0.9rem); color:var(--text-muted); font-weight:500; }
+    .pricing-features { list-style:none; margin:clamp(16px, 3vw, 24px) 0; text-align:left; position:relative; z-index:1; }
+    .pricing-features li { padding:clamp(6px, 1vw, 9px) 0; color:var(--text-muted); font-size:clamp(0.78rem, 1.1vw, 0.88rem); display:flex; align-items:center; gap:8px; }
+    .pricing-features li i { color:var(--success); font-size:0.75rem; flex-shrink:0; }
+
+    .faq-grid { max-width:800px; margin:0 auto; display:flex; flex-direction:column; gap:clamp(8px, 1.5vw, 12px); }
+    .faq-item { background:var(--surface); border:1px solid var(--border); border-radius:16px; overflow:hidden; transition:all 0.3s; cursor:pointer; }
+    .faq-item:hover { border-color:var(--border-hover); }
+    .faq-question { padding:clamp(14px, 2.5vw, 18px) clamp(16px, 3vw, 22px); display:flex; justify-content:space-between; align-items:center; font-weight:700; color:var(--text); font-size:clamp(0.85rem, 1.3vw, 0.95rem); font-family:var(--font-display); }
+    .faq-answer { padding:0 clamp(16px, 3vw, 22px) clamp(14px, 2.5vw, 18px); color:var(--text-muted); font-size:clamp(0.78rem, 1.1vw, 0.88rem); line-height:1.6; display:none; }
+    .faq-item.open .faq-answer { display:block; }
+    .faq-item.open .faq-question i { transform:rotate(180deg); color:var(--primary); }
+    .faq-question i { transition:transform 0.3s; color:var(--text-muted); flex-shrink:0; margin-left:8px; }
+
+    .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:clamp(16px, 3vw, 26px); max-width:920px; margin:0 auto; }
+    @media (max-width: 768px) { .about-grid{grid-template-columns:1fr; max-width:500px} }
+    .about-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--r-2xl); padding:clamp(26px, 5vw, 44px); text-align:center; transition:all 0.4s; position:relative; overflow:hidden; }
+    .about-card::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg, var(--primary-dim), transparent); opacity:0; transition:0.4s; }
+    .about-card:hover { border-color:var(--border-hover); transform:translateY(-6px); box-shadow:0 24px 60px rgba(0,229,160,0.1); }
+    .about-card:hover::before { opacity:1; }
+    .about-icon-wrapper { width:clamp(50px, 10vw, 70px); height:clamp(50px, 10vw, 70px); background:var(--primary-dim); border-radius:18px; display:flex; align-items:center; justify-content:center; margin:0 auto clamp(14px, 2.5vw, 20px); animation:float 5s ease-in-out infinite; border:1px solid var(--border); position:relative; z-index:1; }
+    .about-icon-wrapper i { font-size:clamp(1.5rem, 3vw, 2.2rem); color:var(--primary); }
+    .about-card h3, .about-card p { position:relative; z-index:1; }
+
+    .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:clamp(24px, 5vw, 44px); max-width:1020px; margin:0 auto; }
+    @media (max-width: 768px) { .contact-grid{grid-template-columns:1fr; max-width:550px} }
+    .selected-package { display:none; background:var(--primary-dim); border:1px solid var(--border-hover); border-radius:12px; padding:clamp(10px, 2vw, 14px) clamp(12px, 2.5vw, 18px); margin-bottom:clamp(12px, 2.5vw, 18px); align-items:center; gap:10px; flex-wrap:wrap; animation:scaleIn 0.3s ease-out; }
+    .selected-package.show { display:flex; }
+    .remove-package { margin-left:auto; cursor:pointer; color:var(--text-muted); transition:0.3s; font-size:1.1rem; }
+    .remove-package:hover { color:var(--danger); transform:rotate(90deg); }
+    .form-control { width:100%; padding:clamp(12px, 2vw, 15px) clamp(14px, 2.5vw, 20px); background:var(--surface); border:1px solid var(--border); border-radius:14px; color:var(--text); font-size:clamp(0.85rem, 1.3vw, 0.95rem); margin-bottom:clamp(10px, 2vw, 14px); transition:all 0.3s; font-family:var(--font-body); }
+    textarea.form-control { resize:vertical; min-height:100px; }
+    .form-control::placeholder { color:var(--text-dim); }
+    .form-control:focus { border-color:var(--primary); outline:none; box-shadow:0 0 0 4px rgba(0,229,160,0.1); transform:translateY(-1px); }
+    .status-msg { display:none; padding:clamp(10px, 2vw, 14px) clamp(14px, 2.5vw, 20px); border-radius:12px; margin-top:12px; font-weight:500; text-align:center; font-size:clamp(0.8rem, 1.2vw, 0.9rem); animation:scaleIn 0.3s ease-out; }
+    .status-msg.success { display:block; background:rgba(16,185,129,0.12); border:1px solid var(--success); color:var(--success); }
+    .status-msg.error { display:block; background:rgba(239,68,68,0.12); border:1px solid var(--danger); color:var(--danger); }
+    .status-msg.sending { display:block; background:var(--primary-dim); border:1px solid var(--border-hover); color:var(--primary); }
+    .contact-info-item { display:flex; align-items:center; gap:clamp(10px, 2vw, 14px); margin-bottom:clamp(10px, 2vw, 16px); padding:clamp(12px, 2vw, 16px) clamp(14px, 2.5vw, 20px); background:var(--surface); border-radius:14px; border:1px solid var(--border); transition:all 0.3s; }
+    .contact-info-item:hover { border-color:var(--border-hover); transform:translateX(6px); background:var(--primary-dim); }
+    .contact-info-icon { font-size:clamp(1rem, 1.6vw, 1.2rem); color:var(--primary); width:clamp(34px, 6vw, 40px); height:clamp(34px, 6vw, 40px); display:flex; align-items:center; justify-content:center; background:var(--primary-dim); border-radius:50%; flex-shrink:0; }
+
+    .messenger-buttons { display:flex; gap:clamp(6px, 1.5vw, 10px); flex-wrap:wrap; margin-top:clamp(14px, 2.5vw, 20px); justify-content:center; }
+    .msg-btn { display:inline-flex; align-items:center; gap:6px; padding:clamp(9px, 1.5vw, 12px) clamp(14px, 2.5vw, 22px); border-radius:var(--r-pill); font-weight:600; font-size:clamp(0.75rem, 1.2vw, 0.88rem); text-decoration:none; transition:all 0.3s; border:1px solid var(--border); white-space:nowrap; }
+    .msg-btn:hover { transform:translateY(-2px); }
+    .msg-btn.messenger { background:#0084FF; color:#fff; border-color:#0084FF; }
+    .msg-btn.whatsapp { background:#25D366; color:#fff; border-color:#25D366; }
+    .msg-btn.email { background:var(--surface); color:var(--text); }
+    .msg-btn.email:hover { border-color:var(--primary); color:var(--primary); }
+
+    footer { background:var(--bg2); border-top:1px solid var(--border); padding:clamp(36px, 7vw, 64px) 0 clamp(20px, 4vw, 32px); }
+    .footer-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(min(200px, 100%),1fr)); gap:clamp(24px, 5vw, 44px); }
+    .social-icon { display:inline-flex; align-items:center; justify-content:center; width:clamp(36px, 6vw, 42px); height:clamp(36px, 6vw, 42px); border-radius:12px; background:var(--surface); border:1px solid var(--border); color:var(--text-muted); text-decoration:none; transition:all 0.3s; cursor:pointer; }
+    .social-icon:hover { border-color:var(--primary); color:var(--primary); background:var(--primary-dim); transform:translateY(-3px); box-shadow:0 8px 22px rgba(0,229,160,0.2); }
+
+    #scrollTop { position:fixed; bottom:clamp(16px, 4vw, 28px); right:clamp(16px, 4vw, 28px); width:clamp(38px, 7vw, 46px); height:clamp(38px, 7vw, 46px); background:var(--primary); border:none; border-radius:50%; color:#060912; font-size:clamp(0.9rem, 1.5vw, 1.1rem); cursor:pointer; z-index:500; display:flex; align-items:center; justify-content:center; box-shadow:0 8px 28px var(--primary-glow); opacity:0; transform:translateY(20px); transition:all 0.35s; pointer-events:none; }
+    #scrollTop.show { opacity:1; transform:translateY(0); pointer-events:all; }
+    #scrollTop:hover { transform:translateY(-4px); box-shadow:0 14px 36px var(--primary-glow); }
+
+    .trust-badge { display:inline-flex; align-items:center; gap:8px; margin-top:clamp(14px, 2.5vw, 22px); padding:clamp(7px, 1.5vw, 10px) clamp(14px, 3vw, 20px); background:var(--glass); border:1px solid var(--border); border-radius:var(--r-pill); font-size:clamp(0.72rem, 1.2vw, 0.87rem); color:var(--text-muted); }
+    .trust-badge i { color:var(--success); }
+
+    .text-center{text-align:center} .mt-20{margin-top:20px} .mb-20{margin-bottom:20px} .mt-40{margin-top:40px} .gap-12{gap:12px} .flex{display:flex} .flex-wrap{flex-wrap:wrap} .items-center{align-items:center} .justify-center{justify-content:center}
+
+    #ai-chat-fab {
+      position: fixed; bottom: clamp(70px, 12vw, 88px); right: clamp(16px, 4vw, 28px);
+      width: clamp(44px, 8vw, 56px); height: clamp(44px, 8vw, 56px); border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border: none; cursor: pointer; z-index: 600;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 8px 32px var(--primary-glow);
+      transition: all 0.35s cubic-bezier(0.34,1.56,0.64,1);
+      animation: pulseGlow 3s ease-in-out infinite;
+    }
+    #ai-chat-fab:hover { transform: scale(1.12) translateY(-3px); box-shadow: 0 16px 44px var(--primary-glow); }
+    #ai-chat-fab i { font-size: clamp(1.1rem, 2vw, 1.4rem); color: #060912; transition: transform 0.3s; }
+    #ai-chat-fab.open i { transform: rotate(90deg); }
+
+    #ai-chat-window {
+      position: fixed; bottom: clamp(130px, 22vw, 160px); right: clamp(12px, 3vw, 28px);
+      width: clamp(300px, 90vw, 380px); max-height: clamp(400px, 70vh, 580px);
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: clamp(18px, 4vw, 24px); z-index: 601;
+      display: flex; flex-direction: column;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px var(--border);
+      transform: scale(0.85) translateY(20px); opacity: 0;
+      pointer-events: none;
+      transition: all 0.35s cubic-bezier(0.34,1.2,0.64,1);
+      overflow: hidden;
+    }
+    #ai-chat-window.open {
+      transform: scale(1) translateY(0); opacity: 1; pointer-events: all;
+    }
+    @media (max-width: 480px) {
+      #ai-chat-window { width: calc(100vw - 24px); right: 12px; bottom: 130px; max-height: 65vh; max-height: 65dvh; border-radius: 20px; }
+      #ai-chat-fab { right: 12px; bottom: 68px; }
+      #scrollTop { bottom: 12px; right: 12px; }
+    }
+
+    .chat-header {
+      padding: clamp(14px, 2.5vw, 18px) clamp(14px, 3vw, 20px) clamp(12px, 2vw, 16px);
+      background: linear-gradient(135deg, rgba(0,229,160,0.1), rgba(14,165,233,0.06));
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: clamp(8px, 1.5vw, 12px);
+    }
+    .chat-avatar {
+      width: clamp(32px, 6vw, 40px); height: clamp(32px, 6vw, 40px); border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .chat-avatar i { color: #060912; font-size: clamp(0.85rem, 1.5vw, 1.1rem); }
+    .chat-info { flex: 1; min-width:0; }
+    .chat-name { font-family: var(--font-display); font-weight: 700; font-size: clamp(0.8rem, 1.3vw, 0.95rem); color: var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .chat-status { font-size: clamp(0.65rem, 1vw, 0.75rem); color: var(--primary); display: flex; align-items: center; gap: 5px; }
+    .chat-dot { width: 6px; height: 6px; background: var(--primary); border-radius: 50%; animation: pulseGlow 2s infinite; }
+    .chat-clear-btn {
+      background: none; border: none; color: var(--text-muted); cursor: pointer;
+      font-size: clamp(0.68rem, 1vw, 0.75rem); padding: 5px 10px; border-radius: 8px; transition: 0.2s;
+      font-family: var(--font-body); flex-shrink:0;
+    }
+    .chat-clear-btn:hover { background: var(--surface); color: var(--text); }
+
+    .chat-messages {
+      flex: 1; overflow-y: auto; padding: clamp(10px, 2vw, 16px);
+      display: flex; flex-direction: column; gap: clamp(8px, 1.5vw, 12px);
+      scroll-behavior: smooth; -webkit-overflow-scrolling: touch;
+    }
+    .chat-messages::-webkit-scrollbar { width: 4px; }
+    .chat-messages::-webkit-scrollbar-track { background: transparent; }
+    .chat-messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+    .chat-msg {
+      max-width: 88%; animation: msgSlideIn 0.3s cubic-bezier(0.34,1.1,0.64,1) both;
+    }
+    @keyframes msgSlideIn { from { opacity: 0; transform: translateY(10px) scale(0.96); } to { opacity: 1; transform: none; } }
+    .chat-msg.bot { align-self: flex-start; }
+    .chat-msg.user { align-self: flex-end; }
+    .chat-bubble {
+      padding: clamp(8px, 1.5vw, 11px) clamp(10px, 2vw, 15px); border-radius: 16px; font-size: clamp(0.75rem, 1.2vw, 0.875rem); line-height: 1.55; word-break: break-word;
+    }
+    .chat-msg.bot .chat-bubble {
+      background: var(--surface); border: 1px solid var(--border); color: var(--text);
+      border-bottom-left-radius: 4px;
+    }
+    .chat-msg.user .chat-bubble {
+      background: linear-gradient(135deg, var(--primary), #00c488);
+      color: #060912; font-weight: 500; border-bottom-right-radius: 4px;
+    }
+    .chat-bubble strong { color: var(--primary); }
+    .chat-msg.bot .chat-bubble strong { color: var(--primary); }
+    .chat-msg.user .chat-bubble strong { color: #060912; }
+    .chat-bubble a { color: var(--secondary); text-decoration: underline; }
+    .chat-msg.user .chat-bubble a { color: #060912; }
+    .chat-bubble ul { padding-left: 16px; margin-top: 6px; }
+    .chat-bubble li { margin-bottom: 3px; }
+
+    .typing-indicator {
+      display: flex; gap: 5px; padding: 12px 15px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; border-bottom-left-radius: 4px;
+      width: fit-content; align-self: flex-start;
+    }
+    .typing-dot {
+      width: 7px; height: 7px; background: var(--primary); border-radius: 50%;
+      animation: typingBounce 1.2s ease-in-out infinite;
+    }
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes typingBounce { 0%,60%,100%{transform:translateY(0);opacity:0.4} 30%{transform:translateY(-7px);opacity:1} }
+
+    .chat-suggestions {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      padding: 0 clamp(10px, 2vw, 16px) 8px; align-self: flex-start; width: 100%;
+    }
+    .suggestion-chip {
+      padding: 6px 12px; background: var(--primary-dim); border: 1px solid var(--border-hover);
+      border-radius: 20px; font-size: clamp(0.65rem, 1vw, 0.76rem); color: var(--primary); font-weight: 600;
+      cursor: pointer; transition: all 0.25s; white-space: nowrap; font-family: var(--font-body);
+    }
+    .suggestion-chip:hover { background: var(--primary); color: #060912; transform: translateY(-2px); box-shadow: 0 6px 18px var(--primary-glow); }
+
+    .chat-input-area {
+      padding: clamp(8px, 1.5vw, 12px) clamp(10px, 2vw, 14px) clamp(10px, 2vw, 14px);
+      border-top: 1px solid var(--border);
+      display: flex; gap: clamp(5px, 1vw, 8px); align-items: flex-end;
+    }
+    #chatInput {
+      flex: 1; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: clamp(8px, 1.5vw, 10px) clamp(10px, 2vw, 14px); color: var(--text);
+      font-size: clamp(0.75rem, 1.2vw, 0.875rem); font-family: var(--font-body);
+      resize: none; max-height: 100px; min-height: 36px; line-height: 1.45;
+      transition: border-color 0.25s;
+      outline: none;
+    }
+    #chatInput:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0,229,160,0.08); }
+    #chatInput::placeholder { color: var(--text-dim); }
+    #chatSend {
+      width: clamp(34px, 6vw, 40px); height: clamp(34px, 6vw, 40px); border-radius: 12px; flex-shrink: 0;
+      background: var(--primary); border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.25s; color: #060912; font-size: clamp(0.85rem, 1.3vw, 1rem);
+    }
+    #chatSend:hover { background: var(--secondary); transform: scale(1.08); }
+    #chatSend:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+    .chat-badge {
+      position: absolute; top: -4px; right: -4px;
+      width: clamp(14px, 3vw, 18px); height: clamp(14px, 3vw, 18px); background: var(--danger); border-radius: 50%;
+      font-size: clamp(0.58rem, 1vw, 0.68rem); font-weight: 700; color: #fff;
+      display: none; align-items: center; justify-content: center;
+      border: 2px solid var(--bg);
+    }
+    .chat-badge.show { display: flex; }
+
+    @media (max-width: 380px) {
+      .hero-buttons { flex-direction: column; align-items: center; }
+      .hero-buttons .btn-primary, .hero-buttons .btn-outline { width: 100%; justify-content: center; }
+      .messenger-buttons { flex-direction: column; align-items: center; }
+      .messenger-buttons .msg-btn { width: 100%; justify-content: center; }
+      .footer-grid { grid-template-columns: 1fr; text-align: center; }
+    }
+  </style>
 </head>
 <body oncontextmenu="return false;">
 
@@ -27,11 +583,12 @@
       <div class="nav-links" id="navLinks">
         <a href="#home">Home</a>
         <a href="#services">Services</a>
-        <a href="#portfolio">Our Work</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#case-studies">Case Studies</a>
         <a href="#pricing">Pricing</a>
         <a href="#testimonials">Testimonials</a>
-        <a href="#about">About</a>
         <a href="#faq">FAQ</a>
+        <a href="#about">About</a>
         <a href="#contact">Contact</a>
       </div>
       <div class="nav-actions">
@@ -40,8 +597,6 @@
       </div>
     </div>
   </header>
-
-  <div class="scroll-progress" id="scrollProgress"></div>
 
   <section class="hero" id="home">
     <div class="hero-bg">
@@ -58,40 +613,19 @@
           Secure Web Systems for Schools & Businesses
         </div>
         <h1>
-          <span class="gradient-text">Secure Modern Websites & Systems</span><br>for Businesses and Schools
+          <span class="gradient-text"><span class="rotating-wrap"><span class="rotating-words"><span id="rotWord">Secure</span></span></span> Modern Websites</span><br>That Drive Real Results
         </h1>
-        <p class="hero-description">We build fast, responsive, and secure digital solutions using modern technologies like Laravel, React, and Tailwind CSS. Security-first development for your peace of mind.</p>
+        <p class="hero-description">We build fast, responsive, and secure digital solutions using modern technologies like Laravel, React, and Tailwind CSS. Specializing in systems for schools and businesses.</p>
         <div class="hero-buttons">
           <a href="#contact" class="btn-primary">Get Free Consultation <i class="fas fa-arrow-right"></i></a>
           <a href="#portfolio" class="btn-outline">View Projects <i class="fas fa-arrow-up-right-from-square"></i></a>
         </div>
-        <div class="trust-badge"><i class="fas fa-shield-halved"></i> Security-Focused Development</div>
         <div class="stats-row">
-          <div class="stat-card animate fade-up"><span class="stat-number counter" data-target="5">0</span><span class="stat-plus">+</span><span class="stat-label">Projects Completed</span></div>
-          <div class="stat-card animate fade-up" style="transition-delay:0.1s"><span class="stat-number counter" data-target="2">0</span><span class="stat-plus">+</span><span class="stat-label">Years Learning & Building</span></div>
-          <div class="stat-card animate fade-up" style="transition-delay:0.2s"><span class="stat-number" style="font-family:var(--font-display);font-size:2.6rem;font-weight:800;color:var(--primary);">100</span><span class="stat-plus">%</span><span class="stat-label">Commitment to Quality</span></div>
-          <div class="stat-card animate fade-up" style="transition-delay:0.3s"><span class="stat-number" style="font-family:var(--font-display);font-size:2.6rem;font-weight:800;color:var(--primary);">⚡</span><span class="stat-label">Fast & Secure Development</span></div>
+          <div class="stat-card animate fade-up"><span class="stat-number counter" data-target="5">0</span><span style="font-family:var(--font-display);font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;color:var(--primary);">+</span><span class="stat-label">Projects Completed</span></div>
+          <div class="stat-card animate fade-up" style="transition-delay:0.1s"><span class="stat-number counter" data-target="2">0</span><span style="font-family:var(--font-display);font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;color:var(--primary);">+</span><span class="stat-label">Years Learning & Building</span></div>
+          <div class="stat-card animate fade-up" style="transition-delay:0.2s"><span class="stat-number counter" data-target="100">0</span><span style="font-family:var(--font-display);font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;color:var(--primary);">%</span><span class="stat-label">Commitment to Quality</span></div>
+          <div class="stat-card animate fade-up" style="transition-delay:0.3s"><span class="stat-label" style="font-family:var(--font-display);font-size:clamp(1.2rem,2.5vw,1.6rem);font-weight:800;color:var(--primary);">Fast & Secure</span><span class="stat-label">Development</span></div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="trusted-tech">
-    <div class="container">
-      <p class="section-tag animate fade-up">TECHNOLOGIES WE USE</p>
-      <h2 class="animate fade-up">Built With Modern & Secure Technologies</h2>
-      <p class="section-subtitle animate fade-up">We use industry-standard tools and frameworks to deliver robust solutions.</p>
-      <div class="tech-grid">
-        <div class="tech-item animate fade-up"><i class="fab fa-html5"></i><span>HTML5</span></div>
-        <div class="tech-item animate fade-up" style="transition-delay:0.1s"><i class="fab fa-css3-alt"></i><span>CSS3</span></div>
-        <div class="tech-item animate fade-up" style="transition-delay:0.2s"><i class="fab fa-js"></i><span>JavaScript</span></div>
-        <div class="tech-item animate fade-up" style="transition-delay:0.3s"><i class="fab fa-react"></i><span>React</span></div>
-        <div class="tech-item animate fade-up" style="transition-delay:0.4s"><i class="fab fa-laravel"></i><span>Laravel</span></div>
-        <div class="tech-item animate fade-up" style="transition-delay:0.5s"><i class="fab fa-php"></i><span>PHP</span></div>
-        <div class="tech-item animate fade-up" style="transition-delay:0.6s"><i class="fas fa-database"></i><span>MySQL</span></div>
-        <div class="tech-item animate fade-up" style="transition-delay:0.7s"><i class="fab fa-bootstrap"></i><span>Bootstrap</span></div>
-        <div class="tech-item animate fade-up" style="transition-delay:0.8s"><i class="fas fa-code"></i><span>Tailwind CSS</span></div>
-        <div class="tech-item animate fade-up" style="transition-delay:0.9s"><i class="fas fa-shield-halved"></i><span>Security</span></div>
       </div>
     </div>
   </section>
@@ -130,42 +664,18 @@
     </div>
   </section>
 
-  <section id="why-choose-us">
+  <section id="why-us">
     <div class="container">
       <p class="section-tag animate fade-up">WHY CHOOSE US</p>
-      <h2 class="animate fade-up">What Sets Us Apart</h2>
-      <p class="section-subtitle animate fade-up">We combine security, performance, and modern design in every project.</p>
-      <div class="features-grid">
-        <div class="feature-card animate fade-up">
-          <i class="fas fa-shield-halved"></i>
-          <h3>Security-Focused Development</h3>
-          <p>RBAC, encryption, and anti-injection practices built into every project from day one.</p>
-        </div>
-        <div class="feature-card animate fade-up" style="transition-delay:0.1s">
-          <i class="fas fa-bolt"></i>
-          <h3>Fast Performance</h3>
-          <p>Optimized code and assets for lightning-fast loading speeds and smooth user experiences.</p>
-        </div>
-        <div class="feature-card animate fade-up" style="transition-delay:0.2s">
-          <i class="fas fa-mobile-screen-button"></i>
-          <h3>Mobile Responsive</h3>
-          <p>Perfect display on all devices from smartphones to large desktop screens.</p>
-        </div>
-        <div class="feature-card animate fade-up" style="transition-delay:0.3s">
-          <i class="fas fa-paint-brush"></i>
-          <h3>Modern UI/UX</h3>
-          <p>Clean, intuitive interfaces designed with user experience as the top priority.</p>
-        </div>
-        <div class="feature-card animate fade-up" style="transition-delay:0.4s">
-          <i class="fas fa-cubes"></i>
-          <h3>Scalable Architecture</h3>
-          <p>Systems built to grow with your needs, from small projects to enterprise solutions.</p>
-        </div>
-        <div class="feature-card animate fade-up" style="transition-delay:0.5s">
-          <i class="fas fa-magnifying-glass"></i>
-          <h3>SEO Optimization</h3>
-          <p>Built-in search engine optimization to help your site rank higher and reach more users.</p>
-        </div>
+      <h2 class="animate fade-up">Built Different, Built Better</h2>
+      <p class="section-subtitle animate fade-up">We focus on security, performance, and modern design in every project.</p>
+      <div class="why-grid">
+        <div class="why-card animate fade-up"><div class="why-icon"><i class="fas fa-shield-halved"></i></div><h3 style="font-family:var(--font-display);font-weight:700;margin-bottom:8px;color:var(--text);">Security-Focused</h3><p style="color:var(--text-muted);font-size:clamp(0.78rem,1.2vw,0.9rem);">RBAC, encryption, anti-injection baked into every project.</p></div>
+        <div class="why-card animate fade-up" style="transition-delay:0.1s"><div class="why-icon"><i class="fas fa-bolt"></i></div><h3 style="font-family:var(--font-display);font-weight:700;margin-bottom:8px;color:var(--text);">Fast Performance</h3><p style="color:var(--text-muted);font-size:clamp(0.78rem,1.2vw,0.9rem);">Optimized code, fast loading, smooth user experience.</p></div>
+        <div class="why-card animate fade-up" style="transition-delay:0.2s"><div class="why-icon"><i class="fas fa-mobile-screen"></i></div><h3 style="font-family:var(--font-display);font-weight:700;margin-bottom:8px;color:var(--text);">Mobile Responsive</h3><p style="color:var(--text-muted);font-size:clamp(0.78rem,1.2vw,0.9rem);">Perfect display on every screen size and device.</p></div>
+        <div class="why-card animate fade-up" style="transition-delay:0.1s"><div class="why-icon"><i class="fas fa-palette"></i></div><h3 style="font-family:var(--font-display);font-weight:700;margin-bottom:8px;color:var(--text);">Modern UI/UX</h3><p style="color:var(--text-muted);font-size:clamp(0.78rem,1.2vw,0.9rem);">Clean, intuitive interfaces users love.</p></div>
+        <div class="why-card animate fade-up" style="transition-delay:0.2s"><div class="why-icon"><i class="fas fa-arrows-up-down-left-right"></i></div><h3 style="font-family:var(--font-display);font-weight:700;margin-bottom:8px;color:var(--text);">Scalable Architecture</h3><p style="color:var(--text-muted);font-size:clamp(0.78rem,1.2vw,0.9rem);">Built to grow with your needs.</p></div>
+        <div class="why-card animate fade-up" style="transition-delay:0.3s"><div class="why-icon"><i class="fas fa-magnifying-glass-chart"></i></div><h3 style="font-family:var(--font-display);font-weight:700;margin-bottom:8px;color:var(--text);">SEO Optimized</h3><p style="color:var(--text-muted);font-size:clamp(0.78rem,1.2vw,0.9rem);">Rank higher and get found by your audience.</p></div>
       </div>
     </div>
   </section>
@@ -174,38 +684,14 @@
     <div class="container">
       <p class="section-tag animate fade-up">HOW WE WORK</p>
       <h2 class="animate fade-up">Our Development Process</h2>
-      <p class="section-subtitle animate fade-up">A proven approach to deliver quality results on time.</p>
-      <div class="process-timeline">
-        <div class="process-step animate fade-up">
-          <div class="process-number">1</div>
-          <h3>Consultation</h3>
-          <p>We discuss your needs, goals, and vision for the project.</p>
-        </div>
-        <div class="process-step animate fade-up" style="transition-delay:0.1s">
-          <div class="process-number">2</div>
-          <h3>Planning</h3>
-          <p>Detailed project scope, timeline, and technical architecture planning.</p>
-        </div>
-        <div class="process-step animate fade-up" style="transition-delay:0.2s">
-          <div class="process-number">3</div>
-          <h3>UI/UX Design</h3>
-          <p>Creating wireframes and visual designs that align with your brand.</p>
-        </div>
-        <div class="process-step animate fade-up" style="transition-delay:0.3s">
-          <div class="process-number">4</div>
-          <h3>Development</h3>
-          <p>Clean, secure code with regular progress updates and milestone reviews.</p>
-        </div>
-        <div class="process-step animate fade-up" style="transition-delay:0.4s">
-          <div class="process-number">5</div>
-          <h3>Testing & Security Audit</h3>
-          <p>Rigorous testing, security validation, and performance optimization.</p>
-        </div>
-        <div class="process-step animate fade-up" style="transition-delay:0.5s">
-          <div class="process-number">6</div>
-          <h3>Deployment & Support</h3>
-          <p>Launch and ongoing maintenance to ensure smooth operation.</p>
-        </div>
+      <p class="section-subtitle animate fade-up">A proven approach to deliver quality results every time.</p>
+      <div class="process-steps">
+        <div class="process-step animate fade-up"><div class="process-num">1</div><h4>Consultation</h4><p>We discuss your goals and requirements.</p></div>
+        <div class="process-step animate fade-up" style="transition-delay:0.1s"><div class="process-num">2</div><h4>Planning</h4><p>Scope, timeline, and architecture design.</p></div>
+        <div class="process-step animate fade-up" style="transition-delay:0.2s"><div class="process-num">3</div><h4>UI/UX Design</h4><p>Wireframes and visual design.</p></div>
+        <div class="process-step animate fade-up" style="transition-delay:0.3s"><div class="process-num">4</div><h4>Development</h4><p>Clean, secure code implementation.</p></div>
+        <div class="process-step animate fade-up" style="transition-delay:0.4s"><div class="process-num">5</div><h4>Testing & Security</h4><p>Quality assurance and security audit.</p></div>
+        <div class="process-step animate fade-up" style="transition-delay:0.5s"><div class="process-num">6</div><h4>Deployment & Support</h4><p>Launch and ongoing maintenance.</p></div>
       </div>
     </div>
   </section>
@@ -224,20 +710,6 @@
               <p class="portfolio-subtitle">PIT Tabango | CHED CMO 19 s.2025 Compliant</p>
             </div>
           </div>
-          <div class="portfolio-screenshots">
-            <div class="screenshot-placeholder">
-              <i class="fas fa-desktop"></i>
-              <span>Dashboard Preview</span>
-            </div>
-            <div class="screenshot-placeholder">
-              <i class="fas fa-mobile-screen-button"></i>
-              <span>Mobile View</span>
-            </div>
-            <div class="screenshot-placeholder">
-              <i class="fas fa-chart-bar"></i>
-              <span>Reports & Analytics</span>
-            </div>
-          </div>
           <p class="portfolio-description">A comprehensive web-based evaluation platform designed to digitize, automate, and centralize the entire faculty evaluation process for higher education institutions. Built with role-based access control, real-time analytics, and multi-source evaluation capabilities.</p>
           <div class="feature-categories">
             <div class="feature-category animate fade-up"><h4><i class="fas fa-lock"></i> Auth & User Management</h4><ul class="feature-list"><li><i class="fas fa-check-circle"></i> Multi-role login (Admin, Student, Faculty, Supervisor)</li><li><i class="fas fa-check-circle"></i> Role-Based Access Control (RBAC)</li><li><i class="fas fa-check-circle"></i> Account creation, editing, activation/deactivation</li><li><i class="fas fa-check-circle"></i> Password reset & session management</li></ul></div>
@@ -250,10 +722,6 @@
           <div class="tech-stack animate fade-up">
             <span class="tech-badge"><i class="fab fa-html5"></i> HTML5</span><span class="tech-badge"><i class="fab fa-css3-alt"></i> CSS3 / Bootstrap 5</span><span class="tech-badge"><i class="fab fa-js"></i> JavaScript ES6+</span><span class="tech-badge"><i class="fab fa-php"></i> PHP / Laravel</span><span class="tech-badge"><i class="fas fa-database"></i> MySQL / MariaDB</span><span class="tech-badge"><i class="fas fa-server"></i> Apache / XAMPP</span><span class="tech-badge"><i class="fas fa-cloud"></i> Cloud-Ready</span><span class="tech-badge"><i class="fas fa-mobile-alt"></i> PWA Ready</span>
           </div>
-          <div class="portfolio-links mt-20">
-            <a href="#" class="btn-outline"><i class="fas fa-external-link-alt"></i> Live Demo</a>
-            <a href="#" class="btn-outline"><i class="fab fa-github"></i> GitHub</a>
-          </div>
         </div>
         <div class="portfolio-card animate scale-in">
           <div class="portfolio-header">
@@ -261,16 +729,6 @@
             <div>
               <h3>Rhyzil Tech Company Website</h3>
               <p class="portfolio-subtitle">Live Production Site | Netlify Hosted</p>
-            </div>
-          </div>
-          <div class="portfolio-screenshots">
-            <div class="screenshot-placeholder">
-              <i class="fas fa-desktop"></i>
-              <span>Desktop View</span>
-            </div>
-            <div class="screenshot-placeholder">
-              <i class="fas fa-mobile-screen-button"></i>
-              <span>Mobile View</span>
             </div>
           </div>
           <p class="portfolio-description">A modern, high-performance company website featuring sleek dark/light theme, smooth animations, and fully responsive design that delivers an exceptional user experience across all devices.</p>
@@ -281,10 +739,6 @@
           <div class="tech-stack animate fade-up">
             <span class="tech-badge"><i class="fab fa-html5"></i> HTML5</span><span class="tech-badge"><i class="fab fa-css3-alt"></i> CSS3</span><span class="tech-badge"><i class="fab fa-js"></i> Vanilla JS</span><span class="tech-badge"><i class="fas fa-envelope"></i> EmailJS</span><span class="tech-badge"><i class="fas fa-cloud"></i> Netlify</span><span class="tech-badge"><i class="fas fa-robot"></i> AI Chatbot</span>
           </div>
-          <div class="portfolio-links mt-20">
-            <a href="#" class="btn-outline"><i class="fas fa-external-link-alt"></i> Live Demo</a>
-            <a href="#" class="btn-outline"><i class="fab fa-github"></i> GitHub</a>
-          </div>
         </div>
       </div>
     </div>
@@ -294,39 +748,29 @@
     <div class="container">
       <p class="section-tag animate fade-up">CASE STUDIES</p>
       <h2 class="animate fade-up">Real Problems, Real Solutions</h2>
-      <p class="section-subtitle animate fade-up">How we've helped organizations improve their digital operations.</p>
-      <div class="case-studies-grid">
+      <p class="section-subtitle animate fade-up">How we helped clients transform their digital presence.</p>
+      <div class="case-study-grid">
         <div class="case-study-card animate fade-up">
-          <div class="case-study-icon"><i class="fas fa-school"></i></div>
-          <h3>Faculty Evaluation System</h3>
-          <div class="case-study-detail">
-            <strong>Problem:</strong>
-            <p>Manual student records and paper-based faculty evaluations were slow, inefficient, and prone to errors. Data was difficult to analyze and reports took days to compile.</p>
+          <h3>Student Management System</h3>
+          <div style="margin-bottom:clamp(10px,2vw,16px);">
+            <span class="case-label problem">Problem</span>
+            <span class="case-label solution">Solution</span>
+            <span class="case-label result">Result</span>
           </div>
-          <div class="case-study-detail">
-            <strong>Solution:</strong>
-            <p>Built a Laravel-based management system with RBAC, automated evaluation scheduling, real-time analytics, and PDF report generation. Multi-role access for administrators, faculty, and students.</p>
-          </div>
-          <div class="case-study-detail">
-            <strong>Result:</strong>
-            <p>Reduced administrative work by 80%, improved evaluation accuracy, enabled real-time reporting, and provided secure role-based access for all stakeholders.</p>
-          </div>
+          <p style="margin-bottom:12px;color:var(--text-muted);"><strong style="color:#EF4444;">Problem:</strong> Manual student records were slow, inefficient, and prone to errors. Administrative staff spent hours on paperwork.</p>
+          <p style="margin-bottom:12px;color:var(--text-muted);"><strong style="color:#0EA5E9;">Solution:</strong> Built a Laravel-based management system with RBAC, automated reporting, and a centralized database for all student records.</p>
+          <p style="color:var(--text-muted);"><strong style="color:#10B981;">Result:</strong> Reduced administrative work by 70% and improved data accuracy. Staff can now access records instantly.</p>
         </div>
         <div class="case-study-card animate fade-up" style="transition-delay:0.1s">
-          <div class="case-study-icon"><i class="fas fa-globe"></i></div>
-          <h3>Company Portfolio Website</h3>
-          <div class="case-study-detail">
-            <strong>Problem:</strong>
-            <p>Needed a professional online presence to showcase services, portfolio, and attract potential clients with modern design and excellent user experience.</p>
+          <h3>Business Portfolio Website</h3>
+          <div style="margin-bottom:clamp(10px,2vw,16px);">
+            <span class="case-label problem">Problem</span>
+            <span class="case-label solution">Solution</span>
+            <span class="case-label result">Result</span>
           </div>
-          <div class="case-study-detail">
-            <strong>Solution:</strong>
-            <p>Created a high-performance website with dark/light themes, particle animations, AI-powered chatbot, and fully responsive design optimized for all devices.</p>
-          </div>
-          <div class="case-study-detail">
-            <strong>Result:</strong>
-            <p>Established professional brand presence, improved client engagement through AI chatbot, and created a scalable platform for showcasing future projects.</p>
-          </div>
+          <p style="margin-bottom:12px;color:var(--text-muted);"><strong style="color:#EF4444;">Problem:</strong> A local business had no online presence and was losing customers to competitors with websites.</p>
+          <p style="margin-bottom:12px;color:var(--text-muted);"><strong style="color:#0EA5E9;">Solution:</strong> Designed and developed a modern, responsive website with SEO optimization, contact forms, and social media integration.</p>
+          <p style="color:var(--text-muted);"><strong style="color:#10B981;">Result:</strong> 40% increase in customer inquiries within the first month. Professional online presence established.</p>
         </div>
       </div>
     </div>
@@ -337,39 +781,24 @@
       <p class="section-tag animate fade-up">TESTIMONIALS</p>
       <h2 class="animate fade-up">What People Say</h2>
       <p class="section-subtitle animate fade-up">Feedback from clients and collaborators.</p>
-      <div class="testimonials-grid">
+      <div class="testimonial-grid">
         <div class="testimonial-card animate fade-up">
-          <div class="testimonial-stars">★★★★★</div>
-          <p class="testimonial-text">Professional and responsive developer. The system worked smoothly and looked modern. Security features were well-implemented.</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar"><i class="fas fa-user"></i></div>
-            <div>
-              <strong>John D.</strong>
-              <span>School Project Client</span>
-            </div>
-          </div>
+          <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="testimonial-text">"Professional and responsive developer. The system worked smoothly and looked modern. Would definitely recommend for school management systems."</p>
+          <p class="testimonial-author">John D.</p>
+          <p class="testimonial-role">School Project Client</p>
         </div>
         <div class="testimonial-card animate fade-up" style="transition-delay:0.1s">
-          <div class="testimonial-stars">★★★★★</div>
-          <p class="testimonial-text">Excellent attention to detail and security. The RBAC system was exactly what we needed. Fast delivery and great communication throughout.</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar"><i class="fas fa-user"></i></div>
-            <div>
-              <strong>Maria S.</strong>
-              <span>System User</span>
-            </div>
-          </div>
+          <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="testimonial-text">"Great attention to detail and security. The RBAC system was exactly what we needed. Fast delivery and excellent communication."</p>
+          <p class="testimonial-author">Maria S.</p>
+          <p class="testimonial-role">System User</p>
         </div>
         <div class="testimonial-card animate fade-up" style="transition-delay:0.2s">
-          <div class="testimonial-stars">★★★★★</div>
-          <p class="testimonial-text">The website looks amazing on all devices. Loads fast, looks professional, and the AI chatbot is a nice touch for client engagement.</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar"><i class="fas fa-user"></i></div>
-            <div>
-              <strong>Alex R.</strong>
-              <span>Website Client</span>
-            </div>
-          </div>
+          <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="testimonial-text">"Clean code, modern design, and very responsive to feedback. The website loads fast and looks great on mobile. Highly recommended."</p>
+          <p class="testimonial-author">Alex R.</p>
+          <p class="testimonial-role">Business Owner</p>
         </div>
       </div>
     </div>
@@ -422,87 +851,79 @@
   <section id="pricing">
     <div class="container">
       <p class="section-tag animate fade-up">PRICING</p>
-      <h2 class="animate fade-up">Transparent Rates</h2>
-      <p class="section-subtitle animate fade-up">Web Development Service Rates — no hidden fees</p>
+      <h2 class="animate fade-up">Transparent Plans</h2>
+      <p class="section-subtitle animate fade-up">Choose the right package for your needs.</p>
       <div class="pricing-grid">
         <div class="pricing-card animate fade-up">
-          <div class="pricing-header">
-            <h3>Starter Website</h3>
-            <div class="pricing-price">₱8,000<span>+</span></div>
-          </div>
+          <div class="pricing-badge">Starter</div>
+          <div class="pricing-price">₱8,000<small>+</small></div>
           <ul class="pricing-features">
-            <li><i class="fas fa-check"></i> Responsive Design</li>
-            <li><i class="fas fa-check"></i> Contact Form</li>
-            <li><i class="fas fa-check"></i> SEO Ready</li>
-            <li><i class="fas fa-check"></i> Fast Loading</li>
-            <li><i class="fas fa-check"></i> Basic Security</li>
+            <li><i class="fas fa-check-circle"></i> Responsive Design</li>
+            <li><i class="fas fa-check-circle"></i> Contact Form</li>
+            <li><i class="fas fa-check-circle"></i> SEO Ready</li>
+            <li><i class="fas fa-check-circle"></i> Fast Loading</li>
+            <li><i class="fas fa-check-circle"></i> 3-5 Pages</li>
           </ul>
-          <button class="btn-primary" onclick="addService('Starter Website (₱8k+)');">Get Started</button>
+          <a href="#contact" class="btn-outline" style="width:100%;justify-content:center;position:relative;z-index:1;">Get Started</a>
         </div>
         <div class="pricing-card featured animate fade-up" style="transition-delay:0.1s">
-          <div class="pricing-badge">Popular</div>
-          <div class="pricing-header">
-            <h3>Business Website</h3>
-            <div class="pricing-price">₱20,000<span>+</span></div>
-          </div>
+          <div class="pricing-badge">Business</div>
+          <div class="pricing-price">₱20,000<small>+</small></div>
           <ul class="pricing-features">
-            <li><i class="fas fa-check"></i> Admin Dashboard</li>
-            <li><i class="fas fa-check"></i> Database Integration</li>
-            <li><i class="fas fa-check"></i> Authentication System</li>
-            <li><i class="fas fa-check"></i> Advanced Security</li>
-            <li><i class="fas fa-check"></i> Performance Optimization</li>
+            <li><i class="fas fa-check-circle"></i> Admin Dashboard</li>
+            <li><i class="fas fa-check-circle"></i> Database Integration</li>
+            <li><i class="fas fa-check-circle"></i> Authentication</li>
+            <li><i class="fas fa-check-circle"></i> Security Features</li>
+            <li><i class="fas fa-check-circle"></i> Up to 15 Pages</li>
           </ul>
-          <button class="btn-primary" onclick="addService('Business Website (₱20k+)');">Get Started</button>
+          <a href="#contact" class="btn-primary" style="width:100%;justify-content:center;position:relative;z-index:1;">Get Started</a>
         </div>
         <div class="pricing-card animate fade-up" style="transition-delay:0.2s">
-          <div class="pricing-header">
-            <h3>Premium System</h3>
-            <div class="pricing-price">Custom</div>
-          </div>
+          <div class="pricing-badge">Premium</div>
+          <div class="pricing-price">Custom</div>
           <ul class="pricing-features">
-            <li><i class="fas fa-check"></i> Full RBAC System</li>
-            <li><i class="fas fa-check"></i> API Integration</li>
-            <li><i class="fas fa-check"></i> Analytics Dashboard</li>
-            <li><i class="fas fa-check"></i> Advanced Security</li>
-            <li><i class="fas fa-check"></i> Custom Features</li>
+            <li><i class="fas fa-check-circle"></i> RBAC System</li>
+            <li><i class="fas fa-check-circle"></i> API Integration</li>
+            <li><i class="fas fa-check-circle"></i> Analytics Dashboard</li>
+            <li><i class="fas fa-check-circle"></i> Advanced Security</li>
+            <li><i class="fas fa-check-circle"></i> Unlimited Pages</li>
           </ul>
-          <button class="btn-primary" onclick="addService('Premium System (Custom)');">Contact Us</button>
+          <a href="#contact" class="btn-outline" style="width:100%;justify-content:center;position:relative;z-index:1;">Contact Us</a>
         </div>
       </div>
-      <div class="tabs-nav animate fade-up mt-40" id="rateTabs">
-        <button class="tab-btn active" data-rate="frontend-rates"><i class="fas fa-paint-brush"></i> Front-End</button>
-        <button class="tab-btn" data-rate="backend-rates"><i class="fas fa-server"></i> Back-End</button>
-        <button class="tab-btn" data-rate="fullstack-rates"><i class="fas fa-rocket"></i> Full-Stack</button>
-        <button class="tab-btn" data-rate="security-rates"><i class="fas fa-shield-halved"></i> Security</button>
-      </div>
-      <div class="rate-content animate scale-in" id="frontend-rates">
-        <table class="rate-table"><thead><tr><th><i class="fas fa-layer-group"></i> Service</th><th><i class="fas fa-peso-sign"></i> Starting Rate</th></tr></thead><tbody>
-          <tr class="clickable-rate" data-service="Landing Page (₱3k-₱15k)"><td>Landing Page</td><td>₱3,000 – ₱15,000</td></tr>
-          <tr class="clickable-rate" data-service="Business Website (₱8k-₱40k)"><td>Business Website</td><td>₱8,000 – ₱40,000</td></tr>
-          <tr class="clickable-rate" data-service="React/Next.js App (₱10k-₱80k+)"><td>React / Next.js</td><td>₱10,000 – ₱80,000+</td></tr>
-        </tbody></table>
-      </div>
-      <div class="rate-content animate scale-in" id="backend-rates" style="display:none;">
-        <table class="rate-table"><thead><tr><th><i class="fas fa-layer-group"></i> Service</th><th><i class="fas fa-peso-sign"></i> Starting Rate</th></tr></thead><tbody>
-          <tr class="clickable-rate" data-service="REST API (₱5k-₱50k)"><td>REST API</td><td>₱5,000 – ₱50,000</td></tr>
-          <tr class="clickable-rate" data-service="Auth System (₱3k-₱20k)"><td>Auth System</td><td>₱3,000 – ₱20,000</td></tr>
-        </tbody></table>
-      </div>
-      <div class="rate-content animate scale-in" id="fullstack-rates" style="display:none;">
-        <table class="rate-table"><thead><tr><th><i class="fas fa-layer-group"></i> Service</th><th><i class="fas fa-peso-sign"></i> Starting Rate</th></tr></thead><tbody>
-          <tr class="clickable-rate" data-service="Full Business Solution (₱15k-₱80k)"><td>Full Business Solution</td><td>₱15,000 – ₱80,000</td></tr>
-          <tr class="clickable-rate" data-service="SaaS MVP (₱50k-₱500k+)"><td>SaaS MVP</td><td>₱50,000 – ₱500,000+</td></tr>
-        </tbody></table>
-      </div>
-      <div class="rate-content animate scale-in" id="security-rates" style="display:none;">
-        <table class="rate-table"><thead><tr><th><i class="fas fa-layer-group"></i> Service</th><th><i class="fas fa-peso-sign"></i> Starting Rate</th></tr></thead><tbody>
-          <tr class="clickable-rate" data-service="Security Audit (₱5k-₱50k)"><td>Security Audit</td><td>₱5,000 – ₱50,000</td></tr>
-          <tr class="clickable-rate" data-service="Pen Testing (₱10k-₱150k)"><td>Pen Testing</td><td>₱10,000 – ₱150,000</td></tr>
-        </tbody></table>
-      </div>
-      <div class="downpayment-note animate scale-in">
-        <strong style="font-family:var(--font-display);font-size:1.05rem;"><i class="fas fa-file-invoice"></i> 50% Downpayment | Balance Upon Completion</strong><br>
+      <div class="downpayment-note animate scale-in" style="background:var(--primary-dim); border:1px solid var(--border-hover); border-radius:16px; padding:clamp(16px,3vw,22px) clamp(18px,3.5vw,28px); margin-top:clamp(28px,5vw,44px); text-align:center;">
+        <strong style="font-family:var(--font-display);font-size:clamp(0.9rem,1.5vw,1.05rem);"><i class="fas fa-file-invoice"></i> 50% Downpayment | Balance Upon Completion</strong><br>
         <small style="color:var(--text-muted);margin-top:6px;display:block;">100% satisfaction guarantee on every project</small>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="container">
+      <p class="section-tag animate fade-up">FAQ</p>
+      <h2 class="animate fade-up">Frequently Asked Questions</h2>
+      <p class="section-subtitle animate fade-up">Quick answers to common questions.</p>
+      <div class="faq-grid">
+        <div class="faq-item animate fade-up">
+          <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">How long does a typical project take? <i class="fas fa-chevron-down"></i></div>
+          <div class="faq-answer">Landing pages take 3-7 days, business websites 1-4 weeks, and complex web applications 4-16 weeks depending on features and complexity.</div>
+        </div>
+        <div class="faq-item animate fade-up" style="transition-delay:0.1s">
+          <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">What is your payment process? <i class="fas fa-chevron-down"></i></div>
+          <div class="faq-answer">We require a 50% downpayment to begin work, with the remaining 50% due upon completion and your approval. We offer a 100% satisfaction guarantee.</div>
+        </div>
+        <div class="faq-item animate fade-up" style="transition-delay:0.2s">
+          <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">Do you provide ongoing support? <i class="fas fa-chevron-down"></i></div>
+          <div class="faq-answer">Yes! We offer post-launch support including bug fixes, performance monitoring, updates, and maintenance packages to keep your system running smoothly.</div>
+        </div>
+        <div class="faq-item animate fade-up" style="transition-delay:0.3s">
+          <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">What technologies do you use? <i class="fas fa-chevron-down"></i></div>
+          <div class="faq-answer">We work with HTML5, CSS3, JavaScript, React, Next.js, Vue.js, PHP/Laravel, MySQL, MongoDB, and more. We choose the best tech stack for your specific project needs.</div>
+        </div>
+        <div class="faq-item animate fade-up" style="transition-delay:0.4s">
+          <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">How do I get started? <i class="fas fa-chevron-down"></i></div>
+          <div class="faq-answer">Simply fill out our contact form, send an email, or message us on social media. We'll schedule a free consultation to discuss your project and provide a detailed quote.</div>
+        </div>
       </div>
     </div>
   </section>
@@ -515,83 +936,19 @@
       <div class="about-grid">
         <div class="about-card animate fade-left">
           <div class="about-icon-wrapper"><i class="fas fa-user-tie"></i></div>
-          <h3 style="font-family:var(--font-display);font-size:1.3rem;font-weight:700;margin-bottom:6px;">Rhyzil Angelo Pabadora Jimenez</h3>
+          <h3 style="font-family:var(--font-display);font-size:clamp(1.1rem,1.8vw,1.3rem);font-weight:700;margin-bottom:6px;">Rhyzil Angelo Pabadora Jimenez</h3>
           <p style="color:var(--primary);font-weight:600;margin-bottom:8px;">Founder & CEO</p>
           <p style="color:var(--text-muted);">Lead Security Architect & Full-Stack Developer</p>
-          <div style="display:flex;gap:28px;justify-content:center;margin-top:24px;">
-            <div><strong style="font-family:var(--font-display);font-size:2.4rem;font-weight:800;color:var(--primary);display:block;">7+</strong><small style="color:var(--text-muted);">Years Exp.</small></div>
-            <div><strong style="font-family:var(--font-display);font-size:2.4rem;font-weight:800;color:var(--primary);display:block;">50+</strong><small style="color:var(--text-muted);">Systems Built</small></div>
+          <div style="display:flex;gap:clamp(16px,4vw,28px);justify-content:center;margin-top:clamp(16px,3vw,24px);">
+            <div><strong style="font-family:var(--font-display);font-size:clamp(1.8rem,3.5vw,2.4rem);font-weight:800;color:var(--primary);display:block;">7+</strong><small style="color:var(--text-muted);">Years Exp.</small></div>
+            <div><strong style="font-family:var(--font-display);font-size:clamp(1.8rem,3.5vw,2.4rem);font-weight:800;color:var(--primary);display:block;">50+</strong><small style="color:var(--text-muted);">Systems Built</small></div>
           </div>
         </div>
         <div class="about-card animate fade-right">
           <div class="about-icon-wrapper"><i class="fas fa-shield-halved"></i></div>
-          <h3 style="font-family:var(--font-display);font-size:1.3rem;font-weight:700;margin-bottom:12px;">Security-First Promise</h3>
+          <h3 style="font-family:var(--font-display);font-size:clamp(1.1rem,1.8vw,1.3rem);font-weight:700;margin-bottom:12px;">Security-First Promise</h3>
           <p style="color:var(--text-muted);">RBAC, encryption, anti-injection, and industry best practices baked into every project we deliver.</p>
           <p style="color:var(--text-muted);margin-top:14px;">24/7 security monitoring and proactive threat protection for all our solutions.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="faq">
-    <div class="container">
-      <p class="section-tag animate fade-up">FAQ</p>
-      <h2 class="animate fade-up">Frequently Asked Questions</h2>
-      <p class="section-subtitle animate fade-up">Quick answers to common questions about our services.</p>
-      <div class="faq-grid">
-        <div class="faq-item animate fade-up">
-          <div class="faq-question">
-            <h3>How long does it take to build a website?</h3>
-            <i class="fas fa-chevron-down"></i>
-          </div>
-          <div class="faq-answer">
-            <p>Timeline depends on complexity. Landing pages take 3-7 days, business websites 1-4 weeks, and complex systems 4-16 weeks. We provide detailed timelines during consultation.</p>
-          </div>
-        </div>
-        <div class="faq-item animate fade-up" style="transition-delay:0.1s">
-          <div class="faq-question">
-            <h3>What is your payment process?</h3>
-            <i class="fas fa-chevron-down"></i>
-          </div>
-          <div class="faq-answer">
-            <p>We require 50% downpayment to begin work, with the remaining 50% due upon project completion and your approval. We offer milestone-based payments for larger projects.</p>
-          </div>
-        </div>
-        <div class="faq-item animate fade-up" style="transition-delay:0.2s">
-          <div class="faq-question">
-            <h3>Do you offer maintenance after launch?</h3>
-            <i class="fas fa-chevron-down"></i>
-          </div>
-          <div class="faq-answer">
-            <p>Yes! We offer ongoing maintenance and support packages. Bug fixes are included, and we provide performance monitoring and updates as needed.</p>
-          </div>
-        </div>
-        <div class="faq-item animate fade-up" style="transition-delay:0.3s">
-          <div class="faq-question">
-            <h3>How do you ensure security?</h3>
-            <i class="fas fa-chevron-down"></i>
-          </div>
-          <div class="faq-answer">
-            <p>Security is built into every project from day one. We implement RBAC, encryption, input validation, anti-injection measures, and conduct thorough security testing before launch.</p>
-          </div>
-        </div>
-        <div class="faq-item animate fade-up" style="transition-delay:0.4s">
-          <div class="faq-question">
-            <h3>Can you work with my existing system?</h3>
-            <i class="fas fa-chevron-down"></i>
-          </div>
-          <div class="faq-answer">
-            <p>Absolutely! We can integrate with existing systems, migrate data, or enhance current applications. We'll assess your current setup during consultation.</p>
-          </div>
-        </div>
-        <div class="faq-item animate fade-up" style="transition-delay:0.5s">
-          <div class="faq-question">
-            <h3>What technologies do you specialize in?</h3>
-            <i class="fas fa-chevron-down"></i>
-          </div>
-          <div class="faq-answer">
-            <p>We specialize in Laravel, React, PHP, MySQL, JavaScript, and modern CSS frameworks. We choose the best technology based on your specific project needs.</p>
-          </div>
         </div>
       </div>
     </div>
@@ -629,21 +986,17 @@
             <div class="contact-info-icon"><i class="fas fa-location-dot"></i></div>
             <div><small style="color:var(--text-muted);">Location</small><br><span style="color:var(--text);font-weight:600;">Crossing Otabon, Tabango, Leyte</span></div>
           </div>
-          <div class="contact-quick-actions mt-20">
-            <a href="https://m.me/yourpage" target="_blank" rel="noopener noreferrer" class="btn-outline" style="width:100%;justify-content:center;margin-bottom:10px;"><i class="fab fa-facebook-messenger"></i> Message on Messenger</a>
-            <a href="https://wa.me/639936796302" target="_blank" rel="noopener noreferrer" class="btn-outline" style="width:100%;justify-content:center;margin-bottom:10px;"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
-            <a href="mailto:businessrhyziltech@gmail.com" class="btn-outline" style="width:100%;justify-content:center;"><i class="fas fa-calendar-check"></i> Book a Free Call</a>
+          <div class="messenger-buttons">
+            <a href="https://m.me/61584139169630" target="_blank" rel="noopener noreferrer" class="msg-btn messenger"><i class="fab fa-facebook-messenger"></i> Messenger</a>
+            <a href="https://wa.me/639936796302" target="_blank" rel="noopener noreferrer" class="msg-btn whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            <a href="mailto:businessrhyziltech@gmail.com" class="msg-btn email"><i class="fas fa-envelope"></i> Email</a>
           </div>
-          <div class="flex gap-12 mt-20 justify-center">
+          <div class="flex gap-12 mt-20 justify-center flex-wrap">
             <a href="https://www.facebook.com/profile.php?id=61584139169630" target="_blank" rel="noopener noreferrer" class="social-icon"><i class="fab fa-facebook-f"></i></a>
             <a href="https://www.tiktok.com/@rhyzil_" target="_blank" rel="noopener noreferrer" class="social-icon"><i class="fab fa-tiktok"></i></a>
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="social-icon"><i class="fab fa-github"></i></a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
             <a href="mailto:businessrhyziltech@gmail.com" class="social-icon"><i class="fas fa-envelope"></i></a>
-            <a href="https://github.com/rhyzil" target="_blank" rel="noopener noreferrer" class="social-icon"><i class="fab fa-github"></i></a>
-            <a href="https://linkedin.com/in/rhyzil" target="_blank" rel="noopener noreferrer" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
-          </div>
-          <div class="response-time mt-20 text-center">
-            <i class="fas fa-clock" style="color:var(--primary);"></i>
-            <span style="color:var(--text-muted);">Usually replies within 1-2 hours</span>
           </div>
         </div>
       </div>
@@ -655,46 +1008,32 @@
       <div class="footer-grid">
         <div>
           <div class="logo" style="display:inline-block;margin-bottom:10px;">Rhyzil Tech</div>
-          <p style="color:var(--text-muted);font-size:0.9rem;">Code. Create. Elevate.</p>
-          <p style="color:var(--text-muted);font-size:0.88rem;margin-top:6px;">Secure web systems developer for schools and businesses.</p>
+          <p style="color:var(--text-muted);font-size:clamp(0.78rem,1.2vw,0.9rem);">Secure web systems for schools and businesses.</p>
+          <p style="color:var(--text-muted);font-size:clamp(0.75rem,1.1vw,0.88rem);margin-top:6px;">Code. Create. Elevate.</p>
         </div>
         <div>
-          <h4><i class="fas fa-link"></i> Quick Links</h4>
+          <h4 style="margin-bottom:14px;font-family:var(--font-display);font-size:clamp(0.88rem,1.4vw,1rem);"><i class="fas fa-link"></i> Quick Links</h4>
           <div style="display:flex;flex-direction:column;gap:8px;">
-            <a href="#services">Services</a>
-            <a href="#portfolio">Our Work</a>
-            <a href="#pricing">Pricing</a>
-            <a href="#testimonials">Testimonials</a>
-            <a href="#faq">FAQ</a>
-            <a href="#contact">Contact</a>
+            <a href="#services" style="color:var(--text-muted);text-decoration:none;font-size:clamp(0.78rem,1.2vw,0.9rem);transition:0.2s;display:inline-flex;align-items:center;gap:6px;" onmouseenter="this.style.color='var(--primary)'" onmouseleave="this.style.color='var(--text-muted)'"><i class="fas fa-chevron-right" style="font-size:0.65rem;"></i> Services</a>
+            <a href="#portfolio" style="color:var(--text-muted);text-decoration:none;font-size:clamp(0.78rem,1.2vw,0.9rem);transition:0.2s;display:inline-flex;align-items:center;gap:6px;" onmouseenter="this.style.color='var(--primary)'" onmouseleave="this.style.color='var(--text-muted)'"><i class="fas fa-chevron-right" style="font-size:0.65rem;"></i> Portfolio</a>
+            <a href="#pricing" style="color:var(--text-muted);text-decoration:none;font-size:clamp(0.78rem,1.2vw,0.9rem);transition:0.2s;display:inline-flex;align-items:center;gap:6px;" onmouseenter="this.style.color='var(--primary)'" onmouseleave="this.style.color='var(--text-muted)'"><i class="fas fa-chevron-right" style="font-size:0.65rem;"></i> Pricing</a>
+            <a href="#faq" style="color:var(--text-muted);text-decoration:none;font-size:clamp(0.78rem,1.2vw,0.9rem);transition:0.2s;display:inline-flex;align-items:center;gap:6px;" onmouseenter="this.style.color='var(--primary)'" onmouseleave="this.style.color='var(--text-muted)'"><i class="fas fa-chevron-right" style="font-size:0.65rem;"></i> FAQ</a>
+            <a href="#contact" style="color:var(--text-muted);text-decoration:none;font-size:clamp(0.78rem,1.2vw,0.9rem);transition:0.2s;display:inline-flex;align-items:center;gap:6px;" onmouseenter="this.style.color='var(--primary)'" onmouseleave="this.style.color='var(--text-muted)'"><i class="fas fa-chevron-right" style="font-size:0.65rem;"></i> Contact</a>
           </div>
         </div>
         <div>
-          <h4><i class="fas fa-cogs"></i> Services</h4>
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <a href="#services">Web Development</a>
-            <a href="#services">E-Commerce</a>
-            <a href="#services">Responsive Design</a>
-            <a href="#services">SEO</a>
-            <a href="#detailed-services">Security Services</a>
-          </div>
-        </div>
-        <div>
-          <h4><i class="fas fa-share-nodes"></i> Connect</h4>
-          <div class="flex gap-12">
+          <h4 style="margin-bottom:14px;font-family:var(--font-display);font-size:clamp(0.88rem,1.4vw,1rem);"><i class="fas fa-share-nodes"></i> Connect</h4>
+          <div class="flex gap-12 flex-wrap">
             <a href="https://www.facebook.com/profile.php?id=61584139169630" target="_blank" rel="noopener noreferrer" class="social-icon"><i class="fab fa-facebook-f"></i></a>
             <a href="https://www.tiktok.com/@rhyzil_" target="_blank" rel="noopener noreferrer" class="social-icon"><i class="fab fa-tiktok"></i></a>
-            <a href="https://github.com/rhyzil" target="_blank" rel="noopener noreferrer" class="social-icon"><i class="fab fa-github"></i></a>
-            <a href="https://linkedin.com/in/rhyzil" target="_blank" rel="noopener noreferrer" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
-          </div>
-          <div style="margin-top:14px;">
-            <a href="#" style="color:var(--text-muted);font-size:0.85rem;">Privacy Policy</a>
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="social-icon"><i class="fab fa-github"></i></a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
           </div>
         </div>
       </div>
-      <div style="text-align:center;margin-top:44px;padding-top:28px;border-top:1px solid var(--border);color:var(--text-muted);font-size:0.85rem;">
+      <div style="text-align:center;margin-top:clamp(28px,5vw,44px);padding-top:clamp(18px,3.5vw,28px);border-top:1px solid var(--border);color:var(--text-muted);font-size:clamp(0.72rem,1.1vw,0.85rem);">
         <div style="margin-bottom:8px;"><i class="fas fa-shield-halved" style="color:var(--primary)"></i> Protected by Rhyzil Tech Security <i class="fas fa-lock" style="color:var(--primary)"></i></div>
-        © 2026 Rhyzil Tech. Code. Create. Elevate. All rights reserved.
+        &copy; 2026 Rhyzil Tech. Code. Create. Elevate. All rights reserved.
       </div>
     </div>
   </footer>
@@ -711,19 +1050,413 @@
       <div class="chat-avatar"><i class="fas fa-robot"></i></div>
       <div class="chat-info">
         <div class="chat-name">Rhyzil AI Assistant</div>
-        <div class="chat-status"><span class="chat-dot"></span> Online — Ask me anything</div>
+        <div class="chat-status"><span class="chat-dot"></span> Online - Ask me anything</div>
       </div>
       <button class="chat-clear-btn" id="chatClearBtn" title="Clear chat">Clear</button>
     </div>
     <div class="chat-messages" id="chatMessages"></div>
     <div class="chat-suggestions" id="chatSuggestions"></div>
     <div class="chat-input-area">
-      <textarea id="chatInput" placeholder="Ask about services, pricing, projects…" rows="1" aria-label="Chat message"></textarea>
+      <textarea id="chatInput" placeholder="Ask about services, pricing, projects..." rows="1" aria-label="Chat message"></textarea>
       <button id="chatSend" aria-label="Send message"><i class="fas fa-paper-plane"></i></button>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <script src="script.js"></script>
+  <script>
+  (function() {
+
+    window.addEventListener('load', () => {
+      setTimeout(() => { document.getElementById('preloader').classList.add('hidden'); }, 1500);
+    });
+
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursor-ring');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx + 'px'; cursor.style.top = my + 'px'; });
+    function lerpRing() { rx += (mx - rx) * 0.14; ry += (my - ry) * 0.14; ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; requestAnimationFrame(lerpRing); }
+    lerpRing();
+    document.querySelectorAll('a,button,.bento-card,.service-tag,.rate-table tr,.tech-badge,.social-icon,.why-card,.pricing-card,.testimonial-card,.case-study-card').forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+    });
+
+    const canvas = document.getElementById('particle-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    function resizeCanvas() { canvas.width = canvas.parentElement.offsetWidth; canvas.height = canvas.parentElement.offsetHeight; }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    for (let i = 0; i < 60; i++) {
+      particles.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, r: Math.random() * 1.5 + 0.3, vx: (Math.random() - 0.5) * 0.35, vy: (Math.random() - 0.5) * 0.35, a: Math.random() * 0.5 + 0.1 });
+    }
+    function drawParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+      particles.forEach(p => {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0) p.x = canvas.width; if (p.x > canvas.width) p.x = 0;
+        if (p.y < 0) p.y = canvas.height; if (p.y > canvas.height) p.y = 0;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = isDark ? `rgba(0,229,160,${p.a})` : `rgba(0,150,100,${p.a * 0.5})`;
+        ctx.fill();
+      });
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          if (dist < 100) {
+            ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y);
+            const alpha = (1 - dist / 100) * 0.12;
+            ctx.strokeStyle = isDark ? `rgba(0,229,160,${alpha})` : `rgba(0,150,100,${alpha * 0.5})`;
+            ctx.lineWidth = 0.6; ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(drawParticles);
+    }
+    drawParticles();
+
+    const words = ['Secure', 'Modern', 'Fast'];
+    let wi = 0;
+    const rotEl = document.getElementById('rotWord');
+    if (rotEl) setInterval(() => { wi = (wi + 1) % words.length; rotEl.textContent = words[wi]; }, 2000);
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.animate').forEach(el => observer.observe(el));
+
+    function animateCounter(el) {
+      const target = +el.getAttribute('data-target');
+      const duration = 1600;
+      const start = performance.now();
+      function step(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const ease = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.floor(ease * target);
+        if (progress < 1) requestAnimationFrame(step);
+        else el.textContent = target;
+      }
+      requestAnimationFrame(step);
+    }
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { animateCounter(e.target); counterObserver.unobserve(e.target); } });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+
+    const hdr = document.getElementById('mainHeader');
+    window.addEventListener('scroll', () => {
+      hdr.classList.toggle('scrolled', window.scrollY > 60);
+      document.getElementById('scrollTop').classList.toggle('show', window.scrollY > 400);
+      const sections = ['home','services','why-us','process','portfolio','case-studies','testimonials','detailed-services','pricing','faq','about','contact'];
+      let current = '';
+      sections.forEach(id => { const sec = document.getElementById(id); if (sec && window.scrollY >= sec.offsetTop - 200) current = id; });
+      document.querySelectorAll('.nav-links a').forEach(a => {
+        a.classList.toggle('active-link', a.getAttribute('href') === '#' + current);
+      });
+    }, { passive: true });
+
+    document.getElementById('scrollTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    const html = document.documentElement;
+    const themeToggle = document.getElementById('themeToggle');
+    function setTheme(t) { html.setAttribute('data-theme', t); localStorage.setItem('theme', t); themeToggle.querySelector('i').className = t==='dark' ? 'fas fa-sun' : 'fas fa-moon'; }
+    setTheme(localStorage.getItem('theme') || 'dark');
+    themeToggle.addEventListener('click', () => setTheme(html.getAttribute('data-theme')==='dark' ? 'light' : 'dark'));
+
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+    const navOverlay = document.getElementById('navOverlay');
+    function openMenu() { navLinks.classList.add('show'); navOverlay.classList.add('show'); menuToggle.innerHTML = '<i class="fas fa-times"></i>'; document.body.style.overflow = 'hidden'; }
+    function closeMenu() { navLinks.classList.remove('show'); navOverlay.classList.remove('show'); menuToggle.innerHTML = '<i class="fas fa-bars"></i>'; document.body.style.overflow = ''; }
+    menuToggle.addEventListener('click', () => navLinks.classList.contains('show') ? closeMenu() : openMenu());
+    navOverlay.addEventListener('click', closeMenu);
+    document.querySelectorAll('.nav-links a').forEach(a => a.addEventListener('click', closeMenu));
+
+    function setupTabs(navSel, contentSel, dataAttr) {
+      document.querySelectorAll(navSel).forEach(tab => {
+        tab.addEventListener('click', function() {
+          document.querySelectorAll(navSel).forEach(t => t.classList.remove('active'));
+          this.classList.add('active');
+          document.querySelectorAll(contentSel).forEach(c => { if(c) c.style.display = 'none'; });
+          const target = this.getAttribute(dataAttr);
+          if (target) { const el = document.getElementById(target); if(el) { el.style.display = 'block'; el.classList.remove('visible'); setTimeout(() => el.classList.add('visible'), 20); } }
+        });
+      });
+    }
+    setupTabs('#servicesTabs .tab-btn', '.service-content', 'data-tab');
+
+    const selectedPackageInput = document.getElementById('selectedPackage');
+    const selectedPackageDisplay = document.getElementById('selectedPackageDisplay');
+    const selectedPackageName = document.getElementById('selectedPackageName');
+    let selectedServices = [];
+    function updatePackageDisplay() {
+      if (selectedServices.length === 0) { selectedPackageInput.value=''; selectedPackageName.textContent=''; selectedPackageDisplay.classList.remove('show'); }
+      else { const d = selectedServices.join(' | '); selectedPackageInput.value=d; selectedPackageName.textContent='Selected: '+d; selectedPackageDisplay.classList.add('show'); }
+    }
+    function addService(name) { if (!selectedServices.includes(name)) { selectedServices.push(name); updatePackageDisplay(); document.getElementById('contact').scrollIntoView({behavior:'smooth'}); } }
+    window.addService = addService;
+    document.querySelectorAll('.clickable-service').forEach(tag => tag.addEventListener('click', function() { addService(this.getAttribute('data-service')); }));
+    document.getElementById('removePackage').addEventListener('click', () => { selectedServices=[]; updatePackageDisplay(); });
+
+    emailjs.init("UV2MXRtD7FcyZXQ3F");
+    const form = document.getElementById('contactForm');
+    const status = document.getElementById('formStatus');
+    const sendBtn = document.getElementById('sendBtn');
+    let lastSubmit = 0;
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      if (Date.now() - lastSubmit < 10000) { status.className='status-msg error'; status.textContent='Please wait 10 seconds before resubmitting.'; return; }
+      const name = document.getElementById('senderName').value.trim();
+      const email = document.getElementById('senderEmail').value.trim();
+      const msg = document.getElementById('senderMessage').value.trim();
+      const pkg = selectedPackageInput.value;
+      if (!name||!email||!msg) { status.className='status-msg error'; status.textContent='All fields are required.'; return; }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { status.className='status-msg error'; status.textContent='Please enter a valid email address.'; return; }
+      lastSubmit = Date.now(); sendBtn.disabled=true; sendBtn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Sending...';
+      status.className='status-msg sending'; status.textContent='Sending your message...';
+      let fullMsg = pkg ? 'SELECTED: '+pkg+'\n\nFROM: '+name+' ('+email+')\n\nMESSAGE:\n'+msg : 'FROM: '+name+' ('+email+')\n\nMESSAGE:\n'+msg;
+      emailjs.send("service_ad1l4qy","template_mphmqzv",{from_name:name,from_email:email,message:fullMsg,reply_to:email})
+      .then(() => { status.className='status-msg success'; status.textContent="Sent! I'll reply within 12 hours."; form.reset(); selectedServices=[]; updatePackageDisplay(); sendBtn.disabled=false; sendBtn.innerHTML='<i class="fas fa-paper-plane"></i> Send Message'; setTimeout(()=>{status.className='status-msg';status.textContent='';},7000); })
+      .catch(() => { window.location.href='mailto:businessrhyziltech@gmail.com?subject=Project Inquiry&body='+encodeURIComponent(fullMsg); status.className='status-msg error'; status.innerHTML='Opening email client... <a href="mailto:businessrhyziltech@gmail.com" style="color:var(--primary);">Click here if it didn\'t open</a>'; sendBtn.disabled=false; sendBtn.innerHTML='<i class="fas fa-paper-plane"></i> Send Message'; });
+    });
+
+    document.querySelectorAll('.bento-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        card.style.transform = `translateY(-8px) perspective(800px) rotateX(${-y * 8}deg) rotateY(${x * 8}deg)`;
+      });
+      card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+    });
+
+    const fab = document.getElementById('ai-chat-fab');
+    const chatWindow = document.getElementById('ai-chat-window');
+    const chatMessages = document.getElementById('chatMessages');
+    const chatInput = document.getElementById('chatInput');
+    const chatSend = document.getElementById('chatSend');
+    const chatSuggestions = document.getElementById('chatSuggestions');
+    const chatBadge = document.getElementById('chatBadge');
+    const chatClearBtn = document.getElementById('chatClearBtn');
+
+    let chatOpen = false;
+    let isTyping = false;
+    let conversationHistory = [];
+
+    const SUGGESTIONS = [
+      'What services do you offer?',
+      'How much does a website cost?',
+      'Tell me about your projects',
+      'How do I get started?',
+      'What tech stack do you use?',
+      'What is the payment policy?',
+    ];
+
+    function renderSuggestions(chips) {
+      chatSuggestions.innerHTML = '';
+      chips.forEach(text => {
+        const chip = document.createElement('button');
+        chip.className = 'suggestion-chip';
+        chip.textContent = text;
+        chip.addEventListener('click', () => {
+          chatSuggestions.innerHTML = '';
+          sendMessage(text);
+        });
+        chatSuggestions.appendChild(chip);
+      });
+    }
+
+    function addMessage(role, html, animate = true) {
+      const wrapper = document.createElement('div');
+      wrapper.className = `chat-msg ${role}`;
+      if (!animate) wrapper.style.animation = 'none';
+      const bubble = document.createElement('div');
+      bubble.className = 'chat-bubble';
+      bubble.innerHTML = html;
+      wrapper.appendChild(bubble);
+      chatMessages.appendChild(wrapper);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+      return wrapper;
+    }
+
+    function showTyping() {
+      const el = document.createElement('div');
+      el.className = 'typing-indicator';
+      el.id = 'typingIndicator';
+      el.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+      chatMessages.appendChild(el);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function removeTyping() {
+      const el = document.getElementById('typingIndicator');
+      if (el) el.remove();
+    }
+
+    function mdToHtml(text) {
+      return text
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/^- (.+)$/gm, '<li>$1</li>')
+        .replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>')
+        .replace(/\n{2,}/g, '<br><br>')
+        .replace(/\n/g, '<br>');
+    }
+
+    function generateSmartResponse(userText) {
+      const lower = userText.toLowerCase().trim();
+      
+      if (lower.includes('price') || lower.includes('cost') || lower.includes('rate') || lower.includes('how much') || lower.includes('budget') || lower.includes('fee') || lower.includes('charge')) {
+        if (lower.includes('landing') || lower.includes('one page')) {
+          return "Landing Page Pricing: 3,000 - 15,000\n\nThis includes custom design, mobile-responsive layout, contact form integration, basic SEO optimization, and fast loading speed.";
+        } else if (lower.includes('business') || lower.includes('corporate') || lower.includes('company')) {
+          return "Business Website Pricing: 8,000 - 40,000\n\nIncludes multi-page professional design, advanced contact forms, CMS integration, social media integration, SEO optimization, and analytics setup. 50% downpayment to start.";
+        } else if (lower.includes('ecommerce') || lower.includes('e-commerce') || lower.includes('shop') || lower.includes('store')) {
+          return "E-Commerce Solutions: 15,000 - 80,000+\n\nFeatures include product catalog, shopping cart, payment gateway integration, inventory management, order tracking, and security features.";
+        } else if (lower.includes('payment') || lower.includes('down') || lower.includes('deposit')) {
+          return "Payment Policy: 50% Downpayment to begin work, 50% Balance upon completion and approval. 100% satisfaction guarantee. Milestone-based progress updates. Transparent pricing with no hidden fees.";
+        } else {
+          return "Our Transparent Pricing:\n\nLanding Pages: 3,000 - 15,000\nBusiness Websites: 8,000 - 40,000\nE-Commerce: 15,000 - 80,000+\nReact/Next.js Apps: 10,000 - 80,000+\nSaaS MVP: 50,000 - 500,000+\nSecurity Services: 5,000 - 150,000\n\n50% downpayment, balance upon completion.";
+        }
+      }
+      else if (lower.includes('service') || lower.includes('offer') || lower.includes('provide') || lower.includes('do you do') || lower.includes('what can you')) {
+        return "Our Services:\n\n1. Custom Web Development - Tailored websites and web apps\n2. E-Commerce Solutions - Online stores that convert\n3. Responsive Design - Perfect on all devices\n4. Performance & SEO - Fast, search-engine optimized\n5. Security Services - Penetration testing and audits\n\nWhich would you like to explore?";
+      }
+      else if (lower.includes('tech') || lower.includes('technology') || lower.includes('stack') || lower.includes('language') || lower.includes('framework') || lower.includes('tool') || lower.includes('use')) {
+        return "Our Tech Stack:\n\nFront-End: HTML5, CSS3, JavaScript ES6+, React, Next.js, Vue.js, Bootstrap 5, Tailwind CSS\n\nBack-End: PHP/Laravel, Node.js, REST API\n\nDatabases: MySQL/MariaDB, MongoDB\n\nSecurity: RBAC, Encryption, Anti-injection, Penetration Testing\n\nWe choose the best stack for YOUR project.";
+      }
+      else if (lower.includes('project') || lower.includes('portfolio') || lower.includes('work') || lower.includes('example') || lower.includes('case study') || lower.includes('past') || lower.includes('done')) {
+        return "Featured Projects:\n\n1. Automated Faculty Evaluation System - Full RBAC multi-role system with real-time analytics, PDF export, CHED compliant. Stack: PHP/Laravel, MySQL, Bootstrap 5.\n\n2. Rhyzil Tech Website - Dark/Light theme, particle animations, AI Chatbot. Stack: HTML5, CSS3, Vanilla JS.\n\nCheck our Case Studies section for detailed problem-solution-result breakdowns.";
+      }
+      else if (lower.includes('about') || lower.includes('who') || lower.includes('team') || lower.includes('founder') || lower.includes('company') || lower.includes('history') || lower.includes('experience') || lower.includes('background')) {
+        return "About Rhyzil Tech: Founded by Rhyzil Angelo Pabadora Jimenez. Based in Tabango, Leyte, Philippines. 7+ years development experience, 50+ systems built. Security-first approach. We build powerful web experiences that drive real business results.";
+      }
+      else if (lower.includes('contact') || lower.includes('reach') || lower.includes('email') || lower.includes('phone') || lower.includes('call') || lower.includes('location') || lower.includes('address') || lower.includes('where')) {
+        return "Contact Us:\n\nEmail: businessrhyziltech@gmail.com\nPhone: +63 993 679 6302\nLocation: Crossing Otabon, Tabango, Leyte\n\nResponse Time: Usually within 1-2 hours. You can also use Messenger or WhatsApp buttons on the contact section.";
+      }
+      else if (lower.includes('start') || lower.includes('begin') || lower.includes('hire') || lower.includes('how do i') || lower.includes('process') || lower.includes('work with')) {
+        return "Getting Started:\n\n1. Tell us about your project via contact form or chat\n2. Free consultation to discuss needs and goals\n3. Detailed proposal with transparent pricing\n4. 50% downpayment to secure your project\n5. Development begins with regular updates\n\nReady to start?";
+      }
+      else if (lower.includes('how long') || lower.includes('timeline') || lower.includes('duration') || lower.includes('deadline') || lower.includes('delivery') || lower.includes('fast')) {
+        return "Typical Timelines:\n\nLanding Page: 3-7 days\nBusiness Website: 1-4 weeks\nE-Commerce: 2-8 weeks\nWeb Application: 4-16 weeks\nSaaS MVP: 8-24 weeks\n\nTimelines vary based on complexity. Rush delivery available.";
+      }
+      else if (lower.includes('security') || lower.includes('secure') || lower.includes('protection') || lower.includes('encrypt') || lower.includes('safe') || lower.includes('privacy')) {
+        return "Security-First Promise: RBAC, Encryption, Anti-Injection, Security Audits (5,000 - 50,000), Penetration Testing (10,000 - 150,000), 24/7 Monitoring. Security is built into EVERY project, not added later.";
+      }
+      else if (lower.match(/^(hi|hello|hey|yo|sup|greetings|good morning|good afternoon|good evening)/) || lower.length < 10) {
+        return "Hello! I'm the Rhyzil Tech AI Assistant. I can help with services, pricing, tech stack, past projects, and getting started. What would you like to know?";
+      }
+      else if (lower.includes('thank') || lower.includes('thanks') || lower.includes('appreciate') || lower.includes('helpful')) {
+        return "You're welcome! Need anything else? Feel free to ask another question, use our contact form, or reach us at businessrhyziltech@gmail.com. We're here to help bring your project to life.";
+      }
+      else if (lower.includes('seo') || lower.includes('search engine') || lower.includes('google') || lower.includes('ranking') || lower.includes('marketing') || lower.includes('traffic')) {
+        return "Performance & SEO: Speed optimization, Core Web Vitals, image compression, lazy loading, code minification, meta tags, schema markup, mobile-first optimization, XML sitemaps, keyword optimization. We build websites that rank.";
+      }
+      else if (lower.includes('responsive') || lower.includes('mobile') || lower.includes('phone') || lower.includes('tablet') || lower.includes('device')) {
+        return "Mobile-First Design: All our websites are fully responsive on all devices, tested on iOS and Android, optimized for tablets and desktops, with touch-friendly interfaces and fast loading on mobile networks.";
+      }
+      else if (lower.includes('maintenance') || lower.includes('support') || lower.includes('update') || lower.includes('after') || lower.includes('warranty') || lower.includes('guarantee')) {
+        return "Post-Launch Support: 100% Satisfaction Guarantee, bug fixes included, performance monitoring, updates and maintenance available, ongoing support packages. We stand behind our work.";
+      }
+      else {
+        return "I understand you're asking about something specific. Here's how I can help: tell me more about your project needs, check our services section for detailed info, or get a custom quote by emailing businessrhyziltech@gmail.com. Or ask me specifically about pricing, services, tech stack, or past projects.";
+      }
+    }
+
+    async function sendMessage(userText) {
+      if (!userText.trim() || isTyping) return;
+      isTyping = true;
+      chatSend.disabled = true;
+      chatInput.value = '';
+      chatInput.style.height = 'auto';
+      chatSuggestions.innerHTML = '';
+
+      addMessage('user', userText.replace(/</g,'&lt;').replace(/>/g,'&gt;'));
+
+      conversationHistory.push({ role: 'user', content: userText });
+
+      showTyping();
+
+      const typingDelay = 600 + Math.random() * 1200;
+      await new Promise(resolve => setTimeout(resolve, typingDelay));
+      
+      removeTyping();
+
+      const reply = generateSmartResponse(userText);
+
+      conversationHistory.push({ role: 'assistant', content: reply });
+      addMessage('bot', mdToHtml(reply));
+
+      const lower = userText.toLowerCase();
+      let nextSuggestions = [];
+      if (lower.includes('price') || lower.includes('cost') || lower.includes('rate')) {
+        nextSuggestions = ['What is the payment policy?', 'How do I get started?', 'Tell me about your projects', 'What services do you offer?'];
+      } else if (lower.includes('service') || lower.includes('offer')) {
+        nextSuggestions = ['How much does a website cost?', 'What tech stack do you use?', 'Tell me about your projects'];
+      } else if (lower.includes('project') || lower.includes('portfolio') || lower.includes('work')) {
+        nextSuggestions = ['How much does a website cost?', 'How do I get started?', 'What services do you offer?'];
+      } else if (lower.includes('tech') || lower.includes('stack')) {
+        nextSuggestions = ['What services do you offer?', 'How much does a website cost?', 'Tell me about your projects'];
+      } else {
+        nextSuggestions = SUGGESTIONS.slice(0, 4);
+      }
+      setTimeout(() => renderSuggestions(nextSuggestions), 400);
+
+      isTyping = false;
+      chatSend.disabled = false;
+      chatInput.focus();
+    }
+
+    function openChat() {
+      chatOpen = true;
+      chatWindow.classList.add('open');
+      fab.classList.add('open');
+      chatBadge.classList.remove('show');
+
+      if (chatMessages.children.length === 0) {
+        addMessage('bot', "Hello! I'm the Rhyzil Tech AI Assistant. I'm your smart guide to everything about our services, pricing, and capabilities. Ask me anything, I'm here to help. Try asking: How much for a business website? What technologies do you use? Tell me about your past projects.", false);
+        setTimeout(() => renderSuggestions(SUGGESTIONS.slice(0, 4)), 200);
+      }
+
+      chatInput.focus();
+    }
+
+    function closeChat() {
+      chatOpen = false;
+      chatWindow.classList.remove('open');
+      fab.classList.remove('open');
+    }
+
+    fab.addEventListener('click', () => chatOpen ? closeChat() : openChat());
+
+    chatSend.addEventListener('click', () => sendMessage(chatInput.value));
+
+    chatInput.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !e.shiftKey) { 
+        e.preventDefault(); 
+        sendMessage(chatInput.value); 
+      }
+    });
+
+    chatInput.addEventListener('input', function() {
+      this.style.height = 'auto';
+      this.style.height = Math.min(this.scrollHeight, 100) + 'px';
+    });
+
+    chatClearBtn.addEventListener('click', () => {
+      chatMessages.innerHTML = '';
+      chatSuggestions.innerHTML = '';
+      conversationHistory = [];
+      addMessage('bot', 'Chat cleared. How can I help you today?', false);
+      setTimeout(() => renderSuggestions(SUGGESTIONS.slice(0, 4)), 200);
+    });
+
+    setTimeout(() => {
+      if (!chatOpen) chatBadge.classList.add('show');
+    }, 3000);
+
+  })();
+  </script>
 </body>
 </html>
